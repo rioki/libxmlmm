@@ -29,6 +29,7 @@
 
 #include "Document.h"
 #include "Element.h"
+#include "Comment.h"
 
 // NOTE: Elements can not live w/o their Document.
 
@@ -125,5 +126,14 @@ SUITE(ElementTest)
         CHECK_EQUAL(element2, children[1]);
         CHECK_EQUAL(element3, children[2]);
     }
+    
+//------------------------------------------------------------------------------
+    /*TEST(add_comment)
+    {
+        xml::Document doc;
+        xml::Element* root = doc.create_root_element("test");
+        xml::Comment* comment = root->add_comment_node("This is a comment.");
+        CHECK_EQUAL("This is a comment.", comment->get_content());
+    }*/
 }
 

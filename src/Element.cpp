@@ -34,12 +34,12 @@ namespace xml
     : Node(cobj) {}
     
 //------------------------------------------------------------------------------    
-    std::string Element::get_name() const
+    String Element::get_name() const
     {
         assert(cobj != NULL);
         if (cobj->name != NULL)
         {
-            return reinterpret_cast<const char*>(cobj->name);
+            return cobj->name;
         }
         else
         {
@@ -48,24 +48,24 @@ namespace xml
     }
 
 //------------------------------------------------------------------------------        
-    void Element::set_name(const std::string& value)
+    void Element::set_name(const String& value)
     {
-        xmlNodeSetName(cobj, reinterpret_cast<const xmlChar*>(value.c_str()));
+        xmlNodeSetName(cobj, value.c_str());
     }
     
 //------------------------------------------------------------------------------
-    bool Element::has_attribute(const std::string& key) const
+    bool Element::has_attribute(const String& key) const
     {
-        return xmlGetProp(cobj, reinterpret_cast<const xmlChar*>(key.c_str())) != NULL;
+        return xmlGetProp(cobj, key.c_str()) != NULL;
     }
     
 //------------------------------------------------------------------------------
-    std::string Element::get_attribute(const std::string& key) const
+    String Element::get_attribute(const String& key) const
     {
-        const xmlChar* value = xmlGetProp(cobj, reinterpret_cast<const xmlChar*>(key.c_str()));
+        const xmlChar* value = xmlGetProp(cobj, key.c_str());
         if (value != NULL)
         {
-            return reinterpret_cast<const char*>(value);            
+            return value;            
         }
         else
         {
@@ -74,19 +74,19 @@ namespace xml
     }
     
 //------------------------------------------------------------------------------
-    void Element::set_attribute(const std::string& key, const std::string& value)
+    void Element::set_attribute(const String& key, const String& value)
     {
-        xmlSetProp(cobj, reinterpret_cast<const xmlChar*>(key.c_str()), reinterpret_cast<const xmlChar*>(value.c_str()));
+        xmlSetProp(cobj, (key.c_str()), value.c_str());
     }
     
 //------------------------------------------------------------------------------
-    void Element::remove_attribute(const std::string& key)
+    void Element::remove_attribute(const String& key)
     {
-        xmlUnsetProp(cobj, reinterpret_cast<const xmlChar*>(key.c_str()));    
+        xmlUnsetProp(cobj, key.c_str());    
     }
 
 //------------------------------------------------------------------------------
-    std::string Element::get_text() const
+    String Element::get_text() const
     {
         Text* text = get_text_node();
         if (text != NULL)
@@ -113,7 +113,7 @@ namespace xml
     }
 
 //------------------------------------------------------------------------------
-    void Element::set_text(const std::string& text)
+    void Element::set_text(const String& text)
     {
         Text* node = get_text_node();
         if(node)
@@ -127,16 +127,16 @@ namespace xml
     }
 
 //------------------------------------------------------------------------------
-    void Element::add_text(const std::string& text)
+    void Element::add_text(const String& text)
     {
-        xmlNode* node = xmlNewText(reinterpret_cast<const xmlChar*>(text.c_str()));
+        xmlNode* node = xmlNewText(text.c_str());
         xmlAddChild(cobj, node); 
     }
 
 //------------------------------------------------------------------------------    
-    Element* Element::add_element(const std::string& name)
+    Element* Element::add_element(const String& name)
     {
-        xmlNode* node = xmlNewNode(NULL, reinterpret_cast<const xmlChar*>(name.c_str()));
+        xmlNode* node = xmlNewNode(NULL, name.c_str());
         xmlAddChild(cobj, node); 
         return reinterpret_cast<Element*>(node->_private);
     }

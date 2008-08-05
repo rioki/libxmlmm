@@ -25,85 +25,86 @@
 
 #pragma once
 
-#include "Node.h"
-#include "Text.h"
-#include "String.h"
+#include <iosfwd>
+#include <string>
+#include <libxml/xmlstring.h>
 
 namespace xml
 {
+
     /**
-     * XML Element Wrapper
-     **/    
-    class Element : public Node
+     * UTF-8 handling class.
+     **/
+    class String
     {
-    public: 
-        /** 
-         * Construct the Wrapper
+    public:
+        /**
+         * Initialize empty string.
          **/
-        Element(xmlNode* cobj);
+        String();        
         
         /**
-         * Get the node's name.
+         * Create a string from char array.
          **/
-        String get_name() const;
+        String(const char* cstr);
         
         /**
-         * Set a node's name.
+         * Create a string from xmlChar array.
          **/
-        void set_name(const String& value);
+        String(const xmlChar* str);
         
         /**
-         * Check if a given attribute exists.
+         * Create a string from standard string.
          **/
-        bool has_attribute(const String& key) const;
-        
-        /** 
-         * Get a given attribute. 
-         **/
-        String get_attribute(const String& key) const;
+        String(const std::string& str);
         
         /**
-         * Set a attribute.
+         * Copy constructor.
          **/
-        void set_attribute(const String& key, const String& value);
+        String(const String& orig);
         
         /**
-         * Remove a given attribute.
+         * Free the string.
          **/
-        void remove_attribute(const String& key);
+        ~String();
         
         /**
-         * Get the element's text.
+         * Assignment operator.
          **/
-        String get_text() const;
+        String& operator == (const String& orig);
         
         /**
-         * Get the element's text node.
+         * Get the size of the string.
          **/
-        Text* get_text_node() const;
+        size_t size() const;
         
         /**
-         * Set the 
+         * Get the internal string buffer.
          **/
-        void set_text(const String& text);
+        const xmlChar* c_str() const; 
         
         /**
-         * Add/append text to this element.
+         * Swap two strings.
          **/
-        void add_text(const String& text);
-        
-        /**
-         * Add a element.
-         **/
-        Element* add_element(const String& name);
-        
-        /**
-         * Get all children of this element.
-         *
-         * @return All children of this element. 
-         **/
-        std::vector<Node*> get_children();
-        
-        std::vector<const Node*> get_children() const;
-    };    
+        void swap(String& other);
+    
+    private:
+        xmlChar* xstr;    
+    };
+
+    /**
+     * Is equal operator.
+     **/
+    bool operator == (const String& a, const String& b);
+    
+    /**
+     * Is not equal operator.
+     **/
+    bool operator != (const String& a, const String& b);
+    
+    /**
+     * Stream output operator.
+     **/
+    std::ostream& operator << (std::ostream& os, const String& s);
 }
+

@@ -23,37 +23,41 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 // 
 
-#pragma once
+#include <UnitTest++/UnitTest++.h>
+#include <libxml/xmlstring.h>
+#include <libxml/xmlmemory.h>
 
-#include "Node.h"
 #include "String.h"
 
-namespace xml
+SUITE(StringTest)
 {
-    /**
-     * XML Text Node Wrapper
-     **/    
-    class Content : public Node
+//------------------------------------------------------------------------------
+    TEST(initialize_from_string_literal)
     {
-    public:
-        /**
-         * Construct Wrapper
-         **/
-        Content(xmlNode* cobj);
-        
-        /**
-         * Get the content of a content node.
-         **/
-        String get_content() const;
-        
-        /**
-         * Set the content of a content node.
-         **/
-        void set_content(const String& value);
-        
-        /**
-         * Check if a given note is a blank node.
-         **/
-        bool is_blank() const;        
-    };    
+        xml::String str("This is a test");
+        xmlChar* ref = xmlCharStrdup("This is a test");
+        CHECK(xmlStrEqual(ref, str.c_str()));
+        xmlFree(ref);
+    }
+
+//------------------------------------------------------------------------------    
+    TEST(default_is_empty_string)
+    {
+        CHECK_EQUAL(xml::String(""), xml::String());
+    }
+
+//------------------------------------------------------------------------------        
+    TEST(copy)    
+    {
+        xml::String orig("test");
+        xml::String copy(orig);
+        CHECK_EQUAL(orig, copy);
+    }
+
+//------------------------------------------------------------------------------            
+    TEST(size)
+    {
+        CHECK_EQUAL(4, xml::String("test").size());
+    }
 }
+

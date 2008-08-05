@@ -25,7 +25,7 @@
 
 pkginclude_HEADERS   = LibXmlSentry.h Document.h Node.h Element.h \
                        Content.h Text.h CData.h Comment.h \
-                       ProcessingInstruction.h utils.h
+                       ProcessingInstruction.h String.h utils.h
 
 lib_LTLIBRARIES      = libxmlmm.la
 
@@ -34,5 +34,5 @@ libxmlmm_la_LDFLAGS  = --version-info @LTVERSION@
 libxmlmm_la_LIBADD   = @LIBXML_LIBS@
 libxmlmm_la_SOURCES  = LibXmlSentry.cpp Document.cpp Node.cpp Element.cpp \
                        Content.cpp Text.cpp CData.cpp Comment.cpp \
-                       ProcessingInstruction.cpp utils.cpp
+                       ProcessingInstruction.cpp String.cpp utils.cpp
 

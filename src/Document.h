@@ -90,12 +90,12 @@ namespace xml
          * @exception std::logic_error Throws logic_error if the document 
          * already has a root element.         
          **/
-        Element* create_root_element(const std::string& name);
+        Element* create_root_element(const String& name);
         
         /**
          * Write document to string.
          **/
-        std::string write_to_string() const;
+        String write_to_string() const;
         
         /**
          * Write document to stream.
@@ -107,7 +107,7 @@ namespace xml
          *
          * @todo Add error handling.
          **/
-        void read_from_string(const std::string& xml);
+        void read_from_string(const String& xml);
         
         /**
          * Read document from stream.
