@@ -23,7 +23,7 @@ dnl FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 dnl OTHER DEALINGS IN THE SOFTWARE.
 dnl 
 
-AC_INIT([libxmlmm], [1.0])
+AC_INIT([libxmlmm], [0.1])
 AM_INIT_AUTOMAKE([foreign])
 
 dnl Libtool Version (current:revision:age)
