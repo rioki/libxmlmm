@@ -139,7 +139,11 @@ namespace xml
         std::string result;
         while (is.good())
         {
-            result += is.get();
+            char c = is.get();
+            if (is.good())
+            {
+                result += c;
+            }
         }
         return result;
     }

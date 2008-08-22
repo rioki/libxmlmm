@@ -116,5 +116,25 @@ SUITE(DocumentTest)
           " It aimes to see if a HTML document can be created with the interface.</p></body></html>\n";
         CHECK_EQUAL(ref, buff.str());
     }
+
+//------------------------------------------------------------------------------    
+    TEST(read_from_stream)
+    {
+        std::stringstream xmat(
+            "<?xml version='1.0'?>\n"
+            "<material version='1.0'>\n"
+            "    <lighting_mode value='TOON_LIGHTING' />\n"
+            "    <width value='1.5' />\n"
+            "    <ambient red='0.2' green='0.0' blue='0.8' />\n"
+            "    <diffuse red='0.9' green='0.8' blue='0.9' />\n"
+            "    <specular red='1.0' green='0.7' blue='0.7' />\n"
+            "    <emissive red='0.6' green='0.3' blue='0.2' />\n"
+            "    <shininess value='0.8' />\n"
+            "    <opacity value='0.7' />\n"
+            "</material>\n");
+        
+        xml::Document doc;
+        doc.read_from_stream(xmat);
+    }
 }
 
