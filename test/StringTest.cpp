@@ -59,5 +59,12 @@ SUITE(StringTest)
     {
         CHECK_EQUAL(4, xml::String("test").size());
     }
+    
+//------------------------------------------------------------------------------            
+    TEST(compare_const_char)
+    {
+        xml::String str("test");
+        CHECK(str == "test");
+    }
 }
 

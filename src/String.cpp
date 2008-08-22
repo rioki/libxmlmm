@@ -74,7 +74,7 @@ namespace xml
     }
 
 //------------------------------------------------------------------------------
-    String& String::operator == (const String& orig)
+    String& String::operator = (const String& orig)
     {
         String tmp(orig);
         tmp.swap(*this);

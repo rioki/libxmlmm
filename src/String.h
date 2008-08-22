@@ -71,7 +71,7 @@ namespace xml
         /**
          * Assignment operator.
          **/
-        String& operator == (const String& orig);
+        String& operator = (const String& orig);
         
         /**
          * Get the size of the string.
