@@ -25,8 +25,9 @@
 
 #pragma once
 
+#include <string>
+
 #include "Node.h"
-#include "String.h"
 
 namespace xml
 {
@@ -44,12 +45,12 @@ namespace xml
         /**
          * Get the content of a content node.
          **/
-        String get_content() const;
+        std::string get_content() const;
         
         /**
          * Set the content of a content node.
          **/
-        void set_content(const String& value);
+        void set_content(const std::string& value);
         
         /**
          * Check if a given note is a blank node.

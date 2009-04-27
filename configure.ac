@@ -1,5 +1,5 @@
 dnl 
-dnl Copyright (c) 2008 Sean Farrell
+dnl Copyright (c) 2008 - 2009 Sean Farrell
 dnl 
 dnl Permission is hereby granted, free of charge, to any person
 dnl obtaining a copy of this software and associated documentation
@@ -27,7 +27,7 @@ AC_INIT([libxmlmm], [0.1])
 AM_INIT_AUTOMAKE([foreign])
 
 dnl Libtool Version (current:revision:age)
-LTVERSION = 0:0:0
+LT_VERSION="0:0:0"
 dnl 1. Start with version information of ‘0:0:0’ for each libtool library.
 dnl 2. Update the version information only immediately before a public release 
 dnl    of your software. More frequent updates are unnecessary, and only 
@@ -40,7 +40,7 @@ dnl 5. If any interfaces have been added since the last public release,
 dnl    then increment age.
 dnl 6. If any interfaces have been removed since the last public release, 
 dnl    then set age to 0. 
-AC_SUBST(LTVERSION)
+AC_SUBST(LT_VERSION)
 
 
 AC_LANG([C++])

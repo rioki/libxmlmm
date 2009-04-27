@@ -32,11 +32,11 @@ namespace xml
     : Node(cobj) {}
     
 //------------------------------------------------------------------------------
-    String Content::get_content() const
+    std::string Content::get_content() const
     {
         if (cobj->content != NULL)
         {
-            return cobj->content;
+            return reinterpret_cast<const char*>(cobj->content);
         }
         else
         {
@@ -45,9 +45,9 @@ namespace xml
     }
     
 //------------------------------------------------------------------------------
-    void Content::set_content(const String& value) 
+    void Content::set_content(const std::string& value) 
     {
-        xmlNodeSetContent(cobj, value.c_str());
+        xmlNodeSetContent(cobj, reinterpret_cast<const xmlChar*>(value.c_str()));
     }
     
 //------------------------------------------------------------------------------

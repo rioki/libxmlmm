@@ -1,5 +1,5 @@
 ## 
-## Copyright (c) 2008 Sean Farrell
+## Copyright (c) 2008 - 2009 Sean Farrell
 ## 
 ## Permission is hereby granted, free of charge, to any person
 ## obtaining a copy of this software and associated documentation
@@ -25,15 +25,14 @@
 
 pkginclude_HEADERS   = LibXmlSentry.h Document.h Node.h Element.h \
                        Content.h Text.h CData.h Comment.h \
-                       ProcessingInstruction.h String.h utils.h \
-                       libxmlmm.h
+                       ProcessingInstruction.h utils.h libxmlmm.h
 
 lib_LTLIBRARIES      = libxmlmm.la
 
 libxmlmm_la_CXXFLAGS = @LIBXML_CFLAGS@
-libxmlmm_la_LDFLAGS  = --version-info @LTVERSION@
+libxmlmm_la_LDFLAGS  = -version-info @LT_VERSION@
 libxmlmm_la_LIBADD   = @LIBXML_LIBS@
 libxmlmm_la_SOURCES  = LibXmlSentry.cpp Document.cpp Node.cpp Element.cpp \
                        Content.cpp Text.cpp CData.cpp Comment.cpp \
-                       ProcessingInstruction.cpp String.cpp utils.cpp
+                       ProcessingInstruction.cpp utils.cpp
 

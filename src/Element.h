@@ -25,9 +25,10 @@
 
 #pragma once
 
+#include <string>
+
 #include "Node.h"
 #include "Text.h"
-#include "String.h"
 
 namespace xml
 {
@@ -45,37 +46,37 @@ namespace xml
         /**
          * Get the node's name.
          **/
-        String get_name() const;
+        std::string get_name() const;
         
         /**
          * Set a node's name.
          **/
-        void set_name(const String& value);
+        void set_name(const std::string& value);
         
         /**
          * Check if a given attribute exists.
          **/
-        bool has_attribute(const String& key) const;
+        bool has_attribute(const std::string& key) const;
         
         /** 
          * Get a given attribute. 
          **/
-        String get_attribute(const String& key) const;
+        std::string get_attribute(const std::string& key) const;
         
         /**
          * Set a attribute.
          **/
-        void set_attribute(const String& key, const String& value);
+        void set_attribute(const std::string& key, const std::string& value);
         
         /**
          * Remove a given attribute.
          **/
-        void remove_attribute(const String& key);
+        void remove_attribute(const std::string& key);
         
         /**
          * Get the element's text.
          **/
-        String get_text() const;
+        std::string get_text() const;
         
         /**
          * Get the element's text node.
@@ -85,17 +86,17 @@ namespace xml
         /**
          * Set the 
          **/
-        void set_text(const String& text);
+        void set_text(const std::string& text);
         
         /**
          * Add/append text to this element.
          **/
-        void add_text(const String& text);
+        void add_text(const std::string& text);
         
         /**
          * Add a element.
          **/
-        Element* add_element(const String& name);
+        Element* add_element(const std::string& name);
         
         /**
          * Get all children of this element.

@@ -72,9 +72,9 @@ namespace xml
     }
 
 //------------------------------------------------------------------------------
-    Element* Document::create_root_element(const String& name)
+    Element* Document::create_root_element(const std::string& name)
     {
-        xmlNode* root = xmlNewDocNode(cobj, NULL, (name.c_str()), NULL);
+        xmlNode* root = xmlNewDocNode(cobj, NULL, reinterpret_cast<const xmlChar*>(name.c_str()), NULL);
         xmlDocSetRootElement(cobj, root);
         if (root != NULL)
         {
@@ -87,7 +87,7 @@ namespace xml
     }
 
 //------------------------------------------------------------------------------    
-    String Document::write_to_string() const
+    std::string Document::write_to_string() const
     {
         xmlChar* buffer = 0;
         int length = 0;
@@ -97,7 +97,7 @@ namespace xml
         {
             throw std::runtime_error(get_last_error());
         }
-        String xml(buffer);
+        std::string xml(reinterpret_cast<const char*>(buffer));
 
         xmlFree(buffer);
         
@@ -111,9 +111,9 @@ namespace xml
     }
     
 //------------------------------------------------------------------------------
-    void Document::read_from_string(const String& xml)
+    void Document::read_from_string(const std::string& xml)
     {
-        xmlDoc* tmp_cobj = xmlReadDoc(xml.c_str(), NULL, NULL, 0);
+        xmlDoc* tmp_cobj = xmlReadDoc(reinterpret_cast<const xmlChar*>(xml.c_str()), NULL, NULL, 0);
         if (tmp_cobj != NULL)                
         {        
             xmlFreeDoc(cobj);
