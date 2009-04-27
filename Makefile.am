@@ -22,7 +22,7 @@
 
 SUBDIRS = src test doc
 
-EXTRA_DIST = bootstrap.sh libxmlmm.pc.in README ChangeLog.txt COPYING.txt
+EXTRA_DIST = bootstrap.sh libxmlmm.pc.in README.txt COPYING.txt ChangeLog.txt
 
 pkgconfigdir   = $(libdir)/pkgconfig
 pkgconfig_DATA = libxmlmm.pc
