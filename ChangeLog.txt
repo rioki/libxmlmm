@@ -1,8 +1,10 @@
 
 2009-04-27 Sean Farrell <sean.farrell@rioki.org>
-  * ChangeLog.txt: started use of change log
-  * (all): applied GNU LGPL
-  * COPYING.txt: added GNU LGPL
-  * Makefile.am: added new dist files
-  
+    * ChangeLog.txt: started use of change log
+    * (all): applied GNU LGPL
+    * COPYING.txt: added GNU LGPL
+    * Makefile.am: added new dist files
+
+2009-04-27 Sean Farrell <sean.farrell@rioki.org>
+    * examples: removed empty examples directory
 

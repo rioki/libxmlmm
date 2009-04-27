@@ -69,7 +69,6 @@ AC_CONFIG_FILES([
     libxmlmm.pc 
     src/Makefile 
     test/Makefile
-    examples/Makefile
     doc/Makefile
     doc/Doxyfile
 ])

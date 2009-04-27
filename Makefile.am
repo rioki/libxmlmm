@@ -20,7 +20,7 @@
 
 .PHONY : apidoc
 
-SUBDIRS = src test examples doc
+SUBDIRS = src test doc
 
 EXTRA_DIST = bootstrap.sh libxmlmm.pc.in README ChangeLog.txt COPYING.txt
 
