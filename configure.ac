@@ -1,27 +1,22 @@
-dnl 
-dnl Copyright (c) 2008 - 2009 Sean Farrell
-dnl 
-dnl Permission is hereby granted, free of charge, to any person
-dnl obtaining a copy of this software and associated documentation
-dnl files (the "Software"), to deal in the Software without
-dnl restriction, including without limitation the rights to use,
-dnl copy, modify, merge, publish, distribute, sublicense, and/or sell
-dnl copies of the Software, and to permit persons to whom the
-dnl Software is furnished to do so, subject to the following
-dnl conditions:
-dnl 
-dnl The above copyright notice and this permission notice shall be
-dnl included in all copies or substantial portions of the Software.
-dnl 
-dnl THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-dnl EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
-dnl OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-dnl NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
-dnl HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
-dnl WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-dnl FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
-dnl OTHER DEALINGS IN THE SOFTWARE.
-dnl 
+dnl
+dnl libxmlmmm
+dnl Copyright 2008 - 2009 Sean Farell
+dnl
+dnl This file is part of libqgl.
+dnl
+dnl libxmlmmm is free software: you can redistribute it and/or modify
+dnl it under the terms of the GNU Lesser General Public License as published by
+dnl the Free Software Foundation, either version 3 of the License, or
+dnl (at your option) any later version.
+dnl
+dnl libxmlmmm is distributed in the hope that it will be useful,
+dnl but WITHOUT ANY WARRANTY; without even the implied warranty of
+dnl MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+dnl GNU General Public License for more details.
+dnl
+dnl You should have received a copy of the GNU Lesser General Public License
+dnl along with libxmlmmm. If not, see <http:dnlwww.gnu.org/licenses/>.
+dnl
 
 AC_INIT([libxmlmm], [0.1])
 AM_INIT_AUTOMAKE([foreign])
