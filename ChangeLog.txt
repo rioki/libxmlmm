@@ -11,3 +11,9 @@
 2009-04-27 Sean Farrell <sean.farrell@rioki.org>
     * README.txt: added txt extention
 
+2009-04-27 Sean Farrell <sean.farrell@rioki.org>
+    * apidoc: renamed from doc
+    
+2009-04-27 Sean Farrell <sean.farrell@rioki.org>
+    * README.txt: updated readme
+

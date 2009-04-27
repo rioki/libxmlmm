@@ -20,7 +20,7 @@
 
 if BUILD_DOC 
 
-apiddoc : Doxyfile
+apidoc : Doxyfile
 	@DOXYGEN@ Doxyfile
 
 endif

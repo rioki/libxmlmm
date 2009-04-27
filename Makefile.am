@@ -20,7 +20,7 @@
 
 .PHONY : apidoc
 
-SUBDIRS = src test doc
+SUBDIRS = src test apidoc
 
 EXTRA_DIST = bootstrap.sh libxmlmm.pc.in README.txt COPYING.txt ChangeLog.txt
 
@@ -28,5 +28,5 @@ pkgconfigdir   = $(libdir)/pkgconfig
 pkgconfig_DATA = libxmlmm.pc
 
 apidoc : 
-	cd doc && make apidoc
+	cd apidoc && make apidoc
 

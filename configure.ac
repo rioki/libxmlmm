@@ -69,8 +69,8 @@ AC_CONFIG_FILES([
     libxmlmm.pc 
     src/Makefile 
     test/Makefile
-    doc/Makefile
-    doc/Doxyfile
+    apidoc/Makefile
+    apidoc/Doxyfile
 ])
 
 AC_OUTPUT
