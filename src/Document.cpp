@@ -126,6 +126,21 @@ namespace xml
         read_from_string(read_until_eof(is));
     }
 
+//------------------------------------------------------------------------------    
+    void Document::read_from_file(const std::string& file)
+    {
+        xmlDoc* tmp_cobj = xmlReadFile(file.c_str(), NULL, 0);
+        if (tmp_cobj != NULL)                
+        {        
+            xmlFreeDoc(cobj);
+            cobj = tmp_cobj;
+        }
+        else
+        {
+            throw std::runtime_error(get_last_error());            
+        }
+    }
+
 //------------------------------------------------------------------------------
     std::ostream& operator << (std::ostream& os, const Document& doc)
     {

@@ -16,4 +16,7 @@
     
 2009-04-27 Sean Farrell <sean.farrell@rioki.org>
     * README.txt: updated readme
+    
+2009-04-29 Sean Farrell <sean.farrell@rioki.org>
+    * src/Document.h, src/Document.cpp: added load_from_file
 

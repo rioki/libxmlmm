@@ -111,6 +111,11 @@ namespace xml
          **/
         void read_from_stream(std::istream& is);
         
+        /**
+         * Read the XML document from file.
+         **/
+        void read_from_file(const std::string& file);
+        
     private:
         xmlDoc* cobj;
         
