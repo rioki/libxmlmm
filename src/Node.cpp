@@ -22,6 +22,7 @@
 
 #include <cassert>
 #include <stdexcept>
+#include <libxml/xpath.h>
 
 namespace xml
 {
@@ -59,6 +60,66 @@ namespace xml
     const Element* Node::get_parent() const
     {
         return const_cast<Node*>(this)->get_parent();
+    }
+
+//------------------------------------------------------------------------------    
+    Node* Node::find_node(const std::string& xpath)
+    {
+        std::vector<Node*> nodes = find_nodes(xpath);
+        if (!nodes.empty())
+            return nodes[0];
+        else
+            return NULL;
+        
+    }
+    
+//------------------------------------------------------------------------------
+    const Node* Node::find_node(const std::string& xpath) const
+    {
+        return const_cast<Node*>(this)->find_node(xpath);
+    }
+    
+//------------------------------------------------------------------------------
+    std::vector<Node*> Node::find_nodes(const std::string& xpath)
+    {
+        xmlXPathContext* ctxt = xmlXPathNewContext(cobj->doc);
+        ctxt->node = cobj;
+        
+        xmlXPathObject* result = xmlXPathEval(reinterpret_cast<const xmlChar*>(xpath.c_str()), ctxt);
+        if(!result)
+        {
+            xmlXPathFreeContext(ctxt);
+            throw std::runtime_error("Invalid XPath: " + xpath);
+        }
+        
+        if(result->type != XPATH_NODESET)
+        {
+            xmlXPathFreeObject(result);
+            xmlXPathFreeContext(ctxt);
+
+            throw std::runtime_error("Unsuported querry.");
+        }
+        
+        xmlNodeSet* nodeset = result->nodesetval;
+        std::vector<Node*> nodes;
+        if (nodeset)
+        {
+            nodes.reserve(nodeset->nodeNr);
+            for (int i = 0; i != nodeset->nodeNr; i++)
+                nodes.push_back(static_cast<Node*>(nodeset->nodeTab[i]->_private));
+        }
+
+        xmlXPathFreeObject(result);
+        xmlXPathFreeContext(ctxt);
+        
+        return nodes;
+    }
+    
+//------------------------------------------------------------------------------
+    std::vector<const Node*> Node::find_nodes(const std::string& xpath) const
+    {
+        std::vector<Node*> nodes = const_cast<Node*>(this)->find_nodes(xpath);
+        return std::vector<const Node*>(nodes.begin(), nodes.end());        
     }
 }
 

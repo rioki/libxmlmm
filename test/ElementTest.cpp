@@ -123,12 +123,27 @@ SUITE(ElementTest)
     }
     
 //------------------------------------------------------------------------------
-    /*TEST(add_comment)
+    TEST(simple_xpath_querry)
     {
+        std::stringstream xmat(
+            "<?xml version='1.0'?>\n"
+            "<material version='1.0'>\n"
+            "    <ambient red='0.2' green='0.0' blue='0.8' />\n"
+            "    <diffuse red='0.9' green='0.8' blue='0.9' />\n"
+            "    <specular red='1.0' green='0.7' blue='0.7' />\n"
+            "    <emissive red='0.6' green='0.3' blue='0.2' />\n"
+            "    <shininess value='0.8' />\n"
+            "</material>\n");
+        
         xml::Document doc;
-        xml::Element* root = doc.create_root_element("test");
-        xml::Comment* comment = root->add_comment_node("This is a comment.");
-        CHECK_EQUAL("This is a comment.", comment->get_content());
-    }*/
+        doc.read_from_stream(xmat);
+        
+        xml::Element* xroot = doc.get_root_element();
+        CHECK(xroot != NULL);
+        
+        xml::Element* xambient = xroot->find_element("./ambient");
+        CHECK(xambient != NULL);
+        CHECK_EQUAL("ambient", xambient->get_name());
+    }
 }
 

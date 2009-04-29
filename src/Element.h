@@ -100,6 +100,35 @@ namespace xml
          **/
         std::vector<Node*> get_children();
         
+        /**
+         * Get all children of this element.
+         *
+         * @return All children of this element. 
+         **/
         std::vector<const Node*> get_children() const;
+        
+        /**
+         * Find a given element.
+         *
+         * @param xpath the xpath relative to this element
+         * @return the element found
+         *
+         * @{
+         **/
+        Element* find_element(const std::string& xpath);
+        const Element* find_element(const std::string& xpath) const;
+        /** @} **/
+        
+        /**
+         * Find a given set of elements.
+         *
+         * @param xpath the xpath relative to this element
+         * @return the elements found
+         *
+         * @{
+         **/
+        std::vector<Element*> find_elements(const std::string& xpath);
+        std::vector<const Element*> find_elements(const std::string& xpath) const;
+        /** @} **/
     };    
 }

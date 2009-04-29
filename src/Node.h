@@ -73,7 +73,31 @@ namespace xml
          * @note It is safe to assume that all nodes have a parent. If this
          * is not the case something is really broken.
          **/
-        const Element* get_parent() const;   
+        const Element* get_parent() const;  
+        
+        /**
+         * Find a given node.
+         *
+         * @param xpath the xpath relative to this node
+         * @return the node found
+         *
+         * @{
+         **/
+        Node* find_node(const std::string& xpath);
+        const Node* find_node(const std::string& xpath) const;
+        /** @} **/
+        
+        /**
+         * Find a set of nodes.
+         *
+         * @param xpath the xpath relative to this node
+         * @return the nodes found
+         *
+         * @{
+         **/
+        std::vector<Node*> find_nodes(const std::string& xpath);
+        std::vector<const Node*> find_nodes(const std::string& xpath) const;
+        /** @} **/
     
     protected:    
         /** The wrapped xmlNode object. **/

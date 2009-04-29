@@ -22,6 +22,7 @@
 
 #include <cassert>
 #include <stdexcept>
+#include <algorithm>
 
 namespace xml
 {
@@ -165,4 +166,42 @@ namespace xml
         std::copy(children.begin(), children.end(), result.begin());
         return result;
     }
+
+//------------------------------------------------------------------------------            
+    Element* Element::find_element(const std::string& xpath)
+    {
+        return dynamic_cast<Element*>(find_node(xpath));
+    }
+    
+//------------------------------------------------------------------------------        
+    const Element* Element::find_element(const std::string& xpath) const
+    {
+        return const_cast<Element*>(this)->find_element(xpath);
+    }
+    
+//------------------------------------------------------------------------------
+    Element* cast_node_to_element(Node* node)    
+    {
+        Element* elem = dynamic_cast<Element*>(node);
+        if (elem)
+            return elem;
+        else
+            throw std::runtime_error("The node is not a element.");
+    }
+    
+//------------------------------------------------------------------------------        
+    std::vector<Element*> Element::find_elements(const std::string& xpath)
+    {
+        std::vector<Node*> children = const_cast<Element*>(this)->get_children();
+        std::vector<Element*> elements(children.size());
+        std::transform(children.begin(), children.end(), elements.begin(), cast_node_to_element);        
+        return elements;
+    }
+
+//------------------------------------------------------------------------------
+    std::vector<const Element*> Element::find_elements(const std::string& xpath) const
+    {
+        std::vector<Element*> elements = const_cast<Element*>(this)->find_elements(xpath);
+        return std::vector<const Element*>(elements.begin(), elements.end());             
+    }   
 }
