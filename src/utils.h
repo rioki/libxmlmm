@@ -21,12 +21,15 @@
 #ifndef _LIBXMLMM_UTILS_H_
 #define _LIBXMLMM_UTILS_H_
 
-#include <string>
 #include <iosfwd>
+#include <string>
+#include <sstream>
 #include <libxml/tree.h>
 
 namespace xml
 {
+    class Node;
+    
     /**
      * Get the last error as string from libxml.
      **/
@@ -48,6 +51,34 @@ namespace xml
     
     /** Read from a stream until EOF. **/    
     std::string read_until_eof(std::istream& is);
+    
+    /**
+     * Convert arbitraty value to string.
+     **/
+    template <typename T>
+    std::string to_string(T value)
+    {
+        std::stringstream buff;
+        buff << value;
+        return buff.str();
+    }
+    
+    /**
+     * Convert arbitraty value from string.
+     **/
+    template <typename T>
+    T from_string(const std::string& str)
+    {
+        std::stringstream buff(str);
+        T value;
+        buff >> value;
+        return value;
+    }
+    
+    /**
+     * Get the value from a node.
+     **/
+    std::string get_value(Node* node);
 }
 
 #endif

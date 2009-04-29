@@ -129,6 +129,6 @@ namespace xml
          **/
         std::vector<Element*> find_elements(const std::string& xpath);
         std::vector<const Element*> find_elements(const std::string& xpath) const;
-        /** @} **/
+        /** @} **/       
     };    
 }

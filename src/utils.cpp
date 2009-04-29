@@ -30,6 +30,7 @@
 #include "Comment.h"
 #include "CData.h"
 #include "ProcessingInstruction.h"
+#include "Attribute.h"
 
 namespace xml
 {
@@ -78,9 +79,13 @@ namespace xml
                 break;
             }
             case XML_ATTRIBUTE_NODE:
+            {
+                cobj->_private = new Attribute(cobj);
+                break;    
+            }
             case XML_DOCUMENT_NODE:
             {
-                /* there nodes are not wraped */
+                /* this node is not wraped */
                 break;
             }
             default:
@@ -141,6 +146,24 @@ namespace xml
             }
         }
         return result;
+    }
+
+//------------------------------------------------------------------------------            
+    std::string get_value(Node* node)
+    {
+        Element* element = dynamic_cast<Element*>(node);
+        if (element != NULL)
+            return element->get_text();
+            
+        Content* content = dynamic_cast<Content*>(node);
+        if (content != NULL)
+            return content->get_content();
+        
+        Attribute* attribute = dynamic_cast<Attribute*>(node);
+        if (attribute != NULL)
+            return attribute->get_value(); 
+        
+        return "";   
     }
 }
 

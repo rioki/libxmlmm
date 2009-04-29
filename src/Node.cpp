@@ -24,6 +24,10 @@
 #include <stdexcept>
 #include <libxml/xpath.h>
 
+#include "utils.h"
+#include "Element.h"
+#include "Content.h"
+
 namespace xml
 {
 //------------------------------------------------------------------------------
@@ -86,13 +90,13 @@ namespace xml
         ctxt->node = cobj;
         
         xmlXPathObject* result = xmlXPathEval(reinterpret_cast<const xmlChar*>(xpath.c_str()), ctxt);
-        if(!result)
+        if (!result)
         {
             xmlXPathFreeContext(ctxt);
             throw std::runtime_error("Invalid XPath: " + xpath);
         }
         
-        if(result->type != XPATH_NODESET)
+        if (result->type != XPATH_NODESET)
         {
             xmlXPathFreeObject(result);
             xmlXPathFreeContext(ctxt);
@@ -106,7 +110,9 @@ namespace xml
         {
             nodes.reserve(nodeset->nodeNr);
             for (int i = 0; i != nodeset->nodeNr; i++)
-                nodes.push_back(static_cast<Node*>(nodeset->nodeTab[i]->_private));
+            {
+                nodes.push_back(reinterpret_cast<Node*>(nodeset->nodeTab[i]->_private));              
+            }
         }
 
         xmlXPathFreeObject(result);
@@ -120,6 +126,85 @@ namespace xml
     {
         std::vector<Node*> nodes = const_cast<Node*>(this)->find_nodes(xpath);
         return std::vector<const Node*>(nodes.begin(), nodes.end());        
+    }
+
+//------------------------------------------------------------------------------    
+    std::string Node::query_string(const std::string& xpath) const
+    {
+        xmlXPathContext* ctxt = xmlXPathNewContext(cobj->doc);
+        ctxt->node = cobj;
+        
+        xmlXPathObject* result = xmlXPathEval(reinterpret_cast<const xmlChar*>(xpath.c_str()), ctxt);
+        if (!result)
+        {
+            xmlXPathFreeContext(ctxt);
+            throw std::runtime_error("Invalid XPath: " + xpath);
+        }
+        
+        std::string value;
+        if (result->type == XPATH_STRING)
+        {
+            value = reinterpret_cast<const char*>(result->stringval);                            
+        }
+        else if (result->type == XPATH_NUMBER)
+        {
+            value = to_string(result->floatval);                            
+        }
+        else if (result->type == XPATH_NODESET)
+        {
+            xmlNodeSet* nodeset = result->nodesetval;
+            if (nodeset)
+            {
+                Node* node = reinterpret_cast<Node*>(nodeset->nodeTab[0]->_private);
+                value = get_value(node);
+            }
+        }
+        
+                
+        xmlXPathFreeObject(result);
+        xmlXPathFreeContext(ctxt);
+                
+        return value;
+    }
+    
+//------------------------------------------------------------------------------    
+    double Node::query_number(const std::string& xpath) const
+    {
+        xmlXPathContext* ctxt = xmlXPathNewContext(cobj->doc);
+        ctxt->node = cobj;
+        
+        xmlXPathObject* result = xmlXPathEval(reinterpret_cast<const xmlChar*>(xpath.c_str()), ctxt);
+        if (!result)
+        {
+            xmlXPathFreeContext(ctxt);
+            throw std::runtime_error("Invalid XPath: " + xpath);
+        }
+        
+        double value;
+        if (result->type == XPATH_NUMBER)
+        {
+            value = result->floatval;                            
+        }
+        else if (result->type == XPATH_STRING)
+        {
+            value = from_string<double>(reinterpret_cast<const char*>(result->stringval));
+        }
+        else if (result->type == XPATH_NODESET)
+        {
+            xmlNodeSet* nodeset = result->nodesetval;
+            std::vector<Node*> nodes;
+            if (nodeset)
+            {
+                Node* node = reinterpret_cast<Node*>(nodeset->nodeTab[0]->_private);
+                value = from_string<double>(get_value(node));
+            }
+        }
+        
+                
+        xmlXPathFreeObject(result);
+        xmlXPathFreeContext(ctxt);
+                
+        return value;
     }
 }
 

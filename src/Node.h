@@ -98,6 +98,18 @@ namespace xml
         std::vector<Node*> find_nodes(const std::string& xpath);
         std::vector<const Node*> find_nodes(const std::string& xpath) const;
         /** @} **/
+        
+        /**
+         * Query a value.
+         *
+         * @param xpath the xpath
+         * @return the value
+         *
+         * @{
+         **/
+        std::string query_string(const std::string& xpath) const;
+        double query_number(const std::string& xpath) const;
+        /** @} **/
     
     protected:    
         /** The wrapped xmlNode object. **/

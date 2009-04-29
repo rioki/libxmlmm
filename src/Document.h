@@ -116,6 +116,18 @@ namespace xml
          **/
         void read_from_file(const std::string& file);
         
+        /**
+         * Query a value.
+         *
+         * @param xpath the xpath
+         * @return the value
+         *
+         * @{
+         **/
+        std::string query_string(const std::string& xpath) const;
+        double query_number(const std::string& xpath) const;
+        /** @} **/
+        
     private:
         xmlDoc* cobj;
         

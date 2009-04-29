@@ -141,6 +141,26 @@ namespace xml
         }
     }
 
+//------------------------------------------------------------------------------    
+    std::string Document::query_string(const std::string& xpath) const
+    {
+        const Element* root = get_root_element();
+        if (root != NULL)
+            return root->query_string(xpath);
+        else
+            throw std::logic_error("Document is empty.");
+    }
+
+//------------------------------------------------------------------------------    
+    double Document::query_number(const std::string& xpath) const
+    {
+        const Element* root = get_root_element();
+        if (root != NULL)
+            return root->query_number(xpath);
+        else
+            throw std::logic_error("Document is empty.");
+    }
+
 //------------------------------------------------------------------------------
     std::ostream& operator << (std::ostream& os, const Document& doc)
     {

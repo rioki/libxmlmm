@@ -19,4 +19,12 @@
     
 2009-04-29 Sean Farrell <sean.farrell@rioki.org>
     * src/Document.h, src/Document.cpp: added load_from_file
+    
+2009-04-29 Sean Farrell <sean.farrell@rioki.org>
+    * src/Node.h, src/Node.cpp: added xpath queries for nodes
+    * src/Element.h, src/Element.cpp: added xpath queries for elements
+    
+2009-04-29 Sean Farrell <sean.farrell@rioki.org>
+    * src/utils.h: added to_string and from_string
+    * stc/utils.h, src/utils.cpp: added get_value
 

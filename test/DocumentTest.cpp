@@ -131,5 +131,34 @@ SUITE(DocumentTest)
         xml::Document doc;
         doc.read_from_stream(xmat);
     }
+    
+//------------------------------------------------------------------------------    
+    TEST(xpath_string_query)
+    {
+        std::stringstream xmat(
+            "<?xml version='1.0'?>\n"
+            "<message version=\"1.2\">\n"
+            "    <from>Mack</from>\n"
+            "    <to>Joe</to>\n"
+            "    <to>Sally</to>\n"
+            "    <to>Mike</to>\n"
+            "    <body>Hello everybody!</body>\n"
+            "</message>\n");
+        
+        xml::Document doc;
+        doc.read_from_stream(xmat);
+ 
+        std::string body = doc.query_string("/message/body");
+        CHECK_EQUAL("Hello everybody!", body);
+        std::string body_text = doc.query_string("/message/body/text()");
+        CHECK_EQUAL("Hello everybody!", body_text);        
+        double to_count = doc.query_number("count(/message/to)");
+        CHECK_CLOSE(3.0, to_count, 1e-4); 
+        
+        std::string message_version_string = doc.query_string("/message/@version");
+        CHECK_EQUAL("1.2", message_version_string);        
+        double message_version_number = doc.query_number("/message/@version");
+        CHECK_CLOSE(1.2, message_version_number, 1e-4);                
+    }
 }
 
