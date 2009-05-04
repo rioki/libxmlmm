@@ -50,6 +50,11 @@ namespace xml
         virtual ~Node();       
         
         /**
+         * Get the node's path
+         **/
+        std::string get_path() const;
+        
+        /**
          * Get the node's parent.
          *
          * @return The node's parent.

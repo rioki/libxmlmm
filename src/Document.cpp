@@ -140,8 +140,90 @@ namespace xml
             throw std::runtime_error(get_last_error());            
         }
     }
+    
+//------------------------------------------------------------------------------        
+    Node* Document::find_node(const std::string& xpath)
+    {
+        Element* root = get_root_element();
+        if (root != NULL)
+            return root->find_node(xpath);
+        else
+            throw std::logic_error("Document is empty.");
+    }
+
+    
+//------------------------------------------------------------------------------        
+    const Node* Document::find_node(const std::string& xpath) const
+    {
+        const Element* root = get_root_element();
+        if (root != NULL)
+            return root->find_node(xpath);
+        else
+            throw std::logic_error("Document is empty.");
+    }
+
+
+//------------------------------------------------------------------------------        
+    std::vector<Node*> Document::find_nodes(const std::string& xpath)
+    {
+        Element* root = get_root_element();
+        if (root != NULL)
+            return root->find_nodes(xpath);
+        else
+            throw std::logic_error("Document is empty.");
+    }
+
+//------------------------------------------------------------------------------        
+    std::vector<const Node*> Document::find_nodes(const std::string& xpath) const    
+    {
+        const Element* root = get_root_element();
+        if (root != NULL)
+            return root->find_nodes(xpath);
+        else
+            throw std::logic_error("Document is empty.");
+    }
+
+//------------------------------------------------------------------------------            
+    Element* Document::find_element(const std::string& xpath)
+    {
+        Element* root = get_root_element();
+        if (root != NULL)
+            return root->find_element(xpath);
+        else
+            throw std::logic_error("Document is empty.");
+    }
+    
+//------------------------------------------------------------------------------
+    const Element* Document::find_element(const std::string& xpath) const
+    {
+        const Element* root = get_root_element();
+        if (root != NULL)
+            return root->find_element(xpath);
+        else
+            throw std::logic_error("Document is empty.");
+    }
 
 //------------------------------------------------------------------------------    
+    std::vector<Element*> Document::find_elements(const std::string& xpath)
+    {
+        Element* root = get_root_element();
+        if (root != NULL)
+            return root->find_elements(xpath);
+        else
+            throw std::logic_error("Document is empty.");
+    }
+    
+//------------------------------------------------------------------------------
+    std::vector<const Element*> Document::find_elements(const std::string& xpath) const
+    {
+        const Element* root = get_root_element();
+        if (root != NULL)
+            return root->find_elements(xpath);
+        else
+            throw std::logic_error("Document is empty.");
+    }
+
+//------------------------------------------------------------------------------
     std::string Document::query_string(const std::string& xpath) const
     {
         const Element* root = get_root_element();

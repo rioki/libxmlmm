@@ -42,6 +42,19 @@ namespace xml
     {
         assert(cobj != NULL);
     }
+
+//------------------------------------------------------------------------------    
+    std::string Node::get_path() const
+    {
+        xmlChar* path = xmlGetNodePath(cobj);
+        if (path == NULL)
+            // WTF: How is this suposed to happedn?
+            throw std::logic_error("Node::get_path(): failed to allocated path");
+            
+        std::string result(reinterpret_cast<const char*>(path));
+        xmlFree(path);
+        return result;
+    }
     
 //------------------------------------------------------------------------------
     Element* Node::get_parent()
@@ -108,7 +121,6 @@ namespace xml
         std::vector<Node*> nodes;
         if (nodeset)
         {
-            nodes.reserve(nodeset->nodeNr);
             for (int i = 0; i != nodeset->nodeNr; i++)
             {
                 nodes.push_back(reinterpret_cast<Node*>(nodeset->nodeTab[i]->_private));              

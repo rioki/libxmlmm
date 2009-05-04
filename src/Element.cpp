@@ -23,6 +23,7 @@
 #include <cassert>
 #include <stdexcept>
 #include <algorithm>
+#include <typeinfo> 
 
 namespace xml
 {
@@ -182,19 +183,22 @@ namespace xml
 //------------------------------------------------------------------------------
     Element* cast_node_to_element(Node* node)    
     {
-        Element* elem = dynamic_cast<Element*>(node);
-        if (elem)
+        if (node == NULL)
+            throw std::logic_error("cast_node_to_element: 'node' is NULL");
+            
+        Element* elem = dynamic_cast<Element*>(node);        
+        if (elem != NULL)
             return elem;
         else
-            throw std::runtime_error("The node is not a element.");
+            throw std::runtime_error("The node is not an element. (" + node->get_path() + ")");
     }
     
 //------------------------------------------------------------------------------        
     std::vector<Element*> Element::find_elements(const std::string& xpath)
     {
-        std::vector<Node*> children = const_cast<Element*>(this)->get_children();
-        std::vector<Element*> elements(children.size());
-        std::transform(children.begin(), children.end(), elements.begin(), cast_node_to_element);        
+        std::vector<Node*> nodes = find_nodes(xpath);
+        std::vector<Element*> elements(nodes.size());
+        std::transform(nodes.begin(), nodes.end(), elements.begin(), cast_node_to_element);        
         return elements;
     }
 

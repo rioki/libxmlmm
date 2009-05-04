@@ -108,13 +108,13 @@ namespace xml
             case XML_COMMENT_NODE:
             case XML_CDATA_SECTION_NODE:
             case XML_PI_NODE:
+            case XML_ATTRIBUTE_NODE:
             {
                 Node* node = reinterpret_cast<Node*>(cobj->_private);
                 delete node;
                 cobj->_private = NULL;
                 break;
-            }
-            case XML_ATTRIBUTE_NODE:                        
+            }                        
             case XML_DOCUMENT_NODE:
             {
                 /* there nodes are not wraped */

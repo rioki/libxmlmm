@@ -117,6 +117,54 @@ namespace xml
         void read_from_file(const std::string& file);
         
         /**
+         * Find a given node.
+         *
+         * @param xpath the xpath relative to this node
+         * @return the node found
+         *
+         * @{
+         **/
+        Node* find_node(const std::string& xpath);
+        const Node* find_node(const std::string& xpath) const;
+        /** @} **/
+        
+        /**
+         * Find a given set of nodes.
+         *
+         * @param xpath the xpath
+         * @return the nodes found
+         *
+         * @{
+         **/
+        std::vector<Node*> find_nodes(const std::string& xpath);
+        std::vector<const Node*> find_nodes(const std::string& xpath) const;
+        /** @} **/
+        
+        /**
+         * Find a given element.
+         *
+         * @param xpath the xpath relative to this element
+         * @return the element found
+         *
+         * @{
+         **/
+        Element* find_element(const std::string& xpath);
+        const Element* find_element(const std::string& xpath) const;
+        /** @} **/
+        
+        /**
+         * Find a given set of elements.
+         *
+         * @param xpath the xpath relative to this element
+         * @return the elements found
+         *
+         * @{
+         **/
+        std::vector<Element*> find_elements(const std::string& xpath);
+        std::vector<const Element*> find_elements(const std::string& xpath) const;
+        /** @} **/ 
+        
+        /**
          * Query a value.
          *
          * @param xpath the xpath

@@ -26,5 +26,19 @@
     
 2009-04-29 Sean Farrell <sean.farrell@rioki.org>
     * src/utils.h: added to_string and from_string
-    * stc/utils.h, src/utils.cpp: added get_value
+    * src/utils.h, src/utils.cpp: added get_value
+    * src/Node.h, src/Node.cpp: added query_string, query_number
+    * src/Document.h, src/Document.cpp: added query_string, query_number
+    * src/Attribute.h, src/Attribute.cpp: added Attribute class
+    * src/utils.h(wrap_node): added wraping code for Attribute
+
+2009-04-29 Sean Farrell <sean.farrell@rioki.org>
+    * src/utils.cpp(free_wrapper): added XML_ATTRIBUTE_NODE to delete node case
+    * src/Document.cpp(find_elements): added pass though method
+    * src/Node.cpp(get_path): added
+    
+2009-05-04 Sean Farrell <sean.farrell@rioki.org>
+    * src/Document.cpp(find_node, find_nodes): added pass through functions 
+    * src/Document.cpp(find_element, find_elements): added pass through functions
+    * src/Element.cpp(find_elements): fixed bogus imlpementation
 

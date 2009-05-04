@@ -135,7 +135,7 @@ SUITE(DocumentTest)
 //------------------------------------------------------------------------------    
     TEST(xpath_string_query)
     {
-        std::stringstream xmat(
+        std::stringstream xmsg(
             "<?xml version='1.0'?>\n"
             "<message version=\"1.2\">\n"
             "    <from>Mack</from>\n"
@@ -146,7 +146,7 @@ SUITE(DocumentTest)
             "</message>\n");
         
         xml::Document doc;
-        doc.read_from_stream(xmat);
+        doc.read_from_stream(xmsg);
  
         std::string body = doc.query_string("/message/body");
         CHECK_EQUAL("Hello everybody!", body);
@@ -159,6 +159,58 @@ SUITE(DocumentTest)
         CHECK_EQUAL("1.2", message_version_string);        
         double message_version_number = doc.query_number("/message/@version");
         CHECK_CLOSE(1.2, message_version_number, 1e-4);                
+    }
+    
+//------------------------------------------------------------------------------    
+    TEST(xpath_get_elements)
+    {
+        std::stringstream xmsg(
+            "<?xml version='1.0'?>\n"
+            "<message version=\"1.2\">\n"
+            "    <from>Mack</from>\n"
+            "    <to>Joe</to>\n"
+            "    <to>Sally</to>\n"
+            "    <to>Mike</to>\n"
+            "    <body>Hello everybody!</body>\n"
+            "</message>\n");
+        
+        xml::Document doc;
+        doc.read_from_stream(xmsg);
+ 
+        std::vector<xml::Node*> to_nodes = doc.find_nodes("/message/to");
+        CHECK_EQUAL(3, to_nodes.size());
+ 
+        std::vector<xml::Element*> to_elements = doc.find_elements("/message/to");
+        CHECK_EQUAL(3, to_elements.size());
+        
+        CHECK_EQUAL("Joe", to_elements[0]->get_text());
+        CHECK_EQUAL("Sally", to_elements[1]->get_text());
+        CHECK_EQUAL("Mike", to_elements[2]->get_text());
+    }
+    
+//------------------------------------------------------------------------------    
+    TEST(xpath_get_element)
+    {
+        std::stringstream xmsg(
+            "<?xml version='1.0'?>\n"
+            "<message version=\"1.2\">\n"
+            "    <from>Mack</from>\n"
+            "    <to>Joe</to>\n"
+            "    <to>Sally</to>\n"
+            "    <to>Mike</to>\n"
+            "    <body>Hello everybody!</body>\n"
+            "</message>\n");
+        
+        xml::Document doc;
+        doc.read_from_stream(xmsg);
+        
+        xml::Node* from_node = doc.find_node("/message/from");
+        CHECK(from_node != NULL);
+ 
+        xml::Element* from_element = doc.find_element("/message/from");
+        CHECK(from_element != NULL);
+        
+        CHECK_EQUAL("Mack", from_element->get_text());
     }
 }
 
