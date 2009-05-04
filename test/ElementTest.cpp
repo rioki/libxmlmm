@@ -145,5 +145,23 @@ SUITE(ElementTest)
         CHECK(xambient != NULL);
         CHECK_EQUAL("ambient", xambient->get_name());
     }
+    
+//------------------------------------------------------------------------------
+    TEST(get_attribute_with_type)
+    {
+        std::stringstream xmsg(
+            "<?xml version='1.0'?>\n"
+            "<root version=\"1.2\" id=\"1\" />\n");
+        
+        xml::Document doc;
+        doc.read_from_stream(xmsg);
+                
+        xml::Element* xroot = doc.get_root_element();
+        CHECK(xroot != NULL);
+        
+        CHECK_CLOSE(1.2f, xroot->get_attribute<float>("version"), 1e-4f);
+        CHECK_EQUAL(1, xroot->get_attribute<unsigned int>("id"));
+        CHECK_EQUAL("1.2", xroot->get_attribute<std::string>("version"));
+    }
 }
 

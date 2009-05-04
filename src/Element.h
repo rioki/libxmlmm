@@ -55,8 +55,41 @@ namespace xml
         
         /** 
          * Get a given attribute. 
+         *         
+         * This method will retrive an attribute.
+         *
+         * @param id the attribtue id
+         * @return the attribute value
+         *
+         * @throws std::logic_error if the attibute does not exist on this 
+         * element.
          **/
         std::string get_attribute(const std::string& key) const;
+        
+        /**
+         * Get a given attribute in given type.
+         *
+         * This method will retrive an attribute and try to convert it
+         * to the given type with the help of stream operators.
+         *
+         * @param id the attribtue id
+         * @return the attribute value
+         *
+         * @throws std::logic_error if the attibute does not exist on this 
+         * element.
+         *
+         * @todo add check if conversion to value worked
+         **/
+        template <typename T>
+        T get_attribute(const std::string& id) const
+        {
+            std::stringstream conv(get_attribute(id));
+            
+            T value;
+            conv >> value;
+            
+            return value;
+        }
         
         /**
          * Set a attribute.

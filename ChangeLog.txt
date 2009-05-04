@@ -42,3 +42,5 @@
     * src/Document.cpp(find_element, find_elements): added pass through functions
     * src/Element.cpp(find_elements): fixed bogus imlpementation
 
+2009-05-04 Sean Farrell <sean.farrell@rioki.org>
+    * src/Element.h(get_attribtue<>): added overload for specific types
