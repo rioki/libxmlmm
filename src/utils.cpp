@@ -90,9 +90,6 @@ namespace xml
             }
             default:
             {
-                assert(false && "unknown type");
-                
-                cobj->_private = new Node(cobj);
                 break;
             }
         }
@@ -122,11 +119,6 @@ namespace xml
             }
             default:
             {
-                assert(false && "unknown type");
-                
-                Node* node = reinterpret_cast<Node*>(cobj->_private);
-                delete node;
-                cobj->_private = NULL;
                 break;
             }
         }

@@ -44,3 +44,7 @@
 
 2009-05-04 Sean Farrell <sean.farrell@rioki.org>
     * src/Element.h(get_attribtue<>): added overload for specific types
+    
+2009-05-04 Sean Farrell <sean.farrell@rioki.org>
+    * src/utils.cpp(wrap_node, free_wrapper): removed bogus paranoia asserts
+
