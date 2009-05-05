@@ -98,6 +98,11 @@ namespace xml
         void write_to_stream(std::ostream& os) const;
         
         /**
+         * Write document to file.
+         **/
+        void write_to_file(const std::string& file) const;
+        
+        /**
          * Read document from string.
          *
          * @todo Add error handling.

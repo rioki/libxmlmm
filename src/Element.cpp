@@ -76,7 +76,7 @@ namespace xml
     {
         xmlSetProp(cobj, reinterpret_cast<const xmlChar*>(key.c_str()), reinterpret_cast<const xmlChar*>(value.c_str()));
     }
-    
+        
 //------------------------------------------------------------------------------
     void Element::remove_attribute(const std::string& key)
     {
@@ -207,5 +207,6 @@ namespace xml
     {
         std::vector<Element*> elements = const_cast<Element*>(this)->find_elements(xpath);
         return std::vector<const Element*>(elements.begin(), elements.end());             
-    }   
+    }
 }
+

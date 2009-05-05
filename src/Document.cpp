@@ -104,6 +104,14 @@ namespace xml
     {
         os << write_to_string();    
     }
+
+//------------------------------------------------------------------------------    
+    void Document::write_to_file(const std::string& file) const
+    {
+        int result = xmlSaveFormatFile(file.c_str(), cobj, 1);
+        if (result == -1)
+            throw std::runtime_error(get_last_error());
+    }
     
 //------------------------------------------------------------------------------
     void Document::read_from_string(const std::string& xml)

@@ -21,6 +21,7 @@
 #pragma once
 
 #include <string>
+#include <sstream>
 
 #include "Node.h"
 #include "Text.h"
@@ -92,9 +93,20 @@ namespace xml
         }
         
         /**
-         * Set a attribute.
+         * Set an attribute.
          **/
-        void set_attribute(const std::string& key, const std::string& value);
+        void set_attribute(const std::string& id, const std::string& value);
+               
+        /**
+         * Set an attribute with generic type.
+         **/
+        template <typename T>
+        void set_attribute(const std::string& id, T value)
+        {
+            std::stringstream conv;
+            conv << value;
+            set_attribute(id, conv.str());
+        }
         
         /**
          * Remove a given attribute.
@@ -162,6 +174,9 @@ namespace xml
          **/
         std::vector<Element*> find_elements(const std::string& xpath);
         std::vector<const Element*> find_elements(const std::string& xpath) const;
-        /** @} **/       
+        /** @} **/  
+        
+    private:             
+        
     };    
 }
