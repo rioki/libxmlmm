@@ -56,3 +56,6 @@
     * News.txt: added overview for news versions
     * Readme.txt, Copying.txt: renamed for all uppercase versions
 
+2009-05-10 Sean Farrell <sean.farrell@rioki.org>
+    * configure.ac: fixed version numbers
+

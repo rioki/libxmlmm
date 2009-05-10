@@ -18,11 +18,11 @@ dnl You should have received a copy of the GNU Lesser General Public License
 dnl along with libxmlmmm. If not, see <http:dnlwww.gnu.org/licenses/>.
 dnl
 
-AC_INIT([libxmlmm], [0.1])
+AC_INIT([libxmlmm], [0.2])
 AM_INIT_AUTOMAKE([foreign])
 
 dnl Libtool Version (current:revision:age)
-LT_VERSION="0:0:0"
+LT_VERSION="1:0:0"
 dnl 1. Start with version information of ‘0:0:0’ for each libtool library.
 dnl 2. Update the version information only immediately before a public release 
 dnl    of your software. More frequent updates are unnecessary, and only 
