@@ -48,7 +48,11 @@
 2009-05-04 Sean Farrell <sean.farrell@rioki.org>
     * src/utils.cpp(wrap_node, free_wrapper): removed bogus paranoia asserts
 
-2009-05-04 Sean Farrell <sean.farrell@rioki.org>
+2009-05-05 Sean Farrell <sean.farrell@rioki.org>
     * src/Document.cpp(write_to_file): added
     * src/Element.h(set_attribute): remvoed infinite recursion with overloading
+
+2009-05-10 Sean Farrell <sean.farrell@rioki.org>
+    * News.txt: added overview for news versions
+    * Readme.txt, Copying.txt: renamed for all uppercase versions
 

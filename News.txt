@@ -1,0 +1,13 @@
+
+2009-04-27 libxmlmm-0.1
+
+    * Wrappers for all basic node types.
+    * Load and save of documents.
+    * Basic access API for node types.
+
+2009-05-10 libxmlmm-0.2
+
+    * XPath expression for simple types (query_string, query_number).
+    * Access to nodes and with the help of XPath expression.
+    * Specialisation for elements to XPath nodes queries.
+
