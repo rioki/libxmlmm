@@ -62,13 +62,9 @@ namespace xml
     {
         const xmlChar* value = xmlGetProp(cobj, reinterpret_cast<const xmlChar*>(key.c_str()));
         if (value != NULL)
-        {
             return reinterpret_cast<const char*>(value);
-        }
         else
-        {
-            throw std::logic_error("unkown attribtue");
-        }
+            throw std::logic_error("There is no attribtue '" + key + "' on the element '" + get_name() + "'." );
     }
     
 //------------------------------------------------------------------------------

@@ -205,7 +205,7 @@ namespace xml
         {
             xmlNodeSet* nodeset = result->nodesetval;
             std::vector<Node*> nodes;
-            if (nodeset)
+            if (! xmlXPathNodeSetIsEmpty(nodeset))
             {
                 Node* node = reinterpret_cast<Node*>(nodeset->nodeTab[0]->_private);
                 value = from_string<double>(get_value(node));
