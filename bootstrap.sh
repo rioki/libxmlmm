@@ -27,7 +27,7 @@
 
 set -x
 
-aclocal &&
+aclocal -I /usr/local/share/aclocal &&
 libtoolize --force &&
 automake --add-missing &&
 autoconf
