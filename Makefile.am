@@ -30,4 +30,3 @@ pkgconfig_DATA = libxmlmm.pc
 
 apidoc : 
 	cd apidoc && make apidoc
-

@@ -21,8 +21,10 @@ dnl
 AC_INIT([libxmlmm], [0.2])
 AM_INIT_AUTOMAKE([foreign])
 
+AC_PROG_CXX
+
 dnl Libtool Version (current:revision:age)
-LT_VERSION="1:0:0"
+LT_VERSION="2:0:2"
 dnl 1. Start with version information of ‘0:0:0’ for each libtool library.
 dnl 2. Update the version information only immediately before a public release 
 dnl    of your software. More frequent updates are unnecessary, and only 
@@ -37,14 +39,12 @@ dnl 6. If any interfaces have been removed since the last public release,
 dnl    then set age to 0. 
 AC_SUBST(LT_VERSION)
 
-
-AC_LANG([C++])
-
-AC_PROG_CXX
+AC_LIBTOOL_WIN32_DLL
 AC_PROG_LIBTOOL
 
-
 PKG_CHECK_MODULES(LIBXML, [libxml-2.0 >= 2.6])
+dnl Add LIBXML_STATIC so on Win32 it does not come to link errors.
+LIBXML_CFLAGS+=" -DLIBXML_STATIC"
 AC_SUBST(LIBXML_CFLAGS)
 AC_SUBST(LIBXML_LIBS)
 
