@@ -28,19 +28,20 @@ http://libxmlmm.rioki.org.
 
 5. Changes
 
-libxmlmm-0.1
+2009-04-27 libxmlmm-0.1
 
     * Wrappers for all basic node types.
     * Load and save of documents.
     * Basic access API for node types.
 
-libxmlmm-0.2
+2009-05-10 libxmlmm-0.2
 
     * XPath expression for simple types (query_string, query_number).
     * Access to nodes and with the help of XPath expression.
     * Specialisation for elements to XPath nodes queries.
-    
-libxmlmm-0.3
+
+2009-10-15 libxmlmm-0.3
 
     * Improved error message in Element::get_attribute.
     * Fixed crash in Node::query_number.
+    * Adapted build system to build a windows DLL.
