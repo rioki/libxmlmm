@@ -252,14 +252,14 @@ namespace xml
     }
 
 //------------------------------------------------------------------------------
-    std::ostream& operator << (std::ostream& os, const Document& doc)
+    LIBXMLMM_EXPORT std::ostream& operator << (std::ostream& os, const Document& doc)
     {
         doc.write_to_stream(os);
         return os;
     }
     
 //------------------------------------------------------------------------------
-    std::istream& operator >> (std::istream& is, Document& doc)
+    LIBXMLMM_EXPORT std::istream& operator >> (std::istream& is, Document& doc)
     {
         doc.read_from_stream(is);
         return is;

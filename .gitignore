@@ -20,3 +20,8 @@ ltmain.sh
 missing
 src/libxmlmm.la
 test/test.exe
+*.ncb
+*.suo
+*.vcproj.*.user
+/Debug
+/Release

@@ -24,6 +24,7 @@
 #include <iosfwd>
 #include <libxml/tree.h>
 
+#include "defines.h"
 #include "LibXmlSentry.h"
 #include "Element.h"
 
@@ -36,7 +37,7 @@ namespace xml
      *
      * @todo Add read and write from file.      
      **/    
-    class Document
+    class LIBXMLMM_EXPORT Document
     {
     public:    
         /** 
@@ -193,11 +194,11 @@ namespace xml
     /** 
      * Stream insert operator.
      **/
-    std::ostream& operator << (std::ostream& os, const Document& doc);
+    LIBXMLMM_EXPORT std::ostream& operator << (std::ostream& os, const Document& doc);
     
     /** 
      * Stream extract operator.
      **/
-    std::istream& operator >> (std::istream& is, Document& doc);
+    LIBXMLMM_EXPORT std::istream& operator >> (std::istream& is, Document& doc);
 }
 

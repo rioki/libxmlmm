@@ -33,7 +33,6 @@
 #include "CData.h"
 #include "Comment.h" 
 #include "ProcessingInstruction.h"
-#include "String.h"  
 #include "utils.h"
 #include "LibXmlSentry.h"  
 

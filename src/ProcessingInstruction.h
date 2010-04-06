@@ -27,7 +27,7 @@ namespace xml
     /**
      * XML Processing Instruction Node Wrapper
      **/    
-    class ProcessingInstruction : public Content
+    class LIBXMLMM_EXPORT ProcessingInstruction : public Content
     {
     public:
         /**

@@ -27,7 +27,7 @@ namespace xml
     /**
      * CData Node
      **/    
-    class CData : public Content
+    class LIBXMLMM_EXPORT CData : public Content
     {
     public:
         /**

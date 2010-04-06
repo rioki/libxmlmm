@@ -29,7 +29,7 @@ namespace xml
     /**
      * XML Text Node Wrapper
      **/    
-    class Content : public Node
+    class LIBXMLMM_EXPORT Content : public Node
     {
     public:
         /**

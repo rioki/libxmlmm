@@ -20,20 +20,8 @@
 
 #pragma once
 
-#include "Content.h"
-
-namespace xml
-{
-    /**
-     * XML Text Node Wrapper
-     **/    
-    class LIBXMLMM_EXPORT Text : public Content
-    {
-    public:
-        /**
-         * Construct Wrapper
-         **/
-        Text(xmlNode* cobj);
-        
-    };    
-}
+#ifdef WIN32
+#define LIBXMLMM_EXPORT __declspec(dllexport)
+#else
+#define LIBXMLMM_EXPORT 
+#endif

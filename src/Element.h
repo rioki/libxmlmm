@@ -31,7 +31,7 @@ namespace xml
     /**
      * XML Element Wrapper
      **/    
-    class Element : public Node
+    class LIBXMLMM_EXPORT Element : public Node
     {
     public: 
         /** 

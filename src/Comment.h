@@ -27,7 +27,7 @@ namespace xml
     /**
      * XML Comment Node Wrapper
      **/    
-    class Comment : public Content
+    class LIBXMLMM_EXPORT Comment : public Content
     {
     public:
         /**

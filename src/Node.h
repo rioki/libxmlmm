@@ -24,6 +24,8 @@
 #include <vector>
 #include <libxml/tree.h>
 
+#include "defines.h"
+
 namespace xml
 {
     class Element;
@@ -34,7 +36,7 @@ namespace xml
      * The Node class is the base class for all DOM elements (except Document). 
      * It is effectively a wrapper for xmlNode.
      **/    
-    class Node
+    class LIBXMLMM_EXPORT Node
     {
     public:
         /**
