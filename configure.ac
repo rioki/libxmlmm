@@ -18,7 +18,7 @@ dnl You should have received a copy of the GNU Lesser General Public License
 dnl along with libxmlmmm. If not, see <http:dnlwww.gnu.org/licenses/>.
 dnl
 
-AC_INIT([libxmlmm], [0.3])
+AC_INIT([libxmlmm], [0.4])
 AM_INIT_AUTOMAKE([foreign])
 
 AC_PROG_CXX

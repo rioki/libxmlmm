@@ -9,17 +9,29 @@ libxml2.
 
 2. Install
 
+2.1 Dependencies
+
+To build libxmlmm you need libxml2. You can get it from http://xmlsoft.org/.
+
+2.2 Building With Make 
+
 To install the library you use the traditional "GNU tipple jump":
 
     ./configure
     make
     make install
 
+2.2 Building With Visual Studio
 
+Currently you can build libxmlmm with Visual Studio 2008. Upgrading to 
+a newer version (like VS 2010) should work flawless. You can either add 
+the project to your solution or distribute the binary files to a common 
+location.
+    
 3. Copying
 
 Libxmlmm is released under the Lesser GNU Public License. 
-See COPYING.txt for details.
+See Copying.txt for details.
 
 4. Further Information
 
@@ -45,3 +57,7 @@ http://libxmlmm.rioki.org.
     * Improved error message in Element::get_attribute.
     * Fixed crash in Node::query_number.
     * Adapted build system to build a windows DLL.
+
+2010-04-08 libxmlmm-0.4
+    
+    * Visual Studio 2008 support.

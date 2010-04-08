@@ -22,7 +22,8 @@
 
 SUBDIRS = src test apidoc
 
-EXTRA_DIST = bootstrap.sh libxmlmm.pc.in Readme.txt Copying.txt
+EXTRA_DIST = bootstrap.sh libxmlmm.pc.in Readme.txt Copying.txt \
+             libxmlmm.vcproj libxmlmm-test.vcproj libxmlmm.sln
 
 pkgconfigdir   = $(libdir)/pkgconfig
 pkgconfig_DATA = libxmlmm.pc
