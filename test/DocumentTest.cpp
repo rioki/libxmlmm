@@ -53,7 +53,7 @@ SUITE(DocumentTest)
     TEST(write_to_string)
     {
         xml::Document doc;
-        xml::Element* root = doc.create_root_element("test");       
+        xml::Element* root = doc.create_root_element("test");
         
         std::string xml = 
             "<?xml version=\"1.0\"?>\n" \
@@ -67,7 +67,7 @@ SUITE(DocumentTest)
         xml::Document doc;
                 
         std::string xml = 
-            "<?xml version=\"1.0\"?>\n" \
+            "<?xml version=\"1.0\"?>\n"
             "<test/>\n";
             
         doc.read_from_string(xml);

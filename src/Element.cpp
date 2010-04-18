@@ -81,11 +81,11 @@ namespace xml
 
 //------------------------------------------------------------------------------
     std::string Element::get_text() const
-    {
-        Text* text = get_text_node();
-        if (text != NULL)
+    {        
+        Content* content = get_text_node();
+        if (content != NULL)
         {
-            return text->get_content();
+            return content->get_content();
         }
         else
         {
@@ -94,14 +94,18 @@ namespace xml
     }
 
 //------------------------------------------------------------------------------
-    Text* Element::get_text_node() const
+    Content* Element::get_text_node() const
     {
         for(xmlNode* child = cobj->children; child; child = child->next)
         {
             if(child->type == XML_TEXT_NODE)
             {
-                return reinterpret_cast<Text*>(child->_private);
+                return reinterpret_cast<Content*>(child->_private);
             }
+            if (child->type == XML_CDATA_SECTION_NODE)
+            {
+                return reinterpret_cast<Content*>(child->_private);
+            }            
         }
         return NULL;
     }
@@ -109,7 +113,7 @@ namespace xml
 //------------------------------------------------------------------------------
     void Element::set_text(const std::string& text)
     {
-        Text* node = get_text_node();
+        Content* node = get_text_node();
         if(node)
         {
             node->set_content(text);

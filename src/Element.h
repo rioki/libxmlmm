@@ -115,13 +115,18 @@ namespace xml
         
         /**
          * Get the element's text.
+         *
+         * The text can either be plain or embeded in a CDATA section.
          **/
         std::string get_text() const;
         
         /**
-         * Get the element's text node.
+         * Get the element's text (or CDATA) node.
+         *
+         * Since plain text and CDATA are semantically (almost) the same thing,
+         * this method will return a Text or CData node.
          **/
-        Text* get_text_node() const;
+        Content* get_text_node() const;
         
         /**
          * Set the 

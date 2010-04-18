@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
-	Name="libxmlmm-test"
-	ProjectGUID="{F6102900-88D3-49BB-997C-1DECD4272A2D}"
-	RootNamespace="libxmlmmtest"
+	Name="libxmlmm"
+	ProjectGUID="{E7318BBC-7C59-4EEE-A5E4-E4EB304953CF}"
+	RootNamespace="libxmlmm"
 	Keyword="Win32Proj"
 	TargetFrameworkVersion="196613"
 	>
@@ -20,7 +20,7 @@
 			Name="Debug|Win32"
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
-			ConfigurationType="1"
+			ConfigurationType="2"
 			CharacterSet="1"
 			>
 			<Tool
@@ -28,9 +28,6 @@
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
-				Description="Running Unit Tests"
-				CommandLine="$(TargetPath)&#x0D;&#x0A;"
-				Outputs="dummy.txt"
 			/>
 			<Tool
 				Name="VCXMLDataGeneratorTool"
@@ -44,8 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="src"
-				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;LIBXMLMM_EXPORTS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -64,10 +60,11 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="UnitTest++.lib"
-				LinkIncremental="2"
+				AdditionalDependencies="libxml2.lib"
+				OutputFile="$(OutDir)\$(ProjectName)-d.dll"
+				LinkIncremental="1"
 				GenerateDebugInformation="true"
-				SubSystem="1"
+				SubSystem="2"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -96,7 +93,7 @@
 			Name="Release|Win32"
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
-			ConfigurationType="1"
+			ConfigurationType="2"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
 			>
@@ -105,9 +102,6 @@
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
-				Description="Running Unit Tests"
-				CommandLine="$(TargetPath)&#x0D;&#x0A;"
-				Outputs="dummy.txt"
 			/>
 			<Tool
 				Name="VCXMLDataGeneratorTool"
@@ -122,8 +116,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				AdditionalIncludeDirectories="src"
-				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;LIBXMLMM_EXPORTS"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
 				UsePrecompiledHeader="0"
@@ -141,10 +134,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="UnitTest++.lib"
+				AdditionalDependencies="libxml2.lib"
 				LinkIncremental="1"
 				GenerateDebugInformation="true"
-				SubSystem="1"
+				SubSystem="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				TargetMachine="1"
@@ -173,10 +166,6 @@
 		</Configuration>
 	</Configurations>
 	<References>
-		<ProjectReference
-			ReferencedProjectIdentifier="{E7318BBC-7C59-4EEE-A5E4-E4EB304953CF}"
-			RelativePathToProject=".\libxmlmm.vcproj"
-		/>
 	</References>
 	<Files>
 		<Filter
@@ -185,15 +174,47 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath=".\test\DocumentTest.cpp"
+				RelativePath=".\Attribute.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\test\ElementTest.cpp"
+				RelativePath=".\CData.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\test\test.cpp"
+				RelativePath=".\Comment.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Content.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Document.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Element.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\LibXmlSentry.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Node.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\ProcessingInstruction.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Text.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\utils.cpp"
 				>
 			</File>
 		</Filter>
@@ -202,6 +223,58 @@
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
+			<File
+				RelativePath=".\Attribute.h"
+				>
+			</File>
+			<File
+				RelativePath=".\CData.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Comment.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Content.h"
+				>
+			</File>
+			<File
+				RelativePath=".\defines.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Document.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Element.h"
+				>
+			</File>
+			<File
+				RelativePath=".\libxmlmm.h"
+				>
+			</File>
+			<File
+				RelativePath=".\LibXmlSentry.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Node.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ProcessingInstruction.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Text.h"
+				>
+			</File>
+			<File
+				RelativePath=".\utils.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Resource Files"

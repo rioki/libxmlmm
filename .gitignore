@@ -23,5 +23,5 @@ test/test.exe
 *.ncb
 *.suo
 *.vcproj.*.user
-/Debug
-/Release
+Debug
+Release

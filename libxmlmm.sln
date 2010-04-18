@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libxmlmm", "libxmlmm.vcproj", "{E7318BBC-7C59-4EEE-A5E4-E4EB304953CF}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libxmlmm", "src\libxmlmm.vcproj", "{E7318BBC-7C59-4EEE-A5E4-E4EB304953CF}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libxmlmm-test", "libxmlmm-test.vcproj", "{F6102900-88D3-49BB-997C-1DECD4272A2D}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libxmlmm-test", "test\libxmlmm-test.vcproj", "{F6102900-88D3-49BB-997C-1DECD4272A2D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -24,7 +24,7 @@ check_PROGRAMS  = test
 
 test_CXXFLAGS   = @LIBXML_CFLAGS@ -I$(top_srcdir)/src
 test_LDADD      = $(top_builddir)/src/libxmlmm.la @UT_LIBS@
-test_SOURCES    = test.cpp DocumentTest.cpp ElementTest.cpp
+test_SOURCES    = test.cpp DocumentTest.cpp ElementTest.cpp CDataTest.cpp
 
 check-local : test
 	./test
