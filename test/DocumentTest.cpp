@@ -23,6 +23,7 @@
 #include <UnitTest++/UnitTest++.h>
 
 #include "Document.h"
+#include "exceptions.h"
 
 SUITE(DocumentTest)
 {
@@ -43,10 +44,22 @@ SUITE(DocumentTest)
     }
     
 //------------------------------------------------------------------------------
-    TEST(get_root_node_throws_on_no_root_elemet)    
+    TEST(get_root_node_throws_on_no_root_element)    
     {
         xml::Document doc;
-        CHECK_THROW(doc.get_root_element(), std::logic_error);
+        CHECK_THROW(doc.get_root_element(), xml::NoRootElement);
+    }
+    
+//------------------------------------------------------------------------------
+    TEST(constness)    
+    {
+        const std::string xml = 
+            "<?xml version=\"1.0\"?>\n" \
+            "<test/>\n";
+        const xml::Document doc(xml);
+        CHECK(doc.has_root_element());
+        CHECK(doc.get_root_element() != NULL);
+        CHECK_EQUAL(xml, doc.write_to_string());
     }
     
 //------------------------------------------------------------------------------
@@ -127,9 +140,14 @@ SUITE(DocumentTest)
             "    <shininess value='0.8' />\n"
             "    <opacity value='0.7' />\n"
             "</material>\n");
-        
+
+        const std::string xml(xmat.str());        
+        const xml::Document check(xml);
+
         xml::Document doc;
         doc.read_from_stream(xmat);
+        // We assume our earlier testing of write_to_string is valid
+        CHECK_EQUAL(doc.write_to_string(), check.write_to_string());
     }
     
 //------------------------------------------------------------------------------    

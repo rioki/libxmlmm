@@ -21,7 +21,7 @@
 pkginclude_HEADERS   = LibXmlSentry.h Document.h Node.h Element.h \
                        Content.h Text.h CData.h Comment.h \
                        ProcessingInstruction.h Attribute.h utils.h libxmlmm.h \
-                       defines.h
+                       defines.h exceptions.h
 
 lib_LTLIBRARIES      = libxmlmm.la
 

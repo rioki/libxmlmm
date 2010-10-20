@@ -35,12 +35,12 @@ namespace xml
         /**
          * Construct Wrapper
          **/
-        Attribute(xmlNode* cobj);     
+        explicit Attribute(xmlNode* const cobj);
         
         /**
-         * Get the value.
+         * Get the value of this node.  Empty if not found.
          **/         
-        std::string get_value() const;
+        virtual std::string get_value() const;
         
         /**
          * Set the value.

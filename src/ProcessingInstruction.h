@@ -33,7 +33,7 @@ namespace xml
         /**
          * Construct Wrapper
          **/
-        ProcessingInstruction(xmlNode* cobj);
+        explicit ProcessingInstruction(xmlNode* const cobj);
         
     };    
 }

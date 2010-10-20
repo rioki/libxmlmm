@@ -35,12 +35,19 @@ namespace xml
         /**
          * Construct Wrapper
          **/
-        Content(xmlNode* cobj);
+        explicit Content(xmlNode* const cobj);
         
         /**
-         * Get the content of a content node.
+         * Get the value of this node.  Empty if not found.
          **/
-        std::string get_content() const;
+        virtual std::string get_value() const;
+
+        /**
+         * Get the content of a content node.  Empty if none.
+         * @deprecated Use get_value().
+         **/
+        std::string get_content() const
+        { return this->get_value(); }
         
         /**
          * Set the content of a content node.

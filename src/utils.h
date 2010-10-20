@@ -27,9 +27,7 @@
 #include <libxml/tree.h>
 
 namespace xml
-{
-    class Node;
-    
+{    
     /**
      * Get the last error as string from libxml.
      **/
@@ -40,7 +38,7 @@ namespace xml
      *
      * @note This function is used as callback to libxml.
      **/
-    void wrap_node(xmlNode* node);
+    void wrap_node(xmlNode* const node);
     
     /**
      * Free the wrapper of a node.
@@ -53,8 +51,10 @@ namespace xml
     std::string read_until_eof(std::istream& is);
     
     /**
-     * Convert arbitraty value to string.
+     * Convert arbitrary value to string.
      **/
+    // TODO: shouldn't this be "const T&" to avoid copy?  consider when this
+    // is a complex object.
     template <typename T>
     std::string to_string(T value)
     {
@@ -64,7 +64,7 @@ namespace xml
     }
     
     /**
-     * Convert arbitraty value from string.
+     * Convert arbitrary value from string.
      **/
     template <typename T>
     T from_string(const std::string& str)
@@ -74,12 +74,6 @@ namespace xml
         buff >> value;
         return value;
     }
-    
-    /**
-     * Get the value from a node.
-     **/
-    std::string get_value(Node* node);
 }
 
 #endif
-

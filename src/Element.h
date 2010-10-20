@@ -37,13 +37,13 @@ namespace xml
         /** 
          * Construct the Wrapper
          **/
-        Element(xmlNode* cobj);
+        explicit Element(xmlNode* const cobj);
         
         /**
-         * Get the node's name.
+         * Get the node's name.  Empty if not found.
          **/
         std::string get_name() const;
-        
+
         /**
          * Set a node's name.
          **/
@@ -62,8 +62,8 @@ namespace xml
          * @param id the attribtue id
          * @return the attribute value
          *
-         * @throws std::logic_error if the attibute does not exist on this 
-         * element.
+         * @throws no_such_attribute if the attibute does not exist on
+         * this element.
          **/
         std::string get_attribute(const std::string& key) const;
         
@@ -76,8 +76,8 @@ namespace xml
          * @param id the attribtue id
          * @return the attribute value
          *
-         * @throws std::logic_error if the attibute does not exist on this 
-         * element.
+         * @throws no_such_attribute if the attibute does not exist on
+         * this element.
          *
          * @todo add check if conversion to value worked
          **/
@@ -114,17 +114,19 @@ namespace xml
         void remove_attribute(const std::string& key);
         
         /**
-         * Get the element's text.
-         *
-         * The text can either be plain or embeded in a CDATA section.
+         * Get the value of this node.  Empty if not found.
          **/
-        std::string get_text() const;
+        virtual std::string get_value() const;
         
         /**
-         * Get the element's text (or CDATA) node.
-         *
-         * Since plain text and CDATA are semantically (almost) the same thing,
-         * this method will return a Text or CData node.
+         * Get the element's text.  Empty if not found.
+         * Deprecated. Use get_value().
+         **/
+        std::string get_text() const
+        { return this->get_value(); }
+
+        /**
+         * Get the element's text node.
          **/
         Content* get_text_node() const;
         
@@ -149,14 +151,14 @@ namespace xml
          * @return All children of this element. 
          **/
         std::vector<Node*> get_children();
-        
+
         /**
          * Get all children of this element.
          *
          * @return All children of this element. 
          **/
         std::vector<const Node*> get_children() const;
-        
+
         /**
          * Find a given element.
          *

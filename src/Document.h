@@ -46,6 +46,13 @@ namespace xml
         Document();
         
         /** 
+         * Construct and populate from the specified xml string.
+         *
+         * @exception exception Throws exception if the xml is invalid.
+         **/
+        explicit Document(const std::string &xml);
+
+        /**
          * Destructor
          **/
         ~Document();
@@ -62,20 +69,14 @@ namespace xml
          *
          * @return The root element.
          *
-         * @exception std::logic_error Throws logic_error if the document has
+         * @exception NoRootElement Throws NoRootElement if the document has
          * no root element.
+         *
+         * @{
          **/
         Element* get_root_element();
-        
-        /**
-         * Get the root element.
-         *
-         * @return The root element.
-         *
-         * @exception std::logic_error Throws logic_error if the document has
-         * no root element.
-         **/
         const Element* get_root_element() const;
+        /** @} **/        
     
         /**
          * Create the root element of a document.
@@ -83,8 +84,8 @@ namespace xml
          * @param name The name of the root node.
          * @return The root element.
          *
-         * @exception std::logic_error Throws logic_error if the document 
-         * already has a root element.         
+         * @exception exception Throws exception if the document already
+         * has a root element.
          **/
         Element* create_root_element(const std::string& name);
         
@@ -187,8 +188,8 @@ namespace xml
         
         LibXmlSentry libxml_sentry;
         
-    Document(const Document&);
-    Document& operator = (const Document&);
+        Document(const Document&);
+        Document& operator = (const Document&);
     };   
     
     /** 
@@ -201,4 +202,3 @@ namespace xml
      **/
     LIBXMLMM_EXPORT std::istream& operator >> (std::istream& is, Document& doc);
 }
-

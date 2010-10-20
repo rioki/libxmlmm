@@ -19,17 +19,23 @@
 //
 
 #include "Attribute.h"
+#include "utils.h"
 
 namespace xml
 {
 //------------------------------------------------------------------------------
-    Attribute::Attribute(xmlNode* cobj) 
+    Attribute::Attribute(xmlNode* const cobj)
     : Node(cobj) {}
     
 //------------------------------------------------------------------------------
     std::string Attribute::get_value() const
     {
-        return reinterpret_cast<const char*>(xmlGetProp(cobj->parent, cobj->name));
+        const char *const ptr = reinterpret_cast<const char*>(xmlGetProp(cobj->parent, cobj->name));
+        if (ptr)
+        {
+            return ptr;
+        }
+        return "";
     }
         
 //------------------------------------------------------------------------------

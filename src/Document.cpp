@@ -20,10 +20,10 @@
 
 #include "Document.h"
 
-#include <stdexcept>
 #include <libxml/tree.h>
 
 #include "utils.h"
+#include "exceptions.h"
 
 namespace xml
 {
@@ -32,6 +32,14 @@ namespace xml
     : cobj(xmlNewDoc(BAD_CAST "1.0"))
     {
         cobj->_private = this;
+    }
+
+//------------------------------------------------------------------------------
+    Document::Document(const std::string &xml)
+    : cobj(xmlNewDoc(BAD_CAST "1.0"))
+    {
+        cobj->_private = this;
+        this->read_from_string(xml);
     }
 
 //------------------------------------------------------------------------------
@@ -49,36 +57,35 @@ namespace xml
 //------------------------------------------------------------------------------
     Element* Document::get_root_element()
     {
-        xmlNode* root = xmlDocGetRootElement(cobj);
-        if (root != NULL)
+        xmlNode* const root = xmlDocGetRootElement(cobj);
+        if (!root)
         {
-            return reinterpret_cast<Element*>(root->_private);
+            throw NoRootElement();
         }
-        else
-        {
-            throw std::logic_error("no root element");
-        }
+        return reinterpret_cast<Element*>(root->_private);
     }
 
 //------------------------------------------------------------------------------    
     const Element* Document::get_root_element() const
     {
-        return const_cast<Document*>(this)->get_root_element();
+        const xmlNode* const root = xmlDocGetRootElement(cobj);
+        if (!root)
+        {
+            throw NoRootElement();
+        }
+        return reinterpret_cast<const Element*>(root->_private);
     }
 
 //------------------------------------------------------------------------------
     Element* Document::create_root_element(const std::string& name)
     {
-        xmlNode* root = xmlNewDocNode(cobj, NULL, reinterpret_cast<const xmlChar*>(name.c_str()), NULL);
+        xmlNode* const root = xmlNewDocNode(cobj, NULL, reinterpret_cast<const xmlChar*>(name.c_str()), NULL);
         xmlDocSetRootElement(cobj, root);
-        if (root != NULL)
+        if (!root)
         {
-            return reinterpret_cast<Element*>(root->_private);
+            throw exception(get_last_error());
         }
-        else
-        {
-            throw std::logic_error(get_last_error());            
-        }
+        return reinterpret_cast<Element*>(root->_private);
     }
 
 //------------------------------------------------------------------------------    
@@ -90,7 +97,7 @@ namespace xml
         xmlDocDumpMemory(cobj, &buffer, &length);
         if (!buffer)
         {
-            throw std::runtime_error(get_last_error());
+            throw exception(get_last_error());
         }
         std::string xml(reinterpret_cast<const char*>(buffer));
 
@@ -110,23 +117,22 @@ namespace xml
     {
         int result = xmlSaveFormatFile(file.c_str(), cobj, 1);
         if (result == -1)
-            throw std::runtime_error(get_last_error());
+        {
+            throw exception(get_last_error());
+        }
     }
     
 //------------------------------------------------------------------------------
     void Document::read_from_string(const std::string& xml)
     {
-        xmlDoc* tmp_cobj = xmlReadDoc(reinterpret_cast<const xmlChar*>(xml.c_str()), NULL, NULL, 0);
-        if (tmp_cobj != NULL)                
+        xmlDoc* const tmp_cobj = xmlReadDoc(reinterpret_cast<const xmlChar*>(xml.c_str()), NULL, NULL, 0);
+        if (!tmp_cobj)
         {        
+            throw exception(get_last_error());
+        }
             xmlFreeDoc(cobj);
             cobj = tmp_cobj;
         }
-        else
-        {
-            throw std::runtime_error(get_last_error());            
-        }
-    }    
 
 //------------------------------------------------------------------------------
     void Document::read_from_stream(std::istream& is)
@@ -137,118 +143,124 @@ namespace xml
 //------------------------------------------------------------------------------    
     void Document::read_from_file(const std::string& file)
     {
-        xmlDoc* tmp_cobj = xmlReadFile(file.c_str(), NULL, 0);
-        if (tmp_cobj != NULL)                
+        xmlDoc* const tmp_cobj = xmlReadFile(file.c_str(), NULL, 0);
+        if (!tmp_cobj)
         {        
+            throw exception(get_last_error());
+        }
             xmlFreeDoc(cobj);
             cobj = tmp_cobj;
         }
-        else
-        {
-            throw std::runtime_error(get_last_error());            
-        }
-    }
     
 //------------------------------------------------------------------------------        
     Node* Document::find_node(const std::string& xpath)
+    try
     {
-        Element* root = get_root_element();
-        if (root != NULL)
-            return root->find_node(xpath);
-        else
-            throw std::logic_error("Document is empty.");
+        return get_root_element()->find_node(xpath);
+    }
+    catch(const NoRootElement &)
+    {
+        throw EmptyDocument();
     }
 
     
 //------------------------------------------------------------------------------        
     const Node* Document::find_node(const std::string& xpath) const
+    try
     {
-        const Element* root = get_root_element();
-        if (root != NULL)
-            return root->find_node(xpath);
-        else
-            throw std::logic_error("Document is empty.");
+        return get_root_element()->find_node(xpath);
     }
-
+    catch(const NoRootElement &)
+    {
+        throw EmptyDocument();
+    }
 
 //------------------------------------------------------------------------------        
     std::vector<Node*> Document::find_nodes(const std::string& xpath)
+    try
     {
-        Element* root = get_root_element();
-        if (root != NULL)
-            return root->find_nodes(xpath);
-        else
-            throw std::logic_error("Document is empty.");
+        return get_root_element()->find_nodes(xpath);
+    }
+    catch(const NoRootElement &)
+    {
+        throw EmptyDocument();
     }
 
 //------------------------------------------------------------------------------        
     std::vector<const Node*> Document::find_nodes(const std::string& xpath) const    
+    try
     {
-        const Element* root = get_root_element();
-        if (root != NULL)
-            return root->find_nodes(xpath);
-        else
-            throw std::logic_error("Document is empty.");
+        return get_root_element()->find_nodes(xpath);
+    }
+    catch(const NoRootElement &)
+    {
+        throw EmptyDocument();
     }
 
 //------------------------------------------------------------------------------            
     Element* Document::find_element(const std::string& xpath)
+    try
     {
-        Element* root = get_root_element();
-        if (root != NULL)
-            return root->find_element(xpath);
-        else
-            throw std::logic_error("Document is empty.");
+        return get_root_element()->find_element(xpath);
+    }
+    catch(const NoRootElement &)
+    {
+        throw EmptyDocument();
     }
     
 //------------------------------------------------------------------------------
     const Element* Document::find_element(const std::string& xpath) const
+    try
     {
-        const Element* root = get_root_element();
-        if (root != NULL)
-            return root->find_element(xpath);
-        else
-            throw std::logic_error("Document is empty.");
+        return get_root_element()->find_element(xpath);
+    }
+    catch(const NoRootElement &)
+    {
+        throw EmptyDocument();
     }
 
 //------------------------------------------------------------------------------    
     std::vector<Element*> Document::find_elements(const std::string& xpath)
+    try
     {
-        Element* root = get_root_element();
-        if (root != NULL)
-            return root->find_elements(xpath);
-        else
-            throw std::logic_error("Document is empty.");
+        return get_root_element()->find_elements(xpath);
+    }
+    catch(const NoRootElement &)
+    {
+        throw EmptyDocument();
     }
     
 //------------------------------------------------------------------------------
     std::vector<const Element*> Document::find_elements(const std::string& xpath) const
+    try
     {
-        const Element* root = get_root_element();
-        if (root != NULL)
-            return root->find_elements(xpath);
-        else
-            throw std::logic_error("Document is empty.");
+        return get_root_element()->find_elements(xpath);
+    }
+    catch(const NoRootElement &)
+    {
+        throw EmptyDocument();
     }
 
 //------------------------------------------------------------------------------
     std::string Document::query_string(const std::string& xpath) const
+    try
     {
-        const Element* root = get_root_element();
-        if (root != NULL)
-            return root->query_string(xpath);
-        else
-            throw std::logic_error("Document is empty.");
+        return get_root_element()->query_string(xpath);
+    }
+    catch(const NoRootElement &)
+    {
+        throw EmptyDocument();
     }
 
 //------------------------------------------------------------------------------    
     double Document::query_number(const std::string& xpath) const
+    try
     {
-        const Element* root = get_root_element();
-        if (root != NULL)
-            return root->query_number(xpath);
-        else
-            throw std::logic_error("Document is empty.");
+        return get_root_element()->query_number(xpath);
+    }
+    catch(const NoRootElement &)
+    {
+        throw EmptyDocument();
     }
 
 //------------------------------------------------------------------------------
@@ -265,4 +277,3 @@ namespace xml
         return is;
     }
 }
-

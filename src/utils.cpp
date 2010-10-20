@@ -22,6 +22,7 @@
 
 #include <cassert>
 #include <iostream>
+#include <iterator>
 #include <libxml/xmlerror.h>
 
 #include "Node.h"
@@ -37,7 +38,7 @@ namespace xml
 //------------------------------------------------------------------------------
     std::string get_last_error()
     {
-        xmlError* error = xmlGetLastError();
+        const xmlError* const error = xmlGetLastError();
         if (error != NULL)
         {
             return error->message;
@@ -49,7 +50,7 @@ namespace xml
     }
 
 //------------------------------------------------------------------------------    
-    void wrap_node(xmlNode* cobj)
+    void wrap_node(xmlNode* const cobj)
     {
         switch (cobj->type)
         {
@@ -85,7 +86,7 @@ namespace xml
             }
             case XML_DOCUMENT_NODE:
             {
-                /* this node is not wraped */
+                /* this node is not wrapped */
                 break;
             }
             default:
@@ -96,7 +97,7 @@ namespace xml
     }
 
 //------------------------------------------------------------------------------    
-    void free_wrapper(xmlNode* cobj)
+    void free_wrapper(xmlNode* const cobj)
     {
         switch (cobj->type)
         {
@@ -107,14 +108,14 @@ namespace xml
             case XML_PI_NODE:
             case XML_ATTRIBUTE_NODE:
             {
-                Node* node = reinterpret_cast<Node*>(cobj->_private);
+                Node* const node = reinterpret_cast<Node* const>(cobj->_private);
                 delete node;
                 cobj->_private = NULL;
                 break;
             }                        
             case XML_DOCUMENT_NODE:
             {
-                /* there nodes are not wraped */
+                /* there nodes are not wrapped */
                 break;
             }
             default:
@@ -127,35 +128,13 @@ namespace xml
 //------------------------------------------------------------------------------        
     std::string read_until_eof(std::istream& is)
     {
-        // TODO Can this be done more effectivly?
         std::string result;
-        while (is.good())
-        {
-            char c = is.get();
-            if (is.good())
-            {
-                result += c;
-            }
-        }
+        const std::ios_base::fmtflags saved = is.flags();
+        is.unsetf(std::ios::skipws);
+        std::copy(std::istream_iterator<char>(is),
+                  std::istream_iterator<char>(),
+                  std::back_inserter(result));
+        is.flags(saved);
         return result;
     }
-
-//------------------------------------------------------------------------------            
-    std::string get_value(Node* node)
-    {
-        Element* element = dynamic_cast<Element*>(node);
-        if (element != NULL)
-            return element->get_text();
-            
-        Content* content = dynamic_cast<Content*>(node);
-        if (content != NULL)
-            return content->get_content();
-        
-        Attribute* attribute = dynamic_cast<Attribute*>(node);
-        if (attribute != NULL)
-            return attribute->get_value(); 
-        
-        return "";   
-    }
 }
-

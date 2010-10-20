@@ -19,6 +19,7 @@
 //
 
 #include "Content.h"
+#include "utils.h"
 
 namespace xml
 {
@@ -27,16 +28,13 @@ namespace xml
     : Node(cobj) {}
     
 //------------------------------------------------------------------------------
-    std::string Content::get_content() const
+    std::string Content::get_value() const
     {
         if (cobj->content != NULL)
         {
             return reinterpret_cast<const char*>(cobj->content);
         }
-        else
-        {
-            return "";
-        }
+        return "";
     }
     
 //------------------------------------------------------------------------------

@@ -23,7 +23,7 @@
 namespace xml
 {
 //------------------------------------------------------------------------------
-    Text::Text(xmlNode* cobj) 
+    Text::Text(xmlNode* const cobj)
     : Content(cobj) {}
 
 }

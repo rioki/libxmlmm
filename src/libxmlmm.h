@@ -35,4 +35,4 @@
 #include "ProcessingInstruction.h"
 #include "utils.h"
 #include "LibXmlSentry.h"  
-
+#include "exceptions.h"

@@ -51,8 +51,8 @@ AC_SUBST(LIBXML_LIBS)
 
 AC_CHECK_LIB([UnitTest++], [main], UT_LIBS="-lUnitTest++", 
     AC_MSG_WARN([*** UnitTest++ not found.]))
-AC_CHECK_HEADER([UnitTest++/UnitTest++.h], :, 
-    AC_MSG_WARN([*** UnitTest++ headers not found.]))
+#AC_CHECK_HEADER([UnitTest++/UnitTest++.h], :, 
+#    AC_MSG_WARN([*** UnitTest++ headers not found.]))
 AM_CONDITIONAL([BUILD_TESTS], [test $UT_LIBS != ""])
 AC_SUBST(UT_LIBS)
 

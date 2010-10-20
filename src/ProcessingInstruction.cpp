@@ -23,7 +23,7 @@
 namespace xml
 {
 //------------------------------------------------------------------------------
-    ProcessingInstruction::ProcessingInstruction(xmlNode* cobj) 
+    ProcessingInstruction::ProcessingInstruction(xmlNode* const cobj)
     : Content(cobj) {}
 
 }

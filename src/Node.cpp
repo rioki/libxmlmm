@@ -21,17 +21,16 @@
 #include "Node.h"
 
 #include <cassert>
-#include <stdexcept>
-#include <libxml/xpath.h>
 
 #include "utils.h"
+#include "exceptions.h"
 #include "Element.h"
 #include "Content.h"
 
 namespace xml
 {
 //------------------------------------------------------------------------------
-    Node::Node(xmlNode* co)
+    Node::Node(xmlNode* const co)
     : cobj(co)
     {
         assert(cobj != NULL);
@@ -46,14 +45,16 @@ namespace xml
 //------------------------------------------------------------------------------    
     std::string Node::get_path() const
     {
-        xmlChar* path = xmlGetNodePath(cobj);
+        xmlChar* const path = xmlGetNodePath(cobj);
         if (path == NULL)
-            // WTF: How is this suposed to happedn?
-            throw std::logic_error("Node::get_path(): failed to allocated path");
+        {
+            // WTF: How is this suposed to happen?
+            throw exception("Node::get_path(): failed to allocated path");
+        }
             
-        std::string result(reinterpret_cast<const char*>(path));
+        std::string value(reinterpret_cast<const char*>(path));
         xmlFree(path);
-        return result;
+        return value;
     }
     
 //------------------------------------------------------------------------------
@@ -69,7 +70,7 @@ namespace xml
             // A xmlNode only has no parent if it it is a document node 
             // (not root element) and this is not wraped by Node.
             assert(false && "no parent");
-            throw std::logic_error("no parent");
+            throw exception("no parent");
         }
     }
     
@@ -82,76 +83,32 @@ namespace xml
 //------------------------------------------------------------------------------    
     Node* Node::find_node(const std::string& xpath)
     {
-        std::vector<Node*> nodes = find_nodes(xpath);
-        if (!nodes.empty())
-            return nodes[0];
-        else
-            return NULL;
-        
+        return this->find<Node*>(xpath);
     }
     
 //------------------------------------------------------------------------------
     const Node* Node::find_node(const std::string& xpath) const
     {
-        return const_cast<Node*>(this)->find_node(xpath);
+        return this->find<const Node*>(xpath);
     }
     
 //------------------------------------------------------------------------------
     std::vector<Node*> Node::find_nodes(const std::string& xpath)
     {
-        xmlXPathContext* ctxt = xmlXPathNewContext(cobj->doc);
-        ctxt->node = cobj;
-        
-        xmlXPathObject* result = xmlXPathEval(reinterpret_cast<const xmlChar*>(xpath.c_str()), ctxt);
-        if (!result)
-        {
-            xmlXPathFreeContext(ctxt);
-            throw std::runtime_error("Invalid XPath: " + xpath);
-        }
-        
-        if (result->type != XPATH_NODESET)
-        {
-            xmlXPathFreeObject(result);
-            xmlXPathFreeContext(ctxt);
-
-            throw std::runtime_error("Unsuported querry.");
-        }
-        
-        xmlNodeSet* nodeset = result->nodesetval;
-        std::vector<Node*> nodes;
-        if (nodeset)
-        {
-            for (int i = 0; i != nodeset->nodeNr; i++)
-            {
-                nodes.push_back(reinterpret_cast<Node*>(nodeset->nodeTab[i]->_private));              
-            }
-        }
-
-        xmlXPathFreeObject(result);
-        xmlXPathFreeContext(ctxt);
-        
-        return nodes;
+        return this->find_all<Node*>(xpath);
     }
     
 //------------------------------------------------------------------------------
     std::vector<const Node*> Node::find_nodes(const std::string& xpath) const
     {
-        std::vector<Node*> nodes = const_cast<Node*>(this)->find_nodes(xpath);
-        return std::vector<const Node*>(nodes.begin(), nodes.end());        
+        return this->find_all<const Node*>(xpath);
     }
 
 //------------------------------------------------------------------------------    
     std::string Node::query_string(const std::string& xpath) const
     {
-        xmlXPathContext* ctxt = xmlXPathNewContext(cobj->doc);
-        ctxt->node = cobj;
-        
-        xmlXPathObject* result = xmlXPathEval(reinterpret_cast<const xmlChar*>(xpath.c_str()), ctxt);
-        if (!result)
-        {
-            xmlXPathFreeContext(ctxt);
-            throw std::runtime_error("Invalid XPath: " + xpath);
-        }
+        find_nodeset search(cobj, xpath);
+        const xmlXPathObject* const result = search;
         
         std::string value;
         if (result->type == XPATH_STRING)
@@ -164,33 +121,31 @@ namespace xml
         }
         else if (result->type == XPATH_NODESET)
         {
-            xmlNodeSet* nodeset = result->nodesetval;
+            xmlNodeSet* const nodeset = result->nodesetval;
             if (nodeset)
             {
-                Node* node = reinterpret_cast<Node*>(nodeset->nodeTab[0]->_private);
-                value = get_value(node);
+                // Concatenate all the text from all the text nodes we
+                // have.  NOTE: we technically shouldn't have to do this
+                // since all adjacent text nodes are supposed to merge to
+                // a single node, but that doesn't always happen in
+                // libxml2.  Most notably, when CDATA nodes are adjacent
+                // to other text nodes. 
+                for (int i = 0; i != nodeset->nodeNr; i++)
+                {
+                    const Node* const node = reinterpret_cast<const Node*>(nodeset->nodeTab[i]->_private);
+                    value.append(node->get_value());
+                }
             }
         }
         
-                
-        xmlXPathFreeObject(result);
-        xmlXPathFreeContext(ctxt);
-                
         return value;
     }
     
 //------------------------------------------------------------------------------    
     double Node::query_number(const std::string& xpath) const
     {
-        xmlXPathContext* ctxt = xmlXPathNewContext(cobj->doc);
-        ctxt->node = cobj;
-        
-        xmlXPathObject* result = xmlXPathEval(reinterpret_cast<const xmlChar*>(xpath.c_str()), ctxt);
-        if (!result)
-        {
-            xmlXPathFreeContext(ctxt);
-            throw std::runtime_error("Invalid XPath: " + xpath);
-        }
+        find_nodeset search(cobj, xpath);
+        const xmlXPathObject *const result = search;
         
         double value;
         if (result->type == XPATH_NUMBER)
@@ -203,20 +158,51 @@ namespace xml
         }
         else if (result->type == XPATH_NODESET)
         {
-            xmlNodeSet* nodeset = result->nodesetval;
+            xmlNodeSet* const nodeset = result->nodesetval;
             std::vector<Node*> nodes;
             if (! xmlXPathNodeSetIsEmpty(nodeset))
             {
-                Node* node = reinterpret_cast<Node*>(nodeset->nodeTab[0]->_private);
-                value = from_string<double>(get_value(node));
+                const Node* const node = reinterpret_cast<const Node*>(nodeset->nodeTab[0]->_private);
+                value = from_string<double>(node->get_value());
             }
         }
         
-                
-        xmlXPathFreeObject(result);
-        xmlXPathFreeContext(ctxt);
-                
         return value;
     }
+                
+
+//------------------------------------------------------------------------------
+
+    Node::find_nodeset::find_nodeset(xmlNode *const cobj,
+                                     const std::string &xpath,
+                                     const xmlXPathObjectType type)
+    {
+        ctxt = xmlXPathNewContext(cobj->doc);
+        ctxt->node = cobj;
+
+        result = xmlXPathEval(reinterpret_cast<const xmlChar*>(xpath.c_str()), ctxt);
+        if (!result)
+        {
+        xmlXPathFreeContext(ctxt);
+            throw InvalidXPath(xpath);
+        }
+                
+        if (type != XPATH_UNDEFINED && result->type != type)
+        {
+            xmlXPathFreeObject(result);
+            xmlXPathFreeContext(ctxt);
+            throw exception("Unsuported query.");
+        }
+    }
+
+//------------------------------------------------------------------------------
+
+    Node::find_nodeset::~find_nodeset()
+    {
+        xmlXPathFreeObject(result);
+        xmlXPathFreeContext(ctxt);
 }
 
+//------------------------------------------------------------------------------
+
+}

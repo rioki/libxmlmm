@@ -19,16 +19,17 @@
 //
 
 #include "Element.h"
+#include "exceptions.h"
+#include "utils.h"
 
 #include <cassert>
-#include <stdexcept>
 #include <algorithm>
 #include <typeinfo> 
 
 namespace xml
 {
 //------------------------------------------------------------------------------
-    Element::Element(xmlNode* cobj)
+    Element::Element(xmlNode* const cobj)
     : Node(cobj) {}
     
 //------------------------------------------------------------------------------    
@@ -39,10 +40,7 @@ namespace xml
         {
             return reinterpret_cast<const char*>(cobj->name);
         }
-        else
-        {
-            return "";
-        }
+        return "";
     }
 
 //------------------------------------------------------------------------------        
@@ -60,11 +58,12 @@ namespace xml
 //------------------------------------------------------------------------------
     std::string Element::get_attribute(const std::string& key) const
     {
-        const xmlChar* value = xmlGetProp(cobj, reinterpret_cast<const xmlChar*>(key.c_str()));
-        if (value != NULL)
-            return reinterpret_cast<const char*>(value);
-        else
-            throw std::logic_error("There is no attribtue '" + key + "' on the element '" + get_name() + "'." );
+        const xmlChar* const value = xmlGetProp(cobj, reinterpret_cast<const xmlChar*>(key.c_str()));
+        if (!value)
+        {
+            throw NoSuchAttribute(key, get_name());
+        }
+        return reinterpret_cast<const char*>(value);
     }
     
 //------------------------------------------------------------------------------
@@ -80,17 +79,14 @@ namespace xml
     }
 
 //------------------------------------------------------------------------------
-    std::string Element::get_text() const
+    std::string Element::get_value() const
     {        
-        Content* content = get_text_node();
+        const Content* const content = get_text_node();
         if (content != NULL)
         {
-            return content->get_content();
+          return content->get_value();
         }
-        else
-        {
-            return "";
-        }
+        return "";
     }
 
 //------------------------------------------------------------------------------
@@ -98,7 +94,7 @@ namespace xml
     {
         for(xmlNode* child = cobj->children; child; child = child->next)
         {
-            if(child->type == XML_TEXT_NODE)
+            if (child->type == XML_TEXT_NODE)
             {
                 return reinterpret_cast<Content*>(child->_private);
             }
@@ -142,71 +138,50 @@ namespace xml
 //------------------------------------------------------------------------------    
     std::vector<Node*> Element::get_children()
     {
-        xmlNode* child = cobj->children;
-        if(child == NULL)
-        {
-            return std::vector<Node*>();
-        }
-
         std::vector<Node*> children;
-        do
+        xmlNode* child = cobj->children;
+        while (child != NULL)
         {
             children.push_back(reinterpret_cast<Node*>(child->_private));
             child = child->next;
         }
-        while(child != NULL);
-        
         return children;
     }
 
 //------------------------------------------------------------------------------        
     std::vector<const Node*> Element::get_children() const
     {
-        std::vector<Node*> children = const_cast<Element*>(this)->get_children();
-        std::vector<const Node*> result(children.size());
-        std::copy(children.begin(), children.end(), result.begin());
-        return result;
-    }
-
-//------------------------------------------------------------------------------            
-    Element* Element::find_element(const std::string& xpath)
-    {
-        return dynamic_cast<Element*>(find_node(xpath));
+        std::vector<const Node*> children;
+        const xmlNode* child = cobj->children;
+        while (child != NULL)
+        {
+            children.push_back(reinterpret_cast<const Node*>(child->_private));
+            child = child->next;
+        }
+        return children;
     }
     
 //------------------------------------------------------------------------------        
-    const Element* Element::find_element(const std::string& xpath) const
+    Element* Element::find_element(const std::string& xpath)
     {
-        return const_cast<Element*>(this)->find_element(xpath);
+        return this->find<Element*>(xpath);
     }
     
 //------------------------------------------------------------------------------
-    Element* cast_node_to_element(Node* node)    
+    const Element* Element::find_element(const std::string& xpath) const
     {
-        if (node == NULL)
-            throw std::logic_error("cast_node_to_element: 'node' is NULL");
-            
-        Element* elem = dynamic_cast<Element*>(node);        
-        if (elem != NULL)
-            return elem;
-        else
-            throw std::runtime_error("The node is not an element. (" + node->get_path() + ")");
+        return this->find<const Element*>(xpath);
     }
     
 //------------------------------------------------------------------------------        
     std::vector<Element*> Element::find_elements(const std::string& xpath)
     {
-        std::vector<Node*> nodes = find_nodes(xpath);
-        std::vector<Element*> elements(nodes.size());
-        std::transform(nodes.begin(), nodes.end(), elements.begin(), cast_node_to_element);        
-        return elements;
+        return this->find_all<Element*>(xpath);
     }
 
 //------------------------------------------------------------------------------
     std::vector<const Element*> Element::find_elements(const std::string& xpath) const
     {
-        std::vector<Element*> elements = const_cast<Element*>(this)->find_elements(xpath);
-        return std::vector<const Element*>(elements.begin(), elements.end());             
+        return this->find_all<const Element*>(xpath);
     }
 }
-
