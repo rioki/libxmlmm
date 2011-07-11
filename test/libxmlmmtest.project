@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CodeLite_Project Name="libxmlmmtest" InternalType="UnitTest++">
+  <Description/>
+  <Dependencies/>
+  <VirtualDirectory Name="src">
+    <File Name="CDataTest.cpp"/>
+    <File Name="DocumentTest.cpp"/>
+    <File Name="ElementTest.cpp"/>
+    <File Name="test.cpp"/>
+  </VirtualDirectory>
+  <Dependencies Name="Debug">
+    <Project Name="libxmlmm"/>
+  </Dependencies>
+  <Dependencies Name="Release">
+    <Project Name="libxmlmm"/>
+  </Dependencies>
+  <Settings Type="Executable">
+    <GlobalSettings>
+      <Compiler Options="" C_Options="">
+        <IncludePath Value="."/>
+      </Compiler>
+      <Linker Options="">
+        <LibraryPath Value="."/>
+      </Linker>
+      <ResourceCompiler Options=""/>
+    </GlobalSettings>
+    <Configuration Name="Debug" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
+      <Compiler Options="-g" C_Options="-g" Required="yes" PreCompiledHeader="">
+        <IncludePath Value="../src"/>
+        <IncludePath Value="$(LIBXML2_DIR)/include"/>
+        <IncludePath Value="$(ICONV_DIR)/include"/>
+        <IncludePath Value="$(UNIT_TEST_DIR)/include"/>
+      </Compiler>
+      <Linker Options="" Required="yes">
+        <LibraryPath Value="../debug"/>
+        <LibraryPath Value="$(LIBXML2_DIR)/lib"/>
+        <LibraryPath Value="$(ICONV_DIR)/lib"/>
+        <LibraryPath Value="$(UNIT_TEST_DIR)/lib"/>
+        <Library Value="libxmlmm"/>
+        <Library Value="libxml2"/>
+        <Library Value="UnitTest++"/>
+      </Linker>
+      <ResourceCompiler Options="" Required="no"/>
+      <General OutputFile="../$(ConfigurationName)/$(ProjectName).exe" IntermediateDirectory="$(ConfigurationName)" Command="../$(ConfigurationName)/$(ProjectName).exe" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(ProjectPath)" PauseExecWhenProcTerminates="yes"/>
+      <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;"/>
+      <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="">
+        <PostConnectCommands/>
+        <StartupCommands/>
+      </Debugger>
+      <PreBuild/>
+      <PostBuild>
+        <Command Enabled="yes">$(OutputFile)</Command>
+      </PostBuild>
+      <CustomBuild Enabled="no">
+        <RebuildCommand/>
+        <CleanCommand/>
+        <BuildCommand/>
+        <PreprocessFileCommand/>
+        <SingleFileCommand/>
+        <MakefileGenerationCommand/>
+        <ThirdPartyToolName>None</ThirdPartyToolName>
+        <WorkingDirectory/>
+      </CustomBuild>
+      <AdditionalRules>
+        <CustomPostBuild/>
+        <CustomPreBuild/>
+      </AdditionalRules>
+    </Configuration>
+    <Configuration Name="Release" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
+      <Compiler Options="" C_Options="" Required="yes" PreCompiledHeader="">
+        <IncludePath Value="../src"/>
+        <IncludePath Value="$(LIBXML2_DIR)/include"/>
+        <IncludePath Value="$(ICONV_DIR)/include"/>
+        <IncludePath Value="$(UNIT_TEST_DIR)/include"/>
+      </Compiler>
+      <Linker Options="-O2" Required="yes">
+        <LibraryPath Value="../release"/>
+        <LibraryPath Value="$(LIBXML2_DIR)/lib"/>
+        <LibraryPath Value="$(ICONV_DIR)/lib"/>
+        <LibraryPath Value="$(UNIT_TEST_DIR)/lib"/>
+        <Library Value="libxmlmm"/>
+        <Library Value="libxml2"/>
+        <Library Value="UnitTest++"/>
+      </Linker>
+      <ResourceCompiler Options="" Required="no"/>
+      <General OutputFile="../$(ConfigurationName)/$(ProjectName).exe" IntermediateDirectory="$(ConfigurationName)" Command="../$(ConfigurationName)/$(ProjectName).exe" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(ProjectPath)" PauseExecWhenProcTerminates="yes"/>
+      <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;"/>
+      <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="">
+        <PostConnectCommands/>
+        <StartupCommands/>
+      </Debugger>
+      <PreBuild/>
+      <PostBuild>
+        <Command Enabled="yes">$(OutputFile)</Command>
+      </PostBuild>
+      <CustomBuild Enabled="no">
+        <RebuildCommand/>
+        <CleanCommand/>
+        <BuildCommand/>
+        <PreprocessFileCommand/>
+        <SingleFileCommand/>
+        <MakefileGenerationCommand/>
+        <ThirdPartyToolName>None</ThirdPartyToolName>
+        <WorkingDirectory/>
+      </CustomBuild>
+      <AdditionalRules>
+        <CustomPostBuild/>
+        <CustomPreBuild/>
+      </AdditionalRules>
+    </Configuration>
+  </Settings>
+</CodeLite_Project>
