@@ -106,6 +106,24 @@ namespace xml
         
         return xml;
     }
+    
+//------------------------------------------------------------------------------
+    std::string  Document::write_to_string(const std::string& encoding) const
+    {
+        xmlChar* buffer = 0;
+        int length = 0;
+
+        xmlDocDumpMemoryEnc(cobj, &buffer, &length, encoding.c_str());
+        if (!buffer)
+        {
+            throw exception(get_last_error());
+        }
+        std::string xml(reinterpret_cast<const char*>(buffer));
+
+        xmlFree(buffer);
+        
+        return xml;
+    }
 
 //------------------------------------------------------------------------------    
     void Document::write_to_stream(std::ostream& os) const
@@ -114,9 +132,25 @@ namespace xml
     }
 
 //------------------------------------------------------------------------------    
+    void Document::write_to_stream(std::ostream& os, const std::string& encoding) const
+    {
+        os << write_to_string(encoding);
+    }
+
+//------------------------------------------------------------------------------
     void Document::write_to_file(const std::string& file) const
     {
         int result = xmlSaveFormatFile(file.c_str(), cobj, 1);
+        if (result == -1)
+        {
+            throw exception(get_last_error());
+        }
+    }
+
+//------------------------------------------------------------------------------    
+    void Document::write_to_file(const std::string& file, const std::string& encoding) const
+    {
+        int result = xmlSaveFormatFileEnc(file.c_str(), cobj, encoding.c_str(), 1);
         if (result == -1)
         {
             throw exception(get_last_error());

@@ -95,14 +95,29 @@ namespace xml
         std::string write_to_string() const;
         
         /**
+         * Write document to string.
+         **/
+        std::string write_to_string(const std::string& encoding) const;
+        
+        /**
          * Write document to stream.
          **/
         void write_to_stream(std::ostream& os) const;
         
         /**
+         * Write document to stream.
+         **/
+        void write_to_stream(std::ostream& os, const std::string& encoding) const;
+        
+        /**
          * Write document to file.
          **/
         void write_to_file(const std::string& file) const;
+        
+        /**
+         * Write document to file.
+         **/
+        void write_to_file(const std::string& file, const std::string& encoding) const;
         
         /**
          * Read document from string.

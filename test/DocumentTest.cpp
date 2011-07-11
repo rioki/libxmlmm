@@ -230,5 +230,37 @@ SUITE(DocumentTest)
         
         CHECK_EQUAL("Mack", from_element->get_text());
     }
+
+//------------------------------------------------------------------------------    
+    TEST(writes_latin1)
+    {
+        xml::Document doc;
+        xml::Element* root = doc.create_root_element("test");
+        
+        std::stringstream buff;
+        // NOTE: This implicitly tests write_to_string too.
+        doc.write_to_stream(buff, "ISO-8859-1");
+        
+        std::string ref = 
+          "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n"
+          "<test/>\n";
+        CHECK_EQUAL(ref, buff.str());
+    }
+    
+//------------------------------------------------------------------------------    
+    TEST(writes_latin1_to_file)
+    {
+        xml::Document doc;
+        xml::Element* root = doc.create_root_element("test");
+        
+        std::stringstream buff;
+        // NOTE: This implicitly tests write_to_string too.
+        doc.write_to_stream(buff, "ISO-8859-1");
+        
+        std::string ref = 
+          "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n"
+          "<test/>\n";
+        CHECK_EQUAL(ref, buff.str());
+    }
 }
 
