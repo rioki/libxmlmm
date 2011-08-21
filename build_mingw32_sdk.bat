@@ -1,7 +1,7 @@
 
 set VERSION=0.5.0
 
-set BUNDLE_DIR=..\libxmlmm-%VERSION%
+set BUNDLE_DIR=..\libxmlmm-mingw32-%VERSION%
 
 rmdir /s /q %BUNDLE_DIR%
 
@@ -16,3 +16,5 @@ copy include\libxmlmm\*.h %BUNDLE_DIR%\include\libxmlmm
 copy bin\*.dll %BUNDLE_DIR%\bin
 xcopy apidoc\html %BUNDLE_DIR%\apidoc\html
 
+copy README.md %BUNDLE_DIR%
+copy COPYING.txt %BUNDLE_DIR%
