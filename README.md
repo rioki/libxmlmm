@@ -103,3 +103,8 @@ Changes
 * Wrappers for all basic node types.
 * Load and save of documents.
 * Basic access API for node types.
+
+Thanks
+======
+
+David Benoit helped out making code cleanup.
