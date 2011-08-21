@@ -1,6 +1,6 @@
 ##
 ## libxmlmmm
-## Copyright 2008 - 2009 Sean Farell
+## Copyright 2008 - 2011 Sean Farell
 ##
 ## This file is part of libqgl.
 ##
@@ -20,7 +20,7 @@
 
 .PHONY : apidoc
 
-SUBDIRS = src test apidoc
+SUBDIRS = include src test apidoc
 
 EXTRA_DIST = bootstrap.sh libxmlmm.pc.in Readme.txt Copying.txt \
              libxmlmm.vcproj libxmlmm-test.vcproj libxmlmm.sln

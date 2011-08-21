@@ -1,38 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<CodeLite_Project Name="libxmlmm" InternalType="Library">
+<CodeLite_Project Name="libxmlmmtest" InternalType="UnitTest++">
   <Description/>
   <Dependencies/>
-  <VirtualDirectory Name="Source Files">
-    <File Name="Attribute.cpp"/>
-    <File Name="CData.cpp"/>
-    <File Name="Comment.cpp"/>
-    <File Name="Content.cpp"/>
-    <File Name="Document.cpp"/>
-    <File Name="Element.cpp"/>
-    <File Name="LibXmlSentry.cpp"/>
-    <File Name="Node.cpp"/>
-    <File Name="ProcessingInstruction.cpp"/>
-    <File Name="utils.cpp"/>
-    <File Name="Text.cpp"/>
+  <VirtualDirectory Name="test">
+    <File Name="test/CDataTest.cpp"/>
+    <File Name="test/DocumentTest.cpp"/>
+    <File Name="test/ElementTest.cpp"/>
+    <File Name="test/test.cpp"/>
   </VirtualDirectory>
-  <VirtualDirectory Name="Header Files">
-    <File Name="Attribute.h"/>
-    <File Name="CData.h"/>
-    <File Name="Comment.h"/>
-    <File Name="Content.h"/>
-    <File Name="defines.h"/>
-    <File Name="Document.h"/>
-    <File Name="Element.h"/>
-    <File Name="exceptions.h"/>
-    <File Name="libxmlmm.h"/>
-    <File Name="LibXmlSentry.h"/>
-    <File Name="Node.h"/>
-    <File Name="ProcessingInstruction.h"/>
-    <File Name="Text.h"/>
-    <File Name="utils.h"/>
-  </VirtualDirectory>
-  <Dependencies Name="Debug"/>
-  <Settings Type="Dynamic Library">
+  <Dependencies Name="Debug">
+    <Project Name="libxmlmm"/>
+  </Dependencies>
+  <Dependencies Name="Release">
+    <Project Name="libxmlmm"/>
+  </Dependencies>
+  <Settings Type="Executable">
     <GlobalSettings>
       <Compiler Options="" C_Options="">
         <IncludePath Value="."/>
@@ -42,18 +24,24 @@
       </Linker>
       <ResourceCompiler Options=""/>
     </GlobalSettings>
-    <Configuration Name="Debug" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Dynamic Library" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
+    <Configuration Name="Debug" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
       <Compiler Options="-g" C_Options="-g" Required="yes" PreCompiledHeader="">
-        <IncludePath Value="$(ICONV_DIR)/include"/>
+        <IncludePath Value="include"/>
         <IncludePath Value="$(LIBXML2_DIR)/include"/>
+        <IncludePath Value="$(ICONV_DIR)/include"/>
+        <IncludePath Value="$(UNIT_TEST_DIR)/include"/>
       </Compiler>
       <Linker Options="" Required="yes">
-        <LibraryPath Value="$(ICONV_DIR)/lib"/>
+        <LibraryPath Value="bin"/>
         <LibraryPath Value="$(LIBXML2_DIR)/lib"/>
+        <LibraryPath Value="$(ICONV_DIR)/lib"/>
+        <LibraryPath Value="$(UNIT_TEST_DIR)/lib"/>
+        <Library Value="libxmlmm-d"/>
         <Library Value="libxml2"/>
+        <Library Value="UnitTest++"/>
       </Linker>
       <ResourceCompiler Options="" Required="no"/>
-      <General OutputFile="../$(ConfigurationName)/$(ProjectName).dll" IntermediateDirectory="$(ConfigurationName)" Command="" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes"/>
+      <General OutputFile="bin/$(ProjectName)-d.exe" IntermediateDirectory="$(ConfigurationName)" Command="../$(ConfigurationName)/$(ProjectName).exe" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(ProjectPath)" PauseExecWhenProcTerminates="yes"/>
       <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;"/>
       <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="">
         <PostConnectCommands/>
@@ -61,7 +49,7 @@
       </Debugger>
       <PreBuild/>
       <PostBuild>
-        <Command Enabled="yes">copy_libs.bat $(ConfigurationName)</Command>
+        <Command Enabled="yes">$(OutputFile)</Command>
       </PostBuild>
       <CustomBuild Enabled="no">
         <RebuildCommand/>
@@ -70,7 +58,7 @@
         <PreprocessFileCommand/>
         <SingleFileCommand/>
         <MakefileGenerationCommand/>
-        <ThirdPartyToolName/>
+        <ThirdPartyToolName>None</ThirdPartyToolName>
         <WorkingDirectory/>
       </CustomBuild>
       <AdditionalRules>
@@ -78,18 +66,24 @@
         <CustomPreBuild/>
       </AdditionalRules>
     </Configuration>
-    <Configuration Name="Release" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Dynamic Library" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
+    <Configuration Name="Release" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
       <Compiler Options="" C_Options="" Required="yes" PreCompiledHeader="">
-        <IncludePath Value="$(ICONV_DIR)/include"/>
+        <IncludePath Value="include"/>
         <IncludePath Value="$(LIBXML2_DIR)/include"/>
+        <IncludePath Value="$(ICONV_DIR)/include"/>
+        <IncludePath Value="$(UNIT_TEST_DIR)/include"/>
       </Compiler>
       <Linker Options="-O2" Required="yes">
-        <LibraryPath Value="$(ICONV_DIR)/lib"/>
+        <LibraryPath Value="bin"/>
         <LibraryPath Value="$(LIBXML2_DIR)/lib"/>
+        <LibraryPath Value="$(ICONV_DIR)/lib"/>
+        <LibraryPath Value="$(UNIT_TEST_DIR)/lib"/>
+        <Library Value="libxmlmm"/>
         <Library Value="libxml2"/>
+        <Library Value="UnitTest++"/>
       </Linker>
       <ResourceCompiler Options="" Required="no"/>
-      <General OutputFile="../$(ConfigurationName)/$(ProjectName).dll" IntermediateDirectory="$(ConfigurationName)" Command="" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes"/>
+      <General OutputFile="bin/$(ProjectName).exe" IntermediateDirectory="$(ConfigurationName)" Command="../$(ConfigurationName)/$(ProjectName).exe" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(ProjectPath)" PauseExecWhenProcTerminates="yes"/>
       <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;"/>
       <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="">
         <PostConnectCommands/>
@@ -97,7 +91,7 @@
       </Debugger>
       <PreBuild/>
       <PostBuild>
-        <Command Enabled="yes">copy_libs.bat $(ConfigurationName)</Command>
+        <Command Enabled="yes">$(OutputFile)</Command>
       </PostBuild>
       <CustomBuild Enabled="no">
         <RebuildCommand/>
@@ -106,7 +100,7 @@
         <PreprocessFileCommand/>
         <SingleFileCommand/>
         <MakefileGenerationCommand/>
-        <ThirdPartyToolName/>
+        <ThirdPartyToolName>None</ThirdPartyToolName>
         <WorkingDirectory/>
       </CustomBuild>
       <AdditionalRules>

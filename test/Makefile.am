@@ -1,6 +1,6 @@
 ##
 ## libxmlmmm
-## Copyright 2008 - 2009 Sean Farell
+## Copyright 2008 - 2011 Sean Farell
 ##
 ## This file is part of libqgl.
 ##
@@ -22,7 +22,7 @@ if BUILD_TESTS
 
 check_PROGRAMS  = test
 
-test_CXXFLAGS   = @LIBXML_CFLAGS@ -I$(top_srcdir)/src
+test_CXXFLAGS   = @LIBXML_CFLAGS@ -I$(top_srcdir)/include
 test_LDADD      = $(top_builddir)/src/libxmlmm.la @UT_LIBS@
 test_SOURCES    = test.cpp DocumentTest.cpp ElementTest.cpp CDataTest.cpp
 

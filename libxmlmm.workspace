@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <CodeLite_Workspace Name="libxmlmm" Database="./libxmlmm.tags">
-  <Project Name="libxmlmm" Path="src/libxmlmm.project" Active="No"/>
-  <Project Name="libxmlmmtest" Path="test/libxmlmmtest.project" Active="Yes"/>
+  <Project Name="libxmlmm" Path="libxmlmm.project" Active="No"/>
+  <Project Name="libxmlmmtest" Path="libxmlmmtest.project" Active="Yes"/>
   <BuildMatrix>
-    <WorkspaceConfiguration Name="Debug" Selected="no">
+    <WorkspaceConfiguration Name="Debug" Selected="yes">
       <Project Name="libxmlmm" ConfigName="Debug"/>
       <Project Name="libxmlmmtest" ConfigName="Debug"/>
     </WorkspaceConfiguration>
-    <WorkspaceConfiguration Name="Release" Selected="yes">
+    <WorkspaceConfiguration Name="Release" Selected="no">
       <Project Name="libxmlmm" ConfigName="Release"/>
       <Project Name="libxmlmmtest" ConfigName="Release"/>
     </WorkspaceConfiguration>

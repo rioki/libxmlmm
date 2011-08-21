@@ -1,6 +1,6 @@
 dnl
 dnl libxmlmmm
-dnl Copyright 2008 - 2009 Sean Farell
+dnl Copyright 2008 - 2011 Sean Farell
 dnl
 dnl This file is part of libqgl.
 dnl
@@ -18,7 +18,7 @@ dnl You should have received a copy of the GNU Lesser General Public License
 dnl along with libxmlmmm. If not, see <http:dnlwww.gnu.org/licenses/>.
 dnl
 
-AC_INIT([libxmlmm], [0.4])
+AC_INIT([libxmlmm], [0.5])
 AM_INIT_AUTOMAKE([foreign])
 
 AC_PROG_CXX
@@ -67,6 +67,8 @@ AC_SUBST(HAVE_DOT)
 AC_CONFIG_FILES([
     Makefile 
     libxmlmm.pc 
+    include/Makefile
+    include/libxmlmm/Makefile
     src/Makefile 
     test/Makefile
     apidoc/Makefile
