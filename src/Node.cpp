@@ -1,6 +1,6 @@
 //
 // libxmlmmm
-// Copyright 2008 - 2009 Sean Farell
+// Copyright 2008 - 2011 Sean Farell
 //
 // This file is part of libqgl.
 //
@@ -49,7 +49,7 @@ namespace xml
         if (path == NULL)
         {
             // WTF: How is this suposed to happen?
-            throw exception("Node::get_path(): failed to allocated path");
+            throw Exception("Node::get_path(): failed to allocated path");
         }
             
         std::string value(reinterpret_cast<const char*>(path));
@@ -70,7 +70,7 @@ namespace xml
             // A xmlNode only has no parent if it it is a document node 
             // (not root element) and this is not wraped by Node.
             assert(false && "no parent");
-            throw exception("no parent");
+            throw Exception("no parent");
         }
     }
     
@@ -172,7 +172,6 @@ namespace xml
                 
 
 //------------------------------------------------------------------------------
-
     Node::find_nodeset::find_nodeset(xmlNode *const cobj,
                                      const std::string &xpath,
                                      const xmlXPathObjectType type)
@@ -191,18 +190,14 @@ namespace xml
         {
             xmlXPathFreeObject(result);
             xmlXPathFreeContext(ctxt);
-            throw exception("Unsuported query.");
+            throw Exception("Unsuported query.");
         }
     }
 
 //------------------------------------------------------------------------------
-
     Node::find_nodeset::~find_nodeset()
     {
         xmlXPathFreeObject(result);
         xmlXPathFreeContext(ctxt);
-}
-
-//------------------------------------------------------------------------------
-
+    }
 }

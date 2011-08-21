@@ -1,6 +1,6 @@
 //
 // libxmlmmm
-// Copyright 2008 - 2009 Sean Farell
+// Copyright 2008 - 2011 Sean Farell
 //
 // This file is part of libqgl.
 //
@@ -129,7 +129,8 @@ namespace xml
         xmlNode* cobj;
     
         // Helper object to keep our xpath search context.
-        struct find_nodeset {
+        struct find_nodeset 
+        {
             find_nodeset(xmlNode *const cobj,
                          const std::string &xpath,
                          const xmlXPathObjectType type = XPATH_UNDEFINED);

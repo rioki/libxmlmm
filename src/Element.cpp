@@ -1,6 +1,6 @@
 //
 // libxmlmmm
-// Copyright 2008 - 2009 Sean Farell
+// Copyright 2008 - 2011 Sean Farell
 //
 // This file is part of libqgl.
 //
@@ -40,7 +40,7 @@ namespace xml
         {
             return reinterpret_cast<const char*>(cobj->name);
         }
-        return "";
+        return std::string();
     }
 
 //------------------------------------------------------------------------------        
@@ -86,7 +86,7 @@ namespace xml
         {
           return content->get_value();
         }
-        return "";
+        return std::string();
     }
 
 //------------------------------------------------------------------------------

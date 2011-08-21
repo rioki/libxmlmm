@@ -1,6 +1,6 @@
 //
 // libxmlmmm
-// Copyright 2008 - 2009 Sean Farell
+// Copyright 2008 - 2011 Sean Farell
 //
 // This file is part of libqgl.
 //
@@ -84,7 +84,7 @@ namespace xml
         xmlDocSetRootElement(cobj, root);
         if (!root)
         {
-            throw exception(get_last_error());
+            throw Exception(get_last_error());
         }
         return reinterpret_cast<Element*>(root->_private);
     }
@@ -98,7 +98,7 @@ namespace xml
         xmlDocDumpMemory(cobj, &buffer, &length);
         if (!buffer)
         {
-            throw exception(get_last_error());
+            throw Exception(get_last_error());
         }
         std::string xml(reinterpret_cast<const char*>(buffer));
 
@@ -116,7 +116,7 @@ namespace xml
         xmlDocDumpMemoryEnc(cobj, &buffer, &length, encoding.c_str());
         if (!buffer)
         {
-            throw exception(get_last_error());
+            throw Exception(get_last_error());
         }
         std::string xml(reinterpret_cast<const char*>(buffer));
 
@@ -143,7 +143,7 @@ namespace xml
         int result = xmlSaveFormatFile(file.c_str(), cobj, 1);
         if (result == -1)
         {
-            throw exception(get_last_error());
+            throw Exception(get_last_error());
         }
     }
 
@@ -153,7 +153,7 @@ namespace xml
         int result = xmlSaveFormatFileEnc(file.c_str(), cobj, encoding.c_str(), 1);
         if (result == -1)
         {
-            throw exception(get_last_error());
+            throw Exception(get_last_error());
         }
     }
     
@@ -163,7 +163,7 @@ namespace xml
         xmlDoc* const tmp_cobj = xmlReadDoc(reinterpret_cast<const xmlChar*>(xml.c_str()), NULL, NULL, 0);
         if (!tmp_cobj)
         {        
-            throw exception(get_last_error());
+            throw Exception(get_last_error());
         }
             xmlFreeDoc(cobj);
             cobj = tmp_cobj;
@@ -181,7 +181,7 @@ namespace xml
         xmlDoc* const tmp_cobj = xmlReadFile(file.c_str(), NULL, 0);
         if (!tmp_cobj)
         {        
-            throw exception(get_last_error());
+            throw Exception(get_last_error());
         }
             xmlFreeDoc(cobj);
             cobj = tmp_cobj;

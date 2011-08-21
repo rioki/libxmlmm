@@ -1,6 +1,6 @@
 //
 // libxmlmmm
-// Copyright 2008 - 2009 Sean Farell
+// Copyright 2008 - 2011 Sean Farell
 //
 // This file is part of libqgl.
 //
@@ -25,36 +25,39 @@
 
 namespace xml
 {
-    struct exception : std::runtime_error
+    struct Exception : std::runtime_error
     {
-        explicit exception(const std::string &what)
-            : runtime_error("xmlmm: " + what) {}
-        ~exception() throw() {}
+        explicit Exception(const std::string &what)
+        : runtime_error("xmlmm: " + what) {}
+        
+        ~Exception() throw() {}
     };
 
-    struct NoRootElement : exception
+    struct NoRootElement : Exception
     {
-        NoRootElement() : exception("No root element") {}
+        NoRootElement() 
+        : Exception("No root element") {}
     };
 
-    struct EmptyDocument : exception
+    struct EmptyDocument : Exception
     {
-        EmptyDocument() : exception("Document is empty") {}
+        EmptyDocument() 
+        : Exception("Document is empty") {}
     };
 
-    struct InvalidXPath : exception
+    struct InvalidXPath : Exception
     {
         explicit InvalidXPath(const std::string &xpath)
-            : exception("Invalid XPath: " + xpath) {}
+        : Exception("Invalid XPath: " + xpath) {}
+        
         ~InvalidXPath() throw() {}
     };
 
-    struct NoSuchAttribute : exception
+    struct NoSuchAttribute : Exception
     {
-        NoSuchAttribute(const std::string &attribute,
-                        const std::string &nodeName)
-            : exception("There is no attribute '" + attribute +
-                        "' on the element '" + nodeName + "'.") {}
+        NoSuchAttribute(const std::string &attribute, const std::string &nodeName)
+        : Exception("There is no attribute '" + attribute + "' on the element '" + nodeName + "'.") {}
+        
         ~NoSuchAttribute() throw() {}
     };
 }
