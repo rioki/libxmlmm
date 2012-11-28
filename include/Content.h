@@ -39,19 +39,30 @@ namespace xml
         explicit Content(xmlNode* const cobj);
         
         /**
-         * Get the value of this node.  Empty if not found.
+         * Get the value of this node. 
+         *
+         * @return Returns the value of this node or empty if not found.
          **/
         virtual std::string get_value() const;
+        
+        /**
+         * Set the value of this node.
+         *
+         * @param value the value to set.
+         **/
+        void set_value(const std::string& value);
 
         /**
          * Get the content of a content node.  Empty if none.
+         *
          * @deprecated Use get_value().
          **/
-        std::string get_content() const
-        { return this->get_value(); }
+        std::string get_content() const;
         
         /**
          * Set the content of a content node.
+         *
+         * @deprecated Use set_value().
          **/
         void set_content(const std::string& value);
         

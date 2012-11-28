@@ -46,11 +46,10 @@ namespace xml
 //------------------------------------------------------------------------------    
     std::string Node::get_path() const
     {
-        xmlChar* const path = xmlGetNodePath(cobj);
+        xmlChar* path = xmlGetNodePath(cobj);
         if (path == NULL)
         {
-            // WTF: How is this suposed to happen?
-            throw Exception("Node::get_path(): failed to allocated path");
+            throw Exception("xml::Node::get_path(): failed to allocated path");
         }
             
         std::string value(reinterpret_cast<const char*>(path));
@@ -70,7 +69,6 @@ namespace xml
             // Ok, this never happens! 
             // A xmlNode only has no parent if it it is a document node 
             // (not root element) and this is not wraped by Node.
-            assert(false && "no parent");
             throw Exception("no parent");
         }
     }
@@ -108,8 +106,8 @@ namespace xml
 //------------------------------------------------------------------------------    
     std::string Node::query_string(const std::string& xpath) const
     {
-        find_nodeset search(cobj, xpath);
-        const xmlXPathObject* const result = search;
+        FindNodeset search(cobj, xpath);
+        const xmlXPathObject* result = search;
         
         std::string value;
         if (result->type == XPATH_STRING)
@@ -122,18 +120,18 @@ namespace xml
         }
         else if (result->type == XPATH_NODESET)
         {
-            xmlNodeSet* const nodeset = result->nodesetval;
+            const xmlNodeSet* nodeset = result->nodesetval;
             if (nodeset)
             {
-                // Concatenate all the text from all the text nodes we
-                // have.  NOTE: we technically shouldn't have to do this
+                // Concatenate all the text from all the text nodes we have.  
+                // NOTE: we technically shouldn't have to do this
                 // since all adjacent text nodes are supposed to merge to
                 // a single node, but that doesn't always happen in
                 // libxml2.  Most notably, when CDATA nodes are adjacent
                 // to other text nodes. 
                 for (int i = 0; i != nodeset->nodeNr; i++)
                 {
-                    const Node* const node = reinterpret_cast<const Node*>(nodeset->nodeTab[i]->_private);
+                    const Node* node = reinterpret_cast<const Node*>(nodeset->nodeTab[i]->_private);
                     value.append(node->get_value());
                 }
             }
@@ -145,10 +143,10 @@ namespace xml
 //------------------------------------------------------------------------------    
     double Node::query_number(const std::string& xpath) const
     {
-        find_nodeset search(cobj, xpath);
-        const xmlXPathObject *const result = search;
+        FindNodeset search(cobj, xpath);
+        const xmlXPathObject* result = search;
         
-        double value;
+        double value = 0.0;
         if (result->type == XPATH_NUMBER)
         {
             value = result->floatval;                            
@@ -159,8 +157,7 @@ namespace xml
         }
         else if (result->type == XPATH_NODESET)
         {
-            xmlNodeSet* const nodeset = result->nodesetval;
-            std::vector<Node*> nodes;
+            const xmlNodeSet* nodeset = result->nodesetval;
             if (! xmlXPathNodeSetIsEmpty(nodeset))
             {
                 const Node* const node = reinterpret_cast<const Node*>(nodeset->nodeTab[0]->_private);
@@ -173,9 +170,7 @@ namespace xml
                 
 
 //------------------------------------------------------------------------------
-    Node::find_nodeset::find_nodeset(xmlNode *const cobj,
-                                     const std::string &xpath,
-                                     const xmlXPathObjectType type)
+    Node::FindNodeset::FindNodeset(xmlNode *const cobj, const std::string &xpath, const xmlXPathObjectType type)
     {
         ctxt = xmlXPathNewContext(cobj->doc);
         ctxt->node = cobj;
@@ -183,7 +178,7 @@ namespace xml
         result = xmlXPathEval(reinterpret_cast<const xmlChar*>(xpath.c_str()), ctxt);
         if (!result)
         {
-        xmlXPathFreeContext(ctxt);
+            xmlXPathFreeContext(ctxt);
             throw InvalidXPath(xpath);
         }
                 
@@ -196,7 +191,7 @@ namespace xml
     }
 
 //------------------------------------------------------------------------------
-    Node::find_nodeset::~find_nodeset()
+    Node::FindNodeset::~FindNodeset()
     {
         xmlXPathFreeObject(result);
         xmlXPathFreeContext(ctxt);

@@ -132,9 +132,7 @@ namespace xml
         std::string result;
         const std::ios_base::fmtflags saved = is.flags();
         is.unsetf(std::ios::skipws);
-        std::copy(std::istream_iterator<char>(is),
-                  std::istream_iterator<char>(),
-                  std::back_inserter(result));
+        std::copy(std::istream_iterator<char>(is), std::istream_iterator<char>(), std::back_inserter(result));
         is.flags(saved);
         return result;
     }

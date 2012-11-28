@@ -39,7 +39,7 @@ namespace xml
          * Initialize libxml and register callback functions for construction
          * and destruction of wrappers.
          *
-         * @todo Review if xmlInitParser() is used as intended.s
+         * @todo Review if xmlInitParser() is used as intended.
          **/
         LibXmlSentry();
         

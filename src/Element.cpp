@@ -90,6 +90,12 @@ namespace xml
         return std::string();
     }
 
+//------------------------------------------------------------------------------    
+    std::string Element::get_text() const
+    {
+        return this->get_value(); 
+    }
+
 //------------------------------------------------------------------------------
     Content* Element::get_text_node() const
     {

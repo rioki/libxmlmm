@@ -38,7 +38,7 @@ namespace xml
         explicit Attribute(xmlNode* const cobj);
         
         /**
-         * Get the value of this node.  Empty if not found.
+         * Get the value of this node. Empty if not found.
          **/         
         virtual std::string get_value() const;
         

@@ -121,13 +121,15 @@ namespace xml
         
         /**
          * Get the element's text.  Empty if not found.
-         * Deprecated. Use get_value().
+         * 
+         * @tood Merge multiple text bits?          
          **/
-        std::string get_text() const
-        { return this->get_value(); }
+        std::string get_text() const;
 
         /**
          * Get the element's text node.
+         *
+         * @todo Is this funciton really needed?
          **/
         Content* get_text_node() const;
         

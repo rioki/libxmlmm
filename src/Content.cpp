@@ -37,6 +37,12 @@ namespace xml
         }
         return std::string();
     }
+
+//------------------------------------------------------------------------------    
+    std::string Content::get_content() const    
+    {
+        return this->get_value(); 
+    }
     
 //------------------------------------------------------------------------------
     void Content::set_content(const std::string& value) 

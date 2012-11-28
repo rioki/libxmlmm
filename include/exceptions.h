@@ -30,8 +30,6 @@ namespace xml
     {
         explicit Exception(const std::string &what)
         : runtime_error("xmlmm: " + what) {}
-        
-        ~Exception() throw() {}
     };
 
     struct NoRootElement : Exception
@@ -50,16 +48,12 @@ namespace xml
     {
         explicit InvalidXPath(const std::string &xpath)
         : Exception("Invalid XPath: " + xpath) {}
-        
-        ~InvalidXPath() throw() {}
     };
 
     struct NoSuchAttribute : Exception
     {
         NoSuchAttribute(const std::string &attribute, const std::string &nodeName)
         : Exception("There is no attribute '" + attribute + "' on the element '" + nodeName + "'.") {}
-        
-        ~NoSuchAttribute() throw() {}
     };
 }
 

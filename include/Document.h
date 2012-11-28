@@ -36,7 +36,7 @@ namespace xml
      *
      * This class is the root class for the XML DOM. 
      *
-     * @todo Add read and write from file.      
+     * @todo Rename write_to_file and friends to write_file          
      **/    
     class LIBXMLMM_EXPORT Document
     {
@@ -50,6 +50,8 @@ namespace xml
          * Construct and populate from the specified xml string.
          *
          * @exception exception Throws exception if the xml is invalid.
+         *
+         * @deprecated This constructor will be fully removed, use read_from_string
          **/
         explicit Document(const std::string &xml);
 
@@ -83,9 +85,10 @@ namespace xml
          * Create the root element of a document.
          *
          * @param name The name of the root node.
+         *
          * @return The root element.
          *
-         * @exception exception Throws exception if the document already
+         * @exception Exception Throws Exception if the document already
          * has a root element.
          **/
         Element* create_root_element(const std::string& name);
@@ -143,6 +146,7 @@ namespace xml
          * Find a given node.
          *
          * @param xpath the xpath relative to this node
+         *
          * @return the node found
          *
          * @{
@@ -155,6 +159,7 @@ namespace xml
          * Find a given set of nodes.
          *
          * @param xpath the xpath
+         *
          * @return the nodes found
          *
          * @{
@@ -167,6 +172,7 @@ namespace xml
          * Find a given element.
          *
          * @param xpath the xpath relative to this element
+         *
          * @return the element found
          *
          * @{
@@ -179,6 +185,7 @@ namespace xml
          * Find a given set of elements.
          *
          * @param xpath the xpath relative to this element
+         *
          * @return the elements found
          *
          * @{
@@ -191,6 +198,7 @@ namespace xml
          * Query a value.
          *
          * @param xpath the xpath
+         *
          * @return the value
          *
          * @{
@@ -211,10 +219,12 @@ namespace xml
     /** 
      * Stream insert operator.
      **/
-    LIBXMLMM_EXPORT std::ostream& operator << (std::ostream& os, const Document& doc);
+    LIBXMLMM_EXPORT 
+    std::ostream& operator << (std::ostream& os, const Document& doc);
     
     /** 
      * Stream extract operator.
      **/
-    LIBXMLMM_EXPORT std::istream& operator >> (std::istream& is, Document& doc);
+    LIBXMLMM_EXPORT 
+    std::istream& operator >> (std::istream& is, Document& doc);
 }

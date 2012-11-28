@@ -1,22 +1,23 @@
 //
-// libxmlmmm
-// Copyright 2008 - 2011 Sean Farell
-//
-// This file is part of libqgl.
-//
-// libxmlmmm is free software: you can redistribute it and/or modify
-// it under the terms of the GNU Lesser General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-//
-// libxmlmmm is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU Lesser General Public License
-// along with libxmlmmm. If not, see <http://www.gnu.org/licenses/>.
-//
+// Copyright (c) 2008-2012 Sean Farrell
+// 
+// Permission is hereby granted, free of charge, to any person obtaining a copy of 
+// this software and associated documentation files (the "Software"), to deal in 
+// the Software without restriction, including without limitation the rights to use, 
+// copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the 
+// Software, and to permit persons to whom the Software is furnished to do so, 
+// subject to the following conditions:
+// 
+// The above copyright notice and this permission notice shall be included in all 
+// copies or substantial portions of the Software.
+// 
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, 
+// INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A 
+// PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT 
+// HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION 
+// OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE 
+// SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+// 
 
 #pragma once
 
@@ -55,6 +56,8 @@ namespace xml
         
         /**
          * Get the node's path
+         *
+         * @return The XPath of this node.
          **/
         std::string get_path() const;
 
@@ -63,30 +66,27 @@ namespace xml
          *
          * @return The node's parent.
          *
-         * @throw exception If the node has no parent node.
+         * @throw Exception If the node has no parent node.
          *
-         * @note It is safe to assume that all nodes have a parent. If this
-         * is not the case something is really broken.
+         * @note It is safe to assume that all nodes have a parent.
+         * If this is not the case something is really broken.
+         *
+         * @todo What about the root element? Yes it has a document as
+         * parent and that is a xmlNode in libxml2, but not in libxmlmm.
+         * Wrapping a document xmlNode into a Element may not be the right
+         * thing to do.
+         *
+         * @{
          **/
         Element* get_parent(); 
-        
-        /**
-         * Get the node's parent.
-         *
-         * @return The node's parent.
-         *
-         * @throw exception If the node has no parent node, exception is
-         * raised.
-         *
-         * @note It is safe to assume that all nodes have a parent. If this
-         * is not the case something is really broken.
-         **/
         const Element* get_parent() const;  
+        /** @} **/
         
         /**
          * Find a given node.
          *
-         * @param xpath the xpath relative to this node
+         * @param xpath the XPath relative to this node
+         *
          * @return the node found
          *
          * @{
@@ -98,8 +98,11 @@ namespace xml
         /**
          * Find a set of nodes.
          *
-         * @param xpath the xpath relative to this node
+         * @param xpath the XPath relative to this node
+         *
          * @return the nodes found
+         *
+         * @todo What about empy result?
          *
          * @{
          **/
@@ -111,7 +114,10 @@ namespace xml
          * Query a value.
          *
          * @param xpath the xpath
+         *
          * @return the value
+         *
+         * @todo What about empy result?
          *
          * @{
          **/
@@ -129,45 +135,49 @@ namespace xml
         xmlNode* cobj;
     
         // Helper object to keep our xpath search context.
-        struct find_nodeset 
+        struct FindNodeset 
         {
-            find_nodeset(xmlNode *const cobj,
-                         const std::string &xpath,
-                         const xmlXPathObjectType type = XPATH_UNDEFINED);
-            ~find_nodeset();
+            FindNodeset(xmlNode *const cobj, const std::string &xpath, const xmlXPathObjectType type = XPATH_UNDEFINED);
+            ~FindNodeset();
 
-            operator xmlXPathObject *()
-            { return result; }
+            operator xmlXPathObject* ()
+            { 
+                return result; 
+            }
 
-            operator xmlNodeSet *()
-            { return result->nodesetval; }
+            operator xmlNodeSet* ()
+            { 
+                return result->nodesetval; 
+            }
 
         private:
             xmlXPathContext* ctxt;
             xmlXPathObject* result;
         };
 
-        template <typename NodeType_>
-        NodeType_ find(const std::string &xpath) const {
-            find_nodeset search(cobj, xpath, XPATH_NODESET);
-            xmlNodeSet *const nodeset = search;
+        template <typename NodeType>
+        NodeType find(const std::string &xpath) const 
+        {
+            FindNodeset search(cobj, xpath, XPATH_NODESET);
+            const xmlNodeSet* nodeset = search;
             if (!nodeset || nodeset->nodeNr == 0)
             {
                 return NULL;
             }
-            return reinterpret_cast<NodeType_>(nodeset->nodeTab[0]->_private);
+            return reinterpret_cast<NodeType>(nodeset->nodeTab[0]->_private);
         }
 
-        template <typename NodeType_>
-        std::vector<NodeType_> find_all(const std::string &xpath) const {
-            find_nodeset search(cobj, xpath, XPATH_NODESET);
-            xmlNodeSet *const nodeset = search;
-            std::vector<NodeType_> nodes;
+        template <typename NodeType>
+        std::vector<NodeType> find_all(const std::string &xpath) const 
+        {
+            FindNodeset search(cobj, xpath, XPATH_NODESET);
+            const xmlNodeSet* nodeset = search;
+            std::vector<NodeType> nodes;
             if (nodeset != NULL)
             {
                 for (int i = 0; i != nodeset->nodeNr; i++)
                 {
-                    nodes.push_back(reinterpret_cast<NodeType_>(nodeset->nodeTab[i]->_private));
+                    nodes.push_back(reinterpret_cast<NodeType>(nodeset->nodeTab[i]->_private));
                 }
             }
             return nodes;
@@ -176,6 +186,5 @@ namespace xml
     private:
         Node(const Node&);
         Node& operator = (const Node&);
-
     };    
 }

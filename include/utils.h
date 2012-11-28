@@ -1,4 +1,4 @@
-//
+ //
 // Copyright (c) 2008-2012 Sean Farrell
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy of 
@@ -54,8 +54,6 @@ namespace xml
     /**
      * Convert arbitrary value to string.
      **/
-    // TODO: shouldn't this be "const T&" to avoid copy?  consider when this
-    // is a complex object.
     template <typename T>
     std::string to_string(T value)
     {
