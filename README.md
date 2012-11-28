@@ -65,6 +65,16 @@ Known Issues
 the same exception model. If the exception model is different any exception
 that tries to propagate over a DLL boundary will cause a process abort.
 
+Documentation
+=============
+
+Some simple introductory documentation can be found in the docs folder.
+
+* [Writing a Document](docs/writing-a-document.md)
+* [Reading a Document](docs/reading-a-document.md)
+
+libxmlmm uses extensivly api documentation that can be extracted with doxygen.
+
 Further Information
 ===================
 
