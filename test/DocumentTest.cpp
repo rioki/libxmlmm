@@ -22,8 +22,8 @@
 #include <stdexcept>
 #include <UnitTest++/UnitTest++.h>
 
-#include <libxmlmm/Document.h>
-#include <libxmlmm/exceptions.h>
+#include "Document.h"
+#include "exceptions.h"
 
 SUITE(DocumentTest)
 {

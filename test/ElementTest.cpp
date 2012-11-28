@@ -22,9 +22,9 @@
 #include <stdexcept>
 #include <UnitTest++/UnitTest++.h>
 
-#include <libxmlmm/Document.h>
-#include <libxmlmm/Element.h>
-#include <libxmlmm/Comment.h>
+#include "Document.h"
+#include "Element.h"
+#include "Comment.h"
 
 // NOTE: Elements can not live w/o their Document.
 

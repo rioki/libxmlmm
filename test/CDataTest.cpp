@@ -22,9 +22,9 @@
 #include <stdexcept>
 #include <UnitTest++/UnitTest++.h>
 
-#include <libxmlmm/Document.h>
-#include <libxmlmm/Element.h>
-#include <libxmlmm/CData.h>
+#include "Document.h"
+#include "Element.h"
+#include "CData.h"
 
 // NOTE: Nodes can not live w/o their Document.
 
