@@ -26,6 +26,7 @@
 
 #include "Node.h"
 #include "Text.h"
+#include "exceptions.h"
 
 namespace xml
 {
@@ -89,6 +90,10 @@ namespace xml
             
             T value;
             conv >> value;
+            if (! conv.eof())
+            {
+                throw xml::Exception("xml::Element::get_attribute<>: Type conversion failed.");
+            }
             
             return value;
         }
