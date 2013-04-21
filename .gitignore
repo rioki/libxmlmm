@@ -6,3 +6,10 @@ libxmlmm.dll
 libxmlmm.so
 test-libxmlmm.exe
 test-libxmlmm
+/ipch
+/Debug
+/Release
+*.user
+*.suo
+*.sdf
+*.opensdf

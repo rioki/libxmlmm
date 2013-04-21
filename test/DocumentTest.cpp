@@ -21,7 +21,7 @@
 
 #include <string>
 #include <stdexcept>
-#include <UnitTest++/UnitTest++.h>
+#include "rtest.h"
 
 #include "Document.h"
 #include "exceptions.h"
@@ -205,6 +205,8 @@ SUITE(DocumentTest)
         CHECK_EQUAL("Joe", to_elements[0]->get_text());
         CHECK_EQUAL("Sally", to_elements[1]->get_text());
         CHECK_EQUAL("Mike", to_elements[2]->get_text());
+
+        CHECK(false);
     }
     
 //------------------------------------------------------------------------------    

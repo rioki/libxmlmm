@@ -21,7 +21,7 @@
 
 #include <string>
 #include <stdexcept>
-#include <UnitTest++/UnitTest++.h>
+#include "rtest.h"
 
 #include "Document.h"
 #include "Element.h"

@@ -21,7 +21,7 @@
 
 #pragma once
 
-#ifdef _MSC_VER
+#ifdef _WIN32
 #define LIBXMLMM_EXPORT __declspec(dllexport)
 #else
 #define LIBXMLMM_EXPORT 

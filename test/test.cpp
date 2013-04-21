@@ -19,10 +19,10 @@
 // SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // 
 
-#include <UnitTest++/UnitTest++.h>
+#include "rtest.h"
 
 int main()
-{
-    UnitTest::RunAllTests();
+{    
+    return rtest::run();
 }
 
