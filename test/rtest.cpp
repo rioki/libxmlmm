@@ -6,10 +6,16 @@
 
 namespace rtest
 {
-    std::vector<impl::Test*> tests;
+    std::vector<impl::Test*>& get_tests()
+    {
+        static std::vector<impl::Test*> tests;
+        return tests;
+    }
     
     int run()
     {
+        std::vector<impl::Test*>& tests = get_tests();
+
         unsigned int failed = 0;
         for (unsigned int i = 0; i < tests.size(); i++)
         {
@@ -54,7 +60,7 @@ namespace rtest
             name = n;
             file = f;
             line = l;
-            tests.push_back(this);
+            get_tests().push_back(this);
         }
     }
 }

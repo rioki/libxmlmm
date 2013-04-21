@@ -83,7 +83,7 @@ namespace rtest
     }
 
 #define CHECK_CLOSE(A, B, EPS)                                                                     \
-    if (std::abs(A - B) < EPS)                                                                     \
+    if (std::abs(A - B) >= EPS)                                                                     \
     {                                                                                              \
         std::stringstream buff;                                                                    \
         buff << "Expected " << A << " +- " << EPS << " but got " << B << ".";                      \

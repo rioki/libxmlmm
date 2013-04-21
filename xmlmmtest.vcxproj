@@ -57,11 +57,20 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PreBuildEvent />
-    <PostBuildEvent>
-      <Command>xcopy /Y /D $(libxml2)\bin\*.dll $(OutDir)
-xcopy /Y /D $(iconv)\bin\*.dll $(OutDir)
-</Command>
-    </PostBuildEvent>
+    <PostBuildEvent />
+    <PreBuildEvent>
+      <Command>xcopy /Y /D $(libxml2)\$(Configuration)\*.dll $(OutDir)
+xcopy /Y /D $(iconv)\$(Configuration)\*.dll $(OutDir)</Command>
+    </PreBuildEvent>
+    <CustomBuildStep>
+      <Command>$(TargetPath)</Command>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <Message>Running Unit Tests</Message>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <Outputs>dummy.txt</Outputs>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -81,14 +90,19 @@ xcopy /Y /D $(iconv)\bin\*.dll $(OutDir)
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <PreBuildEvent>
-      <Command>
-      </Command>
+      <Command>xcopy /Y /D $(libxml2)\$(Configuration)\*.dll $(OutDir)
+xcopy /Y /D $(iconv)\$(Configuration)\*.dll $(OutDir)</Command>
     </PreBuildEvent>
-    <PostBuildEvent>
-      <Command>xcopy /Y /D $(libxml2)\bin\*.dll $(OutDir)
-xcopy /Y /D $(iconv)\bin\*.dll $(OutDir)
-</Command>
-    </PostBuildEvent>
+    <PostBuildEvent />
+    <CustomBuildStep>
+      <Command>$(TargetPath)</Command>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <Message>Running Unit Tests</Message>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <Outputs>dummy.txt</Outputs>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="test\CDataTest.cpp" />
