@@ -7,6 +7,6 @@ Name: libxmlmm
 Description: C++ Wrapper for libXML2
 Version: @VERSION@
 Requires: libxml-2.0 >= 2.9
-Libs: -L${libdir} -llibxmlmm
+Libs: -L${libdir} -lxmlmm
 Cflags: -I${includedir}
 
