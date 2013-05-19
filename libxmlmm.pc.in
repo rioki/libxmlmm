@@ -1,0 +1,12 @@
+prefix=@prefix@
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: libxmlmm
+Description: C++ Wrapper for libXML2
+Version: @VERSION@
+Requires: libxml-2.0 >= 2.9
+Libs: -L${libdir} -llibxmlmm
+Cflags: -I${includedir}
+

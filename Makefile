@@ -1,15 +1,17 @@
-PACKAGE = libxmlmm
-VERSION = 0.6.0
 
-CXX      ?= g++ -std=c++0x
-CXXFLAGS += -Iinclude -DVERSION=\"$(VERSION)\" -DLIBXML_STATIC
+-include config.mk
+ifndef CONFIG_MK_INCLUDED
+$(error config.mk not built. Run configure script.)
+endif
+
+CXX      ?= g++
+CXXFLAGS += -Iinclude -DVERSION=\"$(VERSION)\" $(XML2_CFLAGS)
 LDFLAGS  += 
-prefix   ?= /usr/local
 
 headers    = $(wildcard include/*.h)
 lib_hdr    = $(wildcard src/*.h)
 lib_src    = $(wildcard src/*.cpp)
-lib_libs   = -lxml2 
+lib_libs   = $(XML2_LIBS) 
 test_hdr   = $(wildcard test/*.h)
 test_src   = $(wildcard test/*.cpp)
 test_libs  = $(lib_libs) -lUnitTest++
@@ -26,48 +28,50 @@ endif
 
 .PHONY: all check clean install uninstall dist apidoc
 
-all: $(PACKAGE)$(LIBEXT)
+all: libxmlmm$(LIBEXT)
 
-$(PACKAGE)$(LIBEXT): $(patsubst %.cpp, %.o, $(lib_src))
+libxmlmm$(LIBEXT): $(patsubst %.cpp, %.o, $(lib_src))
 	$(CXX) -shared -fPIC $(CXXFLAGS) $(LDFLAGS) $^ $(lib_libs) -Wl,--out-implib=$(patsubst %$(LIBEXT),%.a, $@) -o $@
 
-check: test-$(PACKAGE)$(EXEEXT)	
-	./test-$(PACKAGE)$(EXEEXT)
+check: test-libxmlmm$(EXEEXT)	
+	./test-libxmlmm$(EXEEXT)
 
-test-$(PACKAGE)$(EXEEXT): $(PACKAGE)$(LIBEXT) $(patsubst %.cpp, %.o, $(test_src))
+test-libxmlmm$(EXEEXT): libxmlmm$(LIBEXT) $(patsubst %.cpp, %.o, $(test_src))
 	$(CXX) $(CXXFLAGS) $(LDFLAGS) $^ $(test_libs) -o $@
 
 clean: 
-	rm -f src/*.o src/*.d test/*.o test/*.d $(PACKAGE)$(LIBEXT) test-$(PACKAGE)$(EXEEXT)	
+	rm -f src/*.o src/*.d test/*.o test/*.d libxmlmm$(LIBEXT) test-libxmlmm$(EXEEXT)	
 
 dist:
-	mkdir $(PACKAGE)-$(VERSION)
-	cp --parents $(dist_files) $(PACKAGE)-$(VERSION)
-	tar -czvf $(PACKAGE)-$(VERSION).tar.gz $(PACKAGE)-$(VERSION)
-	rm -rf $(PACKAGE)-$(VERSION)
+	mkdir libxmlmm-$(VERSION)
+	cp --parents $(dist_files) libxmlmm-$(VERSION)
+	tar -czvf libxmlmm-$(VERSION).tar.gz libxmlmm-$(VERSION)
+	rm -rf libxmlmm-$(VERSION)
 
-install: $(PACKAGE)$(LIBEXT)
-	mkdir -p $(prefix)/include/$(PACKAGE)
-	cp $(headers) $(prefix)/include/$(PACKAGE)
+install: libxmlmm$(LIBEXT)
+	mkdir -p $(prefix)/include/libxmlmm
+	cp $(headers) $(prefix)/include/libxmlmm
 	mkdir -p $(prefix)/lib
-	cp $(PACKAGE).a $(prefix)/lib
+	cp libxmlmm.a $(prefix)/lib
+	mkdir -p $(prefix)/lib/pkgconfig
+	cp libxmlmm.pc $(prefix)/pkgconfig
 	mkdir -p $(prefix)/bin
-	cp $(PACKAGE)$(LIBEXT) $(prefix)/bin
+	cp libxmlmm$(LIBEXT) $(prefix)/bin
 
 uninstall:
-	rm -r $(prefix)/include/$(PACKAGE)
-	rm $(prefix)/lib/$(PACKAGE).a
-	rm $(prefix)/bin/$(PACKAGE)$(LIBEXT)
+	rm -r $(prefix)/include/libxmlmm
+	rm $(prefix)/lib/libxmlmm.a
+	rm $(prefix)/lib/pkgconfig/libxmlmm.pc
+	rm $(prefix)/bin/libxmlmm$(LIBEXT)
 
 apidoc:
 	mkdir -p apidoc
 	doxygen Doxyfile
 	
-%.o : %.cpp
+%.o : %.cpp config.mkmake
 	$(CXX) $(CXXFLAGS) -MD -c $< -o $(patsubst %.cpp, %.o, $<)	
 
 ifneq "$(MAKECMDGOALS)" "clean"
-deps  = $(patsubst %.cpp, %.d, $(lib_src))
-deps += $(patsubst %.cpp, %.d, $(test_src))
--include $(deps)
+-include $(patsubst %.cpp, %.d, $(lib_src))
+-include $(patsubst %.cpp, %.d, $(test_src))
 endif

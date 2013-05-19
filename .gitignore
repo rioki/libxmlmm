@@ -1,15 +1,10 @@
 *.o
 *.d
 apidoc
+config.mk
 libxmlmm.a
 libxmlmm.dll
 libxmlmm.so
+libxmlmm.pc
 test-libxmlmm.exe
 test-libxmlmm
-/ipch
-/Debug
-/Release
-*.user
-*.suo
-*.sdf
-*.opensdf

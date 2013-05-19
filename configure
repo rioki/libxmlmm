@@ -1,0 +1,182 @@
+#!/bin/bash 
+
+# defaults
+prefix=/usr/local
+VERSION="0.5.0"
+ERRORS=0
+
+# Parse Arguments
+Usage()
+{
+    echo "$0 [options]"
+    echo ""
+    echo "Options:"
+    echo "  --help|-h       Print this usage note."
+    echo "  --prefix|-p     Insallation prefix."
+}
+
+while :
+do
+    case $1 in
+        -h | --help)
+            Usage
+            exit 0
+            ;;
+        -p | --prefix)
+            file=$2     # You might want to check if you really got FILE
+            shift 2
+            ;;
+        --prefix=*)
+            prefix=${1#*=}        # Delete everything up till "="
+            shift
+            ;;
+        -*)
+            echo "unknown option: $1" >&2
+            echo ""
+            Usage
+            exit 0
+            ;;
+        *)  # no more options. Stop while loop
+            break
+            ;;
+    esac
+done
+
+# test
+
+# 1: the rest running
+echo_test()
+{
+    printf "%-40s" "$1"
+}
+
+# 1: result to display
+echo_result()
+{
+    printf "%10s\n" "$1"
+}
+
+# 1: command to check
+check_tool()
+{
+    echo_test "checking for $1 "
+    if command -v $1  >/dev/null 2>&1; then 
+        echo_result "yes"
+    else    
+        echo_result "no"
+        ERRORS=1
+    fi
+}
+
+# 1: name
+# 2: module signature
+check_pkg_module()
+{
+    echo_test "checking for $2 "
+    if pkg-config "$2" --modversion >/dev/null 2>&1; then
+        echo_result "`pkg-config "$2" --modversion`"
+        export $1_CFLAGS="`pkg-config --cflags "$2"`"
+        export $1_LIBS="`pkg-config --libs "$2"`"
+    else
+        echo_result "no"
+        ERRORS=1
+    fi
+}
+
+# 1: header
+# 2: compiler flags
+check_header_c()
+{
+    echo_test "checking for header $1 "
+    echo "#include <$1>" > conftest.c
+    if gcc -c conftest.c $CFLAGS $2 >/dev/null 2>&1; then
+        echo_result "yes"
+    else
+        echo_result "no"
+        ERRORS=1
+    fi
+    rm -f conftest.c conftest.o
+}
+
+# 1: lib to check
+# 2: compiler flags
+# 3: linker flags
+check_lib_c()
+{
+    echo_test "checking for library $1 "
+    echo "int main(int argc, char* argv[]) { }" >> conftest.c
+    if gcc conftest.c $CFLAGS -l$1 $2 $3 $LDFLAGS -o conftest.exe >/dev/null 2>&1; then
+        echo_result "yes"
+    else
+        echo_result "no"
+        ERRORS=1
+    fi
+    rm -f conftest.c conftest.exe
+}
+
+# 1: variable to hold result
+# 2: libs to check for
+# 3: compiler flags
+# 4: linker flags
+check_libs_c()
+{
+    local LIBS=$2
+    local FOUND=0
+    for LIB in $LIBS; do
+        echo_test "checking for library $LIB "
+        echo "int main(int argc, char* argv[]) { }" >> conftest.c
+        if gcc conftest.c $CFLAGS -l$LIB $3 $4 $LDFLAGS -o conftest.exe >/dev/null 2>&1; then
+            echo_result "yes"
+            export $1=$LIB
+            FOUND=1
+            break 
+        else
+            echo_result "no"            
+        fi
+        rm -f conftest.c conftest.exe
+    done
+    
+    if test $FOUND = 0; then
+        ERRORS=1
+    fi
+}
+
+# actual checks
+
+check_tool "g++"
+check_tool "make"
+check_tool "pkg-config"
+
+check_pkg_module "XML2" "libxml-2.0 >= 2.9.0" 
+
+#output
+
+export_variable()
+{
+    echo $1=${!1} >> config.mk
+}
+
+if test $ERRORS = 0; then
+    rm -f config.mk
+    
+    echo ""
+    echo "Writing config.mk"
+    echo "CONFIG_MK_INCLUDED = 1" >> config.mk    
+    echo "preifx ?= $prefix" >> config.mk    
+    export_variable VERISON
+    export_variable XML2_CFLAGS
+    export_variable XML2_LIBS
+
+    echo "Writing libxmlmm.pc"
+    prefix_e=`echo "$prefix" | sed -e 's/[]\\\/()$*.^|[]/\\\\&/g'`   
+    VERSION_e=`echo "$VERSION" | sed -e 's/[]\\\/()$*.^|[]/\\\\&/g'`   
+    sed -e "s/@prefix@/$prefix_e/g" -e "s/@VERSION@/$VERSION_e/g"  libxmlmm.pc.in > libxmlmm.pc
+    
+    echo ""
+    echo "Everything OK."
+    echo ""
+else
+    echo ""
+    echo "There where errors. Check output."
+    echo ""
+fi
