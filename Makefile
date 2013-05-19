@@ -68,7 +68,7 @@ apidoc:
 	mkdir -p apidoc
 	doxygen Doxyfile
 	
-%.o : %.cpp config.mkmake
+%.o : %.cpp config.mk
 	$(CXX) $(CXXFLAGS) -MD -c $< -o $(patsubst %.cpp, %.o, $<)	
 
 ifneq "$(MAKECMDGOALS)" "clean"
