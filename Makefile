@@ -54,7 +54,7 @@ install: libxmlmm$(LIBEXT)
 	mkdir -p $(prefix)/lib
 	cp libxmlmm.a $(prefix)/lib
 	mkdir -p $(prefix)/lib/pkgconfig
-	cp libxmlmm.pc $(prefix)/pkgconfig
+	cp libxmlmm.pc $(prefix)/lib/pkgconfig
 	mkdir -p $(prefix)/bin
 	cp libxmlmm$(LIBEXT) $(prefix)/bin
 
