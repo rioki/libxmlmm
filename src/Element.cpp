@@ -57,7 +57,8 @@ namespace xml
     }
     
 //------------------------------------------------------------------------------
-    std::string Element::get_attribute(const std::string& key) const
+    template <>
+    std::string Element::get_attribute<std::string>(const std::string& key) const
     {
         const xmlChar* const value = xmlGetProp(cobj, reinterpret_cast<const xmlChar*>(key.c_str()));
         if (!value)

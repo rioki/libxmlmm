@@ -55,20 +55,7 @@ namespace xml
          * Check if a given attribute exists.
          **/
         bool has_attribute(const std::string& key) const;
-        
-        /** 
-         * Get a given attribute. 
-         *         
-         * This method will retrive an attribute.
-         *
-         * @param id the attribtue id
-         * @return the attribute value
-         *
-         * @throws no_such_attribute if the attibute does not exist on
-         * this element.
-         **/
-        std::string get_attribute(const std::string& key) const;
-        
+                
         /**
          * Get a given attribute in given type.
          *
@@ -83,7 +70,7 @@ namespace xml
          *
          * @todo add check if conversion to value worked
          **/
-        template <typename T>
+        template <typename T = std::string>
         T get_attribute(const std::string& id) const
         {
             std::stringstream conv(get_attribute(id));
@@ -97,6 +84,20 @@ namespace xml
             
             return value;
         }
+
+        /** 
+         * Get a given attribute. 
+         *         
+         * This method will retrive an attribute.
+         *
+         * @param id the attribtue id
+         * @return the attribute value
+         *
+         * @throws no_such_attribute if the attibute does not exist on
+         * this element.
+         **/
+        template <>
+        std::string get_attribute<std::string>(const std::string& key) const;
         
         /**
          * Set an attribute.
