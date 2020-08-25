@@ -1,6 +1,5 @@
 
-Reading a Document
-==================
+# Reading a Document
 
 When reading a XML document with libxmlmm there are two options. You can either 
 navigate the document by querying each element for it's children or you can 
@@ -19,8 +18,7 @@ For this example we have the following simple XML:
 
 It is our goal to get all recipients; the names that are in the `to` elements.
 
-Navigating the Document
------------------------
+## Navigating the Document
 
 To navigate the document you basically use 'get_children' all the time.
 
@@ -70,8 +68,7 @@ As a simplification, the inner text of an element can be accessed though
 `get_text`. It would also be possible to call `get_children` and cast the 
 resulting `Node` to `TextNode` and call `get_value` on it.
 
-XPath
------
+## XPath
 
 libxmlmm features the ability to use XPath to access values in a document. 
 To access single values you can use `query_string` and `query_number` and to 
@@ -113,8 +110,7 @@ shows why this method is so useful, it make much cleaner code in those cases
 where you are accessing only elements; and experience shows that when working 
 with XML you will probably query 80% of the time for elements.
 
-Conclusion
-----------
+## Conclusion
 
 Which approach you take depends on your use case. Basically the XPath approach 
 is simpler, but will probably be slower, since the XPath must be evaluated. It 

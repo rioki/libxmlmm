@@ -1,29 +1,20 @@
 
-========
-libxmlmm
-========
+# libxmlmm
 
-About
-=====
+
+## About
 
 Libxmlmm is a C++ wrapper for libxml 2.0 that only relies on standard C++ and 
 libxml2.
 
-Install
-=======
+## Install
 
-Dependencies
-------------
+### Dependencies
 
 To build libxmlmm libxml2 is needed. The latest version of libxml2 can be found
 at http://xmlsoft.org/. There the dependency iconv can also be found.
 
-For the unit tests UnitTest++ is required. The latest version can be found
-at http://unittest-cpp.sourceforge.net/. (The active development moved to
-http://code.google.com/p/unittestpp/, but there seems not to be much activity.)
-
-Building with Make 
-------------------
+### Building with Make 
 
 To install the library you use the traditional "GNU tipple jump":
 
@@ -31,36 +22,12 @@ To install the library you use the traditional "GNU tipple jump":
     make
     make install
     
-Building with CodeLite
-----------------------
+### Building with Visual Studio 2019
 
-The windows version is actively developed with CodeLite. To build the package
-you will have to set the environment variables ICONV_DIR, LIBXML2_DIR and 
-UNIT_TEST_DIR to the corresponding dependencies.
+The windows version is actively developed with Visual Studio 2019. It is generally
+encuraged to use vcpkg to get the dependencies. All you need is libxml2 and gtest.
 
-Building With Visual Studio
----------------------------
-
-Although Visual Studio is useful for many, this package is not developed with
-Visual Studio. As a result keeping the Visual Studio build files up to date
-is problematic, especially since Microsoft adds incompatible file formats every
-3 years. Patches of up to date Visual Studio build configurations are welcome.
-
-The sources should be buildable with MSC from version 8 (VS 2005) to version 10
-(VS 2010). Just create a native dynamic library project with all files from
-src and include/libxmlmm. You can build the unit tests by creating a native 
-win32 executable and add all files from test. You will need a copy of 
-UnitTest++.
-   
-Known Issues
-============
-
-* When building with MinGW it is imperitive to use a version above 4.4 and
-the same exception model. If the exception model is different any exception
-that tries to propagate over a DLL boundary will cause a process abort.
-
-Documentation
-=============
+## Documentation
 
 Some simple introductory documentation can be found in the docs folder.
 
@@ -69,14 +36,17 @@ Some simple introductory documentation can be found in the docs folder.
 
 libxmlmm uses extensivly api documentation that can be extracted with doxygen.
 
-Further Information
-===================
+## Further Information
 
 You can find good resources on the official github page: 
 http://github.com/rioki/libxmlmm.
   
-Changes
-=======
+## Changes
+
+TBD libxml-0.6 
+
+* Updates build system to include VS 2019
+* Changes to unit testing to gtest.
 
 2011-08-21 libxmlmm-0.5
 
@@ -108,24 +78,23 @@ Changes
 * Load and save of documents.
 * Basic access API for node types.
 
-Copying
-=======
+## Copying
 
-Copyright (c) 2008-2012 Sean Farrell
+	Copyright (c) 2008-2020 Sean Farrell
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of 
-this software and associated documentation files (the "Software"), to deal in 
-the Software without restriction, including without limitation the rights to use, 
-copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the 
-Software, and to permit persons to whom the Software is furnished to do so, 
-subject to the following conditions:
+	Permission is hereby granted, free of charge, to any person obtaining a copy of 
+	this software and associated documentation files (the "Software"), to deal in 
+	the Software without restriction, including without limitation the rights to use, 
+	copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the 
+	Software, and to permit persons to whom the Software is furnished to do so, 
+	subject to the following conditions:
 
-The above copyright notice and this permission notice shall be included in all 
-copies or substantial portions of the Software.
+	The above copyright notice and this permission notice shall be included in all 
+	copies or substantial portions of the Software.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, 
-INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A 
-PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT 
-HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION 
-OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE 
-SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, 
+	INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A 
+	PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT 
+	HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION 
+	OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE 
+	SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.

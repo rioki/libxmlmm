@@ -1,6 +1,5 @@
 
-Writing a Document
-==================
+# Writing a Document
 
 If you are creating a document you need to do this through the methods of the 
 Document and Node classes. This comes from the fact that libxml2 can only create 
