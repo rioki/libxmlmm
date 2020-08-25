@@ -1,10 +1,13 @@
 *.o
 *.d
+x86
+x64
+.vs
+*.user
 apidoc
 config.mk
 libxmlmm.a
 libxmlmm.dll
 libxmlmm.so
 libxmlmm.pc
-test-libxmlmm.exe
-test-libxmlmm
+libxmlmm-test.exe
