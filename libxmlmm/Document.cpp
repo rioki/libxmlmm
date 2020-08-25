@@ -29,14 +29,14 @@
 namespace xml
 {
 
-//------------------------------------------------------------------------------
+
     Document::Document()
     : cobj(xmlNewDoc(BAD_CAST "1.0"))
     {
         cobj->_private = this;
     }
 
-//------------------------------------------------------------------------------
+
     Document::Document(const std::string &xml)
     : cobj(xmlNewDoc(BAD_CAST "1.0"))
     {
@@ -44,19 +44,19 @@ namespace xml
         this->read_from_string(xml);
     }
 
-//------------------------------------------------------------------------------
+
     Document::~Document()
     {
         xmlFreeDoc(cobj);
     }
 
-//------------------------------------------------------------------------------
+
     bool Document::has_root_element() const
     {
         return xmlDocGetRootElement(cobj) != NULL;
     }
 
-//------------------------------------------------------------------------------
+
     Element* Document::get_root_element()
     {
         xmlNode* root = xmlDocGetRootElement(cobj);
@@ -67,13 +67,13 @@ namespace xml
         return reinterpret_cast<Element*>(root->_private);
     }
 
-//------------------------------------------------------------------------------
+
     const Element* Document::get_root_element() const
     {
         return const_cast<Document*>(this)->get_root_element();
     }
 
-//------------------------------------------------------------------------------
+
     Element* Document::create_root_element(const std::string& name)
     {
         if (has_root_element())
@@ -92,7 +92,7 @@ namespace xml
         return reinterpret_cast<Element*>(root->_private);
     }
 
-//------------------------------------------------------------------------------
+
     std::string Document::write_to_string() const
     {
         xmlChar* buffer = 0;
@@ -110,7 +110,7 @@ namespace xml
         return xml;
     }
 
-//------------------------------------------------------------------------------
+
     std::string Document::write_to_string(const std::string& encoding) const
     {
         xmlChar* buffer = 0;
@@ -128,19 +128,19 @@ namespace xml
         return xml;
     }
 
-//------------------------------------------------------------------------------
+
     void Document::write_to_stream(std::ostream& os) const
     {
         os << write_to_string();
     }
 
-//------------------------------------------------------------------------------
+
     void Document::write_to_stream(std::ostream& os, const std::string& encoding) const
     {
         os << write_to_string(encoding);
     }
 
-//------------------------------------------------------------------------------
+
     void Document::write_to_file(const std::string& file) const
     {
         int result = xmlSaveFormatFile(file.c_str(), cobj, 1);
@@ -150,7 +150,7 @@ namespace xml
         }
     }
 
-//------------------------------------------------------------------------------
+
     void Document::write_to_file(const std::string& file, const std::string& encoding) const
     {
         int result = xmlSaveFormatFileEnc(file.c_str(), cobj, encoding.c_str(), 1);
@@ -160,7 +160,7 @@ namespace xml
         }
     }
 
-//------------------------------------------------------------------------------
+
     void Document::read_from_string(const std::string& xml)
     {
         xmlDoc* tmp_cobj = xmlReadDoc(reinterpret_cast<const xmlChar*>(xml.c_str()), NULL, NULL, 0);
@@ -172,13 +172,13 @@ namespace xml
             cobj = tmp_cobj;
         }
 
-//------------------------------------------------------------------------------
+
     void Document::read_from_stream(std::istream& is)
     {
         read_from_string(read_until_eof(is));
     }
 
-//------------------------------------------------------------------------------
+
     void Document::read_from_file(const std::string& file)
     {
         xmlDoc* tmp_cobj = xmlReadFile(file.c_str(), NULL, 0);
@@ -190,7 +190,7 @@ namespace xml
         cobj = tmp_cobj;
     }
 
-//------------------------------------------------------------------------------
+
     Node* Document::find_node(const std::string& xpath)
     {
         try
@@ -203,7 +203,7 @@ namespace xml
         }
     }
 
-//------------------------------------------------------------------------------
+
     const Node* Document::find_node(const std::string& xpath) const
     {
         try
@@ -216,7 +216,7 @@ namespace xml
         }
     }
 
-//------------------------------------------------------------------------------
+
     std::vector<Node*> Document::find_nodes(const std::string& xpath)
     {
         try
@@ -229,7 +229,7 @@ namespace xml
         }
     }
 
-//------------------------------------------------------------------------------
+
     std::vector<const Node*> Document::find_nodes(const std::string& xpath) const
     {
         try
@@ -242,7 +242,7 @@ namespace xml
         }
     }
 
-//------------------------------------------------------------------------------
+
     Element* Document::find_element(const std::string& xpath)
     {
         try
@@ -255,7 +255,7 @@ namespace xml
         }
     }
 
-//------------------------------------------------------------------------------
+
     const Element* Document::find_element(const std::string& xpath) const
     {
         try
@@ -268,7 +268,7 @@ namespace xml
         }
     }
 
-//------------------------------------------------------------------------------
+
     std::vector<Element*> Document::find_elements(const std::string& xpath)
     {
         try
@@ -281,7 +281,7 @@ namespace xml
         }
     }
 
-//------------------------------------------------------------------------------
+
     std::vector<const Element*> Document::find_elements(const std::string& xpath) const
     {
         try
@@ -294,7 +294,7 @@ namespace xml
         }
     }
 
-//------------------------------------------------------------------------------
+
     std::string Document::query_string(const std::string& xpath) const
     {
         try
@@ -307,7 +307,7 @@ namespace xml
         }
     }
 
-//------------------------------------------------------------------------------
+
     double Document::query_number(const std::string& xpath) const
     {
         try
@@ -320,7 +320,7 @@ namespace xml
         }
     }
 
-//------------------------------------------------------------------------------
+
     LIBXMLMM_EXPORT
     std::ostream& operator << (std::ostream& os, const Document& doc)
     {
@@ -328,7 +328,7 @@ namespace xml
         return os;
     }
 
-//------------------------------------------------------------------------------
+
     LIBXMLMM_EXPORT
     std::istream& operator >> (std::istream& is, Document& doc)
     {

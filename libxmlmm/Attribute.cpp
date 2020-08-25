@@ -24,11 +24,11 @@
 
 namespace xml
 {
-//------------------------------------------------------------------------------
+
     Attribute::Attribute(xmlNode* const cobj)
     : Node(cobj) {}
 
-//------------------------------------------------------------------------------
+
     std::string Attribute::get_value() const
     {
         const char *const ptr = reinterpret_cast<const char*>(xmlGetProp(cobj->parent, cobj->name));
@@ -39,7 +39,7 @@ namespace xml
         return "";
     }
 
-//------------------------------------------------------------------------------
+
     void Attribute::set_value(const std::string& value)
     {
         xmlSetProp(cobj->parent, cobj->name, reinterpret_cast<const xmlChar*>(value.c_str()));

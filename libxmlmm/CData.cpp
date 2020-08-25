@@ -23,7 +23,7 @@
 
 namespace xml
 {
-//------------------------------------------------------------------------------
+
     CData::CData(xmlNode* const cobj)
     : Content(cobj) {}
 

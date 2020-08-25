@@ -23,7 +23,7 @@
 
 namespace xml
 {
-//------------------------------------------------------------------------------
+
     Comment::Comment(xmlNode* const cobj)
     : Content(cobj) {}
 

@@ -19,10 +19,11 @@
 // SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-#include "rtest.h"
+#include <gtest/gtest.h>
 
-int main()
+int main(int argc, char* argv[])
 {
-    return rtest::run();
+    testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
 }
 

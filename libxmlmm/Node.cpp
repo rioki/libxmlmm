@@ -30,20 +30,20 @@
 
 namespace xml
 {
-//------------------------------------------------------------------------------
+
     Node::Node(xmlNode* const co)
     : cobj(co)
     {
         assert(cobj != NULL);
     }
 
-//------------------------------------------------------------------------------
+
     Node::~Node()
     {
         assert(cobj != NULL);
     }
 
-//------------------------------------------------------------------------------
+
     std::string Node::get_path() const
     {
         xmlChar* path = xmlGetNodePath(cobj);
@@ -57,7 +57,7 @@ namespace xml
         return value;
     }
 
-//------------------------------------------------------------------------------
+
     Element* Node::get_parent()
     {
         if (cobj->parent != NULL)
@@ -73,37 +73,37 @@ namespace xml
         }
     }
 
-//------------------------------------------------------------------------------
+
     const Element* Node::get_parent() const
     {
         return const_cast<Node*>(this)->get_parent();
     }
 
-//------------------------------------------------------------------------------
+
     Node* Node::find_node(const std::string& xpath)
     {
         return this->find<Node*>(xpath);
     }
 
-//------------------------------------------------------------------------------
+
     const Node* Node::find_node(const std::string& xpath) const
     {
         return this->find<const Node*>(xpath);
     }
 
-//------------------------------------------------------------------------------
+
     std::vector<Node*> Node::find_nodes(const std::string& xpath)
     {
         return this->find_all<Node*>(xpath);
     }
 
-//------------------------------------------------------------------------------
+
     std::vector<const Node*> Node::find_nodes(const std::string& xpath) const
     {
         return this->find_all<const Node*>(xpath);
     }
 
-//------------------------------------------------------------------------------
+
     std::string Node::query_string(const std::string& xpath) const
     {
         FindNodeset search(cobj, xpath);
@@ -140,7 +140,7 @@ namespace xml
         return value;
     }
 
-//------------------------------------------------------------------------------
+
     double Node::query_number(const std::string& xpath) const
     {
         FindNodeset search(cobj, xpath);
@@ -169,7 +169,7 @@ namespace xml
     }
 
 
-//------------------------------------------------------------------------------
+
     Node::FindNodeset::FindNodeset(xmlNode *const cobj, const std::string &xpath, const xmlXPathObjectType type)
     {
         ctxt = xmlXPathNewContext(cobj->doc);
@@ -190,7 +190,7 @@ namespace xml
         }
     }
 
-//------------------------------------------------------------------------------
+
     Node::FindNodeset::~FindNodeset()
     {
         xmlXPathFreeObject(result);

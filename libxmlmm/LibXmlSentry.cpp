@@ -33,7 +33,7 @@ namespace xml
 {
     unsigned int LibXmlSentry::use_count = 0;
 
-//------------------------------------------------------------------------------
+
     LibXmlSentry::LibXmlSentry()
     {
         if (use_count == 0)
@@ -47,7 +47,7 @@ namespace xml
         use_count++;
     }
 
-//------------------------------------------------------------------------------
+
     LibXmlSentry::~LibXmlSentry()
     {
         use_count--;

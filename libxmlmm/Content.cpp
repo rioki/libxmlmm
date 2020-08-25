@@ -24,11 +24,11 @@
 
 namespace xml
 {
-//------------------------------------------------------------------------------
+
     Content::Content(xmlNode* cobj)
     : Node(cobj) {}
 
-//------------------------------------------------------------------------------
+
     std::string Content::get_value() const
     {
         if (cobj->content != NULL)
@@ -38,19 +38,19 @@ namespace xml
         return std::string();
     }
 
-//------------------------------------------------------------------------------
+
     std::string Content::get_content() const
     {
         return this->get_value();
     }
 
-//------------------------------------------------------------------------------
+
     void Content::set_content(const std::string& value)
     {
         xmlNodeSetContent(cobj, reinterpret_cast<const xmlChar*>(value.c_str()));
     }
 
-//------------------------------------------------------------------------------
+
     bool Content::is_blank() const
     {
         return xmlIsBlankNode(const_cast<xmlNode*>(cobj));

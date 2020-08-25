@@ -36,7 +36,7 @@
 
 namespace xml
 {
-//------------------------------------------------------------------------------
+
     std::string get_last_error()
     {
         const xmlError* const error = xmlGetLastError();
@@ -50,7 +50,7 @@ namespace xml
         }
     }
 
-//------------------------------------------------------------------------------
+
     void wrap_node(xmlNode* const cobj)
     {
         switch (cobj->type)
@@ -97,7 +97,7 @@ namespace xml
         }
     }
 
-//------------------------------------------------------------------------------
+
     void free_wrapper(xmlNode* const cobj)
     {
         switch (cobj->type)
@@ -126,7 +126,7 @@ namespace xml
         }
     }
 
-//------------------------------------------------------------------------------
+
     std::string read_until_eof(std::istream& is)
     {
         std::string result;

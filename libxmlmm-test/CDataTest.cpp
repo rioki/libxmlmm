@@ -21,7 +21,7 @@
 
 #include <string>
 #include <stdexcept>
-#include "rtest.h"
+#include <gtest/gtest.h>
 
 #include <libxmlmm/Document.h>
 #include <libxmlmm/Element.h>
@@ -29,57 +29,51 @@
 
 // NOTE: Nodes can not live w/o their Document.
 
-SUITE(CDataTest)
+TEST(CDataTest, cdata_get_content)
 {
-//------------------------------------------------------------------------------
-    TEST(cdata_get_content)
-    {
-        xml::Document doc;
+    xml::Document doc;
 
-        std::string xml =
-            "<?xml version=\"1.0\"?>\n"
-            "<test><![CDATA[This is a test.]]></test>\n";
+    std::string xml =
+        "<?xml version=\"1.0\"?>\n"
+        "<test><![CDATA[This is a test.]]></test>\n";
 
-        doc.read_from_string(xml);
+    doc.read_from_string(xml);
 
-        xml::Element* element = doc.get_root_element();
-        CHECK(element != NULL);
+    xml::Element* element = doc.get_root_element();
+    EXPECT_TRUE(element != NULL);
 
-        std::vector<xml::Node*> children = element->get_children();
-        CHECK_EQUAL(1, children.size());
-        xml::CData* c_data = dynamic_cast<xml::CData*>(children.at(0));
-        CHECK(c_data != NULL);
-        CHECK_EQUAL("This is a test.", c_data->get_content());
-    }
+    std::vector<xml::Node*> children = element->get_children();
+    EXPECT_EQ(1, children.size());
+    xml::CData* c_data = dynamic_cast<xml::CData*>(children.at(0));
+    EXPECT_TRUE(c_data != NULL);
+    EXPECT_EQ("This is a test.", c_data->get_content());
+}
 
-//------------------------------------------------------------------------------
-    TEST(cdata_element_get_text)
-    {
-        xml::Document doc;
+TEST(CDataTest, data_element_get_text)
+{
+    xml::Document doc;
 
-        std::string xml =
-            "<?xml version=\"1.0\"?>\n"
-            "<test><![CDATA[This is a test.]]></test>\n";
+    std::string xml =
+        "<?xml version=\"1.0\"?>\n"
+        "<test><![CDATA[This is a test.]]></test>\n";
 
-        doc.read_from_string(xml);
+    doc.read_from_string(xml);
 
-        xml::Element* element = doc.get_root_element();
-        CHECK(element != NULL);
+    xml::Element* element = doc.get_root_element();
+    EXPECT_TRUE(element != NULL);
 
-        CHECK_EQUAL("This is a test.", element->get_text());
-    }
+    EXPECT_EQ("This is a test.", element->get_text());
+}
 
-//------------------------------------------------------------------------------
-    TEST(cdata_behaves_like_text_in_xpath)
-    {
-        xml::Document doc;
+TEST(CDataTest, cdata_behaves_like_text_in_xpath)
+{
+    xml::Document doc;
 
-        std::string xml =
-            "<?xml version=\"1.0\"?>\n"
-            "<test><![CDATA[This is a test.]]></test>\n";
+    std::string xml =
+        "<?xml version=\"1.0\"?>\n"
+        "<test><![CDATA[This is a test.]]></test>\n";
 
-        doc.read_from_string(xml);
-        std::string text = doc.query_string("/test/text()");
-        CHECK_EQUAL("This is a test.", text);
-    }
+    doc.read_from_string(xml);
+    std::string text = doc.query_string("/test/text()");
+    EXPECT_EQ("This is a test.", text);
 }

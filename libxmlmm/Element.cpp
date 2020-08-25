@@ -29,11 +29,11 @@
 
 namespace xml
 {
-//------------------------------------------------------------------------------
+
     Element::Element(xmlNode* const cobj)
     : Node(cobj) {}
 
-//------------------------------------------------------------------------------
+
     std::string Element::get_name() const
     {
         assert(cobj != NULL);
@@ -44,19 +44,19 @@ namespace xml
         return std::string();
     }
 
-//------------------------------------------------------------------------------
+
     void Element::set_name(const std::string& value)
     {
         xmlNodeSetName(cobj, reinterpret_cast<const xmlChar*>(value.c_str()));
     }
 
-//------------------------------------------------------------------------------
+
     bool Element::has_attribute(const std::string& key) const
     {
         return xmlGetProp(cobj, reinterpret_cast<const xmlChar*>(key.c_str())) != NULL;
     }
 
-//------------------------------------------------------------------------------
+
     std::string Element::get_attribute(const std::string& key) const
     {
         const xmlChar* const value = xmlGetProp(cobj, reinterpret_cast<const xmlChar*>(key.c_str()));
@@ -67,19 +67,19 @@ namespace xml
         return reinterpret_cast<const char*>(value);
     }
 
-//------------------------------------------------------------------------------
+
     void Element::set_attribute(const std::string& key, const std::string& value)
     {
         xmlSetProp(cobj, reinterpret_cast<const xmlChar*>(key.c_str()), reinterpret_cast<const xmlChar*>(value.c_str()));
     }
 
-//------------------------------------------------------------------------------
+
     void Element::remove_attribute(const std::string& key)
     {
         xmlUnsetProp(cobj, reinterpret_cast<const xmlChar*>(key.c_str()));
     }
 
-//------------------------------------------------------------------------------
+
     std::string Element::get_value() const
     {
         const Content* const content = get_text_node();
@@ -90,13 +90,13 @@ namespace xml
         return std::string();
     }
 
-//------------------------------------------------------------------------------
+
     std::string Element::get_text() const
     {
         return this->get_value();
     }
 
-//------------------------------------------------------------------------------
+
     Content* Element::get_text_node() const
     {
         for(xmlNode* child = cobj->children; child; child = child->next)
@@ -113,7 +113,7 @@ namespace xml
         return NULL;
     }
 
-//------------------------------------------------------------------------------
+
     void Element::set_text(const std::string& text)
     {
         Content* node = get_text_node();
@@ -127,14 +127,14 @@ namespace xml
         }
     }
 
-//------------------------------------------------------------------------------
+
     void Element::add_text(const std::string& text)
     {
         xmlNode* node = xmlNewText(reinterpret_cast<const xmlChar*>(text.c_str()));
         xmlAddChild(cobj, node);
     }
 
-//------------------------------------------------------------------------------
+
     Element* Element::add_element(const std::string& name)
     {
         xmlNode* node = xmlNewNode(NULL, reinterpret_cast<const xmlChar*>(name.c_str()));
@@ -142,7 +142,7 @@ namespace xml
         return reinterpret_cast<Element*>(node->_private);
     }
 
-//------------------------------------------------------------------------------
+
     std::vector<Node*> Element::get_children()
     {
         std::vector<Node*> children;
@@ -155,7 +155,7 @@ namespace xml
         return children;
     }
 
-//------------------------------------------------------------------------------
+
     std::vector<const Node*> Element::get_children() const
     {
         std::vector<const Node*> children;
@@ -168,25 +168,25 @@ namespace xml
         return children;
     }
 
-//------------------------------------------------------------------------------
+
     Element* Element::find_element(const std::string& xpath)
     {
         return this->find<Element*>(xpath);
     }
 
-//------------------------------------------------------------------------------
+
     const Element* Element::find_element(const std::string& xpath) const
     {
         return this->find<const Element*>(xpath);
     }
 
-//------------------------------------------------------------------------------
+
     std::vector<Element*> Element::find_elements(const std::string& xpath)
     {
         return this->find_all<Element*>(xpath);
     }
 
-//------------------------------------------------------------------------------
+
     std::vector<const Element*> Element::find_elements(const std::string& xpath) const
     {
         return this->find_all<const Element*>(xpath);
