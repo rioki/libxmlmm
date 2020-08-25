@@ -39,14 +39,15 @@ libxmlmm uses extensivly api documentation that can be extracted with doxygen.
 ## Further Information
 
 You can find good resources on the official github page: 
-http://github.com/rioki/libxmlmm.
+http://github.com/rioki/libxmlmm
   
 ## Changes
 
-TBD libxml-0.6 
+2020-08-25 libxmlmm-0.6 
 
-* Updates build system to include VS 2019
+* Updates build system to include VS 2019.
 * Changes to unit testing to gtest.
+* Prepare code for vcpkg.
 
 2011-08-21 libxmlmm-0.5
 
