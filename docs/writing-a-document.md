@@ -47,7 +47,7 @@ create it on the stack. This has the advantage that we don't have to bother abou
 
 The root node is created through `create_root_element`. As you should know, in 
 XML you can only have one root node. If one already exists, the method will throw 
-an exception. To get a already created root node, simply use `get_root_node`.
+an exception. To get a already created root node, simply use `get_root_element`.
 
 The following code is a repetition of 'add_element'. This will append a new 
 element as a child to the node.
