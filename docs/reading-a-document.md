@@ -25,7 +25,7 @@ To navigate the document you basically use 'get_children' all the time.
     xml::Document doc;
     doc.read_from_file("message.xml");
 
-    xml::Element* message = doc.get_root_node();
+    xml::Element* message = doc.get_root_element();
     assert(message != NULL);
     assert(message->get_name() == "message");
     assert(message->get_attribute("version") == "1.2");
